@@ -1,12 +1,10 @@
-
+import Registro from './pages/Registro/Registro';
 
 function App() {
 
   return (
     <>
-      <div>
-        <p>hola mundo 2</p>
-      </div>
+      <Registro/>
     </>
   )
 }

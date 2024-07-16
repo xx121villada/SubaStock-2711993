@@ -2,6 +2,8 @@ import React from 'react'
 
 export default function Registro() {
     return (
-        <div>Registro</div>
+        <div>
+            <p>registro</p>
+        </div>
     )
 }
