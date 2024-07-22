@@ -3,23 +3,9 @@ import "./styles/core.css"
 import './styles/icons.css'
 import './styles/styles.css'
 import './styles/style.css'
-import core from './scripts/core'
-import jquery from './scripts/jquery.steps'
-import layout from './scripts/layout-settings'
-import process from './scripts/process'
-import steps from'./scripts/steps-setting'
-import min from './scripts/script.min'
 
 export default function Registro() {
-    useEffect(() => {
-        // Código para inicializar scripts si es necesario
-        core();
-        jquery();
-        layout();
-        process();
-        steps();
-        min();
-    }, []);
+ 
     return (
         <div>
             <div>
