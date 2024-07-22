@@ -3,36 +3,22 @@ import "./styles/core.css"
 import './styles/icons.css'
 import './styles/styles.css'
 import './styles/style.css'
-import core from './scripts/core'
-import jquery from './scripts/jquery.steps'
-import layout from './scripts/layout-settings'
-import process from './scripts/process'
-import steps from'./scripts/steps-setting'
-import min from './scripts/script.min'
+// import '../../../public/core'
+// // import './scripts/jquery.steps'
+// // import './scripts/layout-settings'
+// // import './scripts/process'
+// // import './scripts/steps-setting'
+// // import './scripts/script.min'
 
 export default function Registro() {
-    useEffect(() => {
-        // Código para inicializar scripts si es necesario
-        core();
-        jquery();
-        layout();
-        process();
-        steps();
-        min();
-    }, []);
     return (
         <div>
             <div>
-                <meta charset="utf-8" />
-                <title>SubaStock</title>
 
                 {/* <link rel="apple-touch-icon" sizes="180x180" href="vendors/images/apple-touch-icon.png" /> 
                 <link rel="icon" type="image/png" sizes="32x32" href="vendors/images/favicon-32x32.png" />
                 <link rel="icon" type="image/png" sizes="16x16" href="vendors/images/favicon-16x16.png" /> */}
 
-                <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-
-                <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 
                 {/* <link rel="stylesheet" type="text/css" href="./styles/core.css" />
                 <link rel="stylesheet" type="text/css" href="./styles/icons.css" />
