@@ -1,8 +1,4 @@
 import React, { useEffect } from 'react';
-import "./styles/core.css"
-import './styles/icons.css'
-import './styles/styles.css'
-import './styles/style.css'
 
 export default function Registro() {
     return (
