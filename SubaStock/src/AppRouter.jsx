@@ -5,6 +5,7 @@ import Registro from './pages/Registro/Registro'
 import { DetalleSubasta } from './components/detalleSubasta/DetalleSubasta'
 import DetalleAnimales from './pages/detalleAnimales/DetalleAnimales'
 
+
 export default function AppRouter() {
   return (
       <HashRouter>
@@ -13,7 +14,7 @@ export default function AppRouter() {
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/registro" element={<Registro />} />
           <Route exact path='/detalle-subasta' element={<DetalleSubasta/>} />
-          <Route exact path="/detalle-animales" element={<DetalleAnimales />} />
+          <Route exact path="/detalle-animales" element={<DetalleAnimales/>} />
         </Routes>
       </HashRouter>
   )

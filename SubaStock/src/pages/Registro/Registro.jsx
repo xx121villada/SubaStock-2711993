@@ -1,25 +1,5 @@
-import React, { useEffect } from 'react';
-import "./styles/core.css"
-import './styles/icons.css'
-import './styles/styles.css'
-import './styles/style.css'
-import core from './scripts/core'
-import jquery from './scripts/jquery.steps'
-import layout from './scripts/layout-settings'
-import process from './scripts/process'
-import steps from'./scripts/steps-setting'
-import min from './scripts/script.min'
-
 export default function Registro() {
-    useEffect(() => {
-        // Código para inicializar scripts si es necesario
-        core();
-        jquery();
-        layout();
-        process();
-        steps();
-        min();
-    }, []);
+
     return (
         <div>
             <div>
@@ -172,7 +152,7 @@ export default function Registro() {
                 </div>
 
                 <button type="button" id="success-modal-btn" hidden data-toggle="modal" data-target="#success-modal" data-backdrop="static">Launch modal</button>
-                <div className="modal fade" id="success-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div className="modal fade" id="success-modal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                     <div className="modal-dialog modal-dialog-centered max-width-400" role="document">
                         <div className="modal-content">
                             <div className="modal-body text-center font-18">

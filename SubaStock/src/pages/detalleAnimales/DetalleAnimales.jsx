@@ -1,20 +1,24 @@
+import Buscador from '../Subastas/components/Buscador';
+import { Link } from 'react-router-dom';
+import './styles/CardAnimal.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
+import CardList from './CardList';
 
-import back from './img/back.svg';
 export default function DetalleAnimales() {
     return (
-        <div className="bg-light">
-            <div>
-            <img className='text-start p-3' src={back} alt="Atras" />
-            <h1 className="text-success fs-4 text-center p-2">SUBASTOCK</h1>
+        <div className='bg-light'>
+            <div className="back-container p-2">
+                <Link to='/' className="back-link">
+                    <i className="link-back bi bi-caret-left-fill fw-semibold">Regresar</i>
+                </Link>
             </div>
-            <nav className="navbar navbar-light bg-light">
-                <div className="container-fluid">
-                    <form className="d-flex">
-                        <input className="form-control me-2 p-3" type="search" placeholder="Buscar..."/>
-                        <button type="button" className="btn btn-success m-0 rounded-pill">Success</button>
-                        </form>
-                </div>
-            </nav>
+            <div className="buscador-container">
+                <Buscador />
+            </div>
+            <div className='container-Card'>
+                <CardList />
+            </div>
+
         </div>
     )
 }
