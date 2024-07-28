@@ -1,10 +1,10 @@
-import dataAnimal from './DataAnimal';
-import AnimalCard from './CardAnimal';
+import DataAnimal from './DataAnimal';
+import CardAnimal from './CardAnimal';
 
 export default function CardList() {
-    const cards = dataAnimal.map((animal) =>
+    const cards = DataAnimal.map((animal) =>
             Array.from({ length: 9 }).map(() => (
-                <AnimalCard 
+                <CardAnimal 
                     key={animal.id}
                     animal={animal} 
                 />

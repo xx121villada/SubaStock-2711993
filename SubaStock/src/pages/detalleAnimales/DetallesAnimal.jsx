@@ -4,7 +4,7 @@ import './styles/CardAnimal.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import CardList from './CardList';
 
-export default function DetalleAnimales() {
+export default function DetallesAnimal() {
     return (
         <div className='bg-light'>
             <div className="back-container p-2">
