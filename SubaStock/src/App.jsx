@@ -1,11 +1,10 @@
-import Registro from './pages/Registro/Registro';
-import Login from './pages/Login/Login';
+import Subastas from './pages/Subastas/Subastas';
 
 function App() {
 
   return (
     <>
-      <Registro/>
+      <Subastas/>
     </>
   )
 }
