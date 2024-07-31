@@ -3,64 +3,59 @@ import './styles/style.css'
 
 export default function Registro() {
     return (
-        <div>
-            <div>
-                <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+        <div className='body'>
+            <div className="login">
+                <h2> REGISTRO </h2>
             </div>
-            <div className='body'>
-                <div className="login">
-                    <h2> REGISTRO </h2>
-                </div>
-                <div className="register-page-wrap d-flex align-items-center flex-wrap justify-content-center">
-                    <div className="container">
-                        <div className="form-wrap max-width-600 mx-auto">
-                            <div className="form-group row">
-                                <label>Ingrese su documento:</label>
-                                <div className="col-sm-10">
-                                    <input type="number" className="form-control" />
-                                </div>
-                            </div>
-                            <div className="form-group row">
-                                <label>Ingrese sus nombres:</label>
-                                <div className="col-sm-10">
-                                    <input type="text" className="form-control" />
-                                </div>
-                            </div>
-                            <div className="form-group row">
-                                <label>Ingrese sus apellidos:</label>
-                                <div className="col-sm-10">
-                                    <input type="text" className="form-control" />
-                                </div>
-                            </div>
-                            <div className="form-group row">
-                                <label> Ingrese su número de telefono:</label>
-                                <div className="col-sm-10">
-                                    <input type="number" className="form-control" />
-                                </div>
+            <div className="register-page-wrap d-flex align-items-center flex-wrap justify-content-center">
+                <div className="container">
+                    <div className="form-wrap max-width-600 mx-auto">
+                        <div className="form-group row">
+                            <label>Ingrese su documento:</label>
+                            <div className="col-sm-10">
+                                <input type="number" className="form-control" />
                             </div>
                         </div>
                         <div className="form-group row">
-                            <label>Ingrese su correo electrónico:</label>
+                            <label>Ingrese sus nombres:</label>
                             <div className="col-sm-10">
-                                <input type="email" className="form-control" />
+                                <input type="text" className="form-control" />
                             </div>
                         </div>
                         <div className="form-group row">
-                            <label>Ingrese una contraseña:</label>
+                            <label>Ingrese sus apellidos:</label>
                             <div className="col-sm-10">
-                                <input type="password" className="form-control" />
+                                <input type="text" className="form-control" />
                             </div>
                         </div>
                         <div className="form-group row">
-                            <label>Confirmar contraseña:</label>
+                            <label> Ingrese su número de telefono:</label>
                             <div className="col-sm-10">
-                                <input type="password" className="form-control" />
+                                <input type="number" className="form-control" />
                             </div>
                         </div>
                     </div>
+                    <div className="form-group row">
+                        <label>Ingrese su correo electrónico:</label>
+                        <div className="col-sm-10">
+                            <input type="email" className="form-control" />
+                        </div>
+                    </div>
+                    <div className="form-group row">
+                        <label>Ingrese una contraseña:</label>
+                        <div className="col-sm-10">
+                            <input type="password" className="form-control" />
+                        </div>
+                    </div>
+                    <div className="form-group row">
+                        <label>Confirmar contraseña:</label>
+                        <div className="col-sm-10">
+                            <input type="password" className="form-control" />
+                        </div>
+                    </div>
                 </div>
-                <button type='button' className='boton' class="btn btn-outline-success"> REGISTRARME </button>
             </div>
+            <button type='button' className='boton' class="btn btn-outline-success btn-sm"> REGISTRARME </button>
         </div>
     )
 }
