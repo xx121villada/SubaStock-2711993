@@ -11,51 +11,53 @@ export default function Registro() {
                 <div className="container">
                     <div className="form-wrap max-width-600 mx-auto">
                         <div className="form-group row">
-                            <label>Ingrese su documento:</label>
+                            <label>Documento:</label>
                             <div className="col-sm-10">
-                                <input type="number" className="form-control" />
+                                <input placeholder='Ingrese su documento' type="number" className="form-control" />
                             </div>
                         </div>
                         <div className="form-group row">
-                            <label>Ingrese sus nombres:</label>
+                            <label>Nombres:</label>
                             <div className="col-sm-10">
-                                <input type="text" className="form-control" />
+                                <input placeholder='Ingrese sus nombres' type="text" className="form-control" />
                             </div>
                         </div>
                         <div className="form-group row">
-                            <label>Ingrese sus apellidos:</label>
+                            <label>Apellidos:</label>
                             <div className="col-sm-10">
-                                <input type="text" className="form-control" />
+                                <input placeholder='Ingrese sus apellidos' type="text" className="form-control" />
                             </div>
                         </div>
                         <div className="form-group row">
-                            <label> Ingrese su número de telefono:</label>
+                            <label> Telefono:</label>
                             <div className="col-sm-10">
-                                <input type="number" className="form-control" />
+                                <input placeholder='Ingrese su numero de telefono' type="number" className="form-control" />
                             </div>
                         </div>
                     </div>
                     <div className="form-group row">
-                        <label>Ingrese su correo electrónico:</label>
+                        <label>Correo electrónico:</label>
                         <div className="col-sm-10">
-                            <input type="email" className="form-control" />
+                            <input placeholder='Ingrese su correo electronico' type="email" className="form-control" />
                         </div>
                     </div>
                     <div className="form-group row">
-                        <label>Ingrese una contraseña:</label>
+                        <label>Contraseña:</label>
                         <div className="col-sm-10">
-                            <input type="password" className="form-control" />
+                            <input placeholder='Crear contraseña' type="password" className="form-control" />
                         </div>
                     </div>
                     <div className="form-group row">
                         <label>Confirmar contraseña:</label>
                         <div className="col-sm-10">
-                            <input type="password" className="form-control" />
+                            <input placeholder='Repita su contraseña' type="password" className="form-control" />
                         </div>
                     </div>
                 </div>
             </div>
-            <button type='button' className='boton' class="btn btn-outline-success btn-sm"> REGISTRARME </button>
+            <div className='espacioBoton'>
+            <button type='button' id='buton' class="btn btn-outline-success btn-sm"> REGISTRARME </button>
+            </div>
         </div>
     )
 }
