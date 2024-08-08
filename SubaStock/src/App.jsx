@@ -1,10 +1,11 @@
-import Subastas from './pages/Subastas/Subastas';
+import RegistroA from './pages/RegistroAnimales/RegistroAnimales';
+import Crud from './pages/CRUD-xime/Crud';
 
 function App() {
 
   return (
     <>
-      <Subastas/>
+      <RegistroA/>
     </>
   )
 }
