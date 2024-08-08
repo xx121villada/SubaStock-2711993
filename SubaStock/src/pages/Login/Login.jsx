@@ -70,6 +70,7 @@ function Login() {
 										<a className="btn btn-outline-primary btn-lg btn-block" href="register.html">Registrase para crear cuenta</a>
 									</div>
 								</div>
+
 							</div>
 						</form>
 					</div>

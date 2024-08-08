@@ -15,8 +15,8 @@
 .espacioBoton {
     display: flex;
     justify-content: center;
-    align-items: center;     
-    height: 5vh; 
+    align-items: center;
+    height: 5vh;
 }
 
 #buton {
@@ -28,12 +28,10 @@
     font-size: 14px;
     font-weight: bold;
     transition: all 0.3s ease;
-  }
-  
-  #buton:hover {
+}
+
+#buton:hover {
     background-color: #28a745;
     color: white;
     border: 2px solid #28a745;
-  }
-  
-
+}
