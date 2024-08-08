@@ -14,8 +14,6 @@ for (let i = 0; i < 40; i++) {
     ubicacion: "Pereira",
   });
 }
-console.log(animals);
-
 const Subastas = () => {
   return (
     <div id="main-subastas">

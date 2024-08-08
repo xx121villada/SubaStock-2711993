@@ -1,11 +1,10 @@
-import Crud from '../src/pages/CRUD-xime/Crud'
-
+import Subastas from "./pages/Subastas/Subastas"
 
 function App() {
 
   return (
     <>
-      <Crud/>
+      <Subastas/>
     </>
   )
 }

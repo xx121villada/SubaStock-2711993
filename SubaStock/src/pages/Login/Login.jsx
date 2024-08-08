@@ -1,9 +1,8 @@
-import React from 'react';
-import LoginImg from './img/Login.png';
-
 // import  './Styles/core.css';
 // import './Styles/icon-font.min.css';
 // import './Styles/style.css';
+
+import { Link } from "react-router-dom"
 
 function Login() {
     return (
@@ -27,7 +26,7 @@ function Login() {
 		<div className="container">
 			<div className="row align-items-center">
 				<div className="col-md-6 col-lg-7">
-					<img src={LoginImg} alt=""/>
+					{/* <img src={LoginImg} alt=""/> */}
 				</div>
 				<div className="col-md-6 col-lg-5">
 					<div className="login-box bg-white box-shadow border-radius-10">
@@ -56,18 +55,21 @@ function Login() {
 									</div>
 								</div>
 								<div className="col-6">
-									<div className="forgot-password"><a href="forgot-password.html">Recuperar Contraseña</a></div>
+									<div className="forgot-password"><a>Recuperar Contraseña</a></div>
 								</div>
 							</div>
 							<div className="row">
 								<div className="col-sm-12">
 									<div className="input-group mb-0">
-										
-										<a className="btn btn-primary btn-lg btn-block" href="index.html">Iniciar Sesión</a>
+										<Link to='/sesion-iniciada'>
+										<a className="btn btn-primary btn-lg btn-block">Iniciar Sesión</a>
+										</Link>
 									</div>
 									<div className="font-16 weight-600 pt-10 pb-10 text-center" data-color="#707373">O</div>
 									<div className="input-group mb-0">
-										<a className="btn btn-outline-primary btn-lg btn-block" href="register.html">Registrase para crear cuenta</a>
+										<Link to='/registro'>
+										<a className="btn btn-outline-primary btn-lg btn-block">Registrase para crear cuenta</a>
+										</Link>
 									</div>
 								</div>
 

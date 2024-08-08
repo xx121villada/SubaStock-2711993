@@ -1,6 +1,3 @@
-import React from 'react'
-import Subastas from '../../Subastas/Subastas'
-
 function header() {
   return (
     <div className='bodyBody' >
@@ -17,7 +14,7 @@ function header() {
       </div>
       <div className='contenedorBodyPc'>
       </div>
-
+      
     </div>
   )
 }

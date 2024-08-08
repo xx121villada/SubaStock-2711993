@@ -14,7 +14,7 @@ export default function CardVisualizarAnimal({ visualizarAnimal,  }) {
             </div>
             <div className="content-Tipo">
                 <h5 className="card-name">{visualizarAnimal.name}</h5>
-                <Link to={`/visualizar/${visualizarAnimal.name.toLowerCase()}`}>
+                <Link to='/crud-animal'>
                     <button className='btn-visualizar'>Visualizar</button>
                 </Link>
             </div>

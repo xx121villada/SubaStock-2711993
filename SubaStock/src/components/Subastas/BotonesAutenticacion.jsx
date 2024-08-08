@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 /* eslint-disable react/prop-types */
 const BotonesAutenticacion = ({
   registrarseClassName,
@@ -6,12 +8,18 @@ const BotonesAutenticacion = ({
 }) => {
   return (
     <>
-      <button className={className + " " + registrarseClassName}>
-        Registrarse
-      </button>
-      <button className={className + " " + iniciarSesionClassName}>
-        Iniciar Sesion
-      </button>
+      <Link to='/registro'>
+        <button className={className + " " + registrarseClassName}>
+          Registrarse
+        </button>
+      </Link>
+
+      <Link to='login'>
+        <button className={className + " " + iniciarSesionClassName}>
+          Iniciar Sesion
+        </button>
+      </Link>
+
     </>
   );
 };

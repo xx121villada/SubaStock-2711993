@@ -1,11 +1,16 @@
 import {Routes, Route, HashRouter} from 'react-router-dom'
 import Inicio from './App'
-// import Login from './'
+import Login from './pages/Login/Login.jsx'
 import Registro from './pages/Registro/Registro'
 import { DetalleSubasta } from './components/detalleSubasta/DetalleSubasta'
-import DetalleAnimales from './pages/detalleAnimales/DetallesAnimal.jsx'
+import DetalleAnimales from './pages/DetalleAnimales/DetallesAnimal'
 import SesionIniciada from './pages/sesionIniciada/sesionIniciada'
-import InsertarAlimentos from './pages/insertarAlimentos/insertarAlimentos.jsx'
+import VisualizarAnimal from './pages/VisualizarAnimales/VisualizarAnimal';
+import InsertarAlimentos from './pages/insertarAlimentos/InsertarAlimento.jsx'
+import { Subastar } from './components/subastar/Subastar'
+import RegistroAnimales from './pages/RegistroAnimales/RegistroAnimales.jsx'
+import Animales from './pages/Animales/Animales'
+import Crud from './pages/CRUD-xime/Crud.jsx'
 
 export default function AppRouter() {
   return (
@@ -18,6 +23,12 @@ export default function AppRouter() {
           <Route exact path="/detalle-animales" element={<DetalleAnimales />} />
           <Route exact path="/sesion-iniciada" element={<SesionIniciada />} />
           <Route exact path="insertar-alimentos" element={<InsertarAlimentos />}/>
+          <Route exact path='/visualizar/:tipoAnimal' element={<VisualizarAnimal />} />
+          <Route exact path="/registro-animales" element={<RegistroAnimales />} />
+          <Route exact path='/ver-animales' element={<Animales />} />
+          <Route exact path="Subastar" element={<Subastar />}/>
+          <Route exact path="/crud-animal" element={<Crud />} />
+
         </Routes>
       </HashRouter>
   )

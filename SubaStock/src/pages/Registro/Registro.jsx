@@ -1,10 +1,10 @@
-import React from 'react';
 import './styles/style.css'
+import { Link } from 'react-router-dom'
 
 export default function Registro() {
 
     return (
-        <div className='body'>
+        <div className='body bg-white   '>
             <div className="login">
                 <h2> REGISTRO </h2>
             </div>
@@ -57,7 +57,9 @@ export default function Registro() {
                 </div>
             </div>
             <div className='espacioBoton'>
-            <button type='button' id='buton' class="btn btn-outline-success btn-sm"> REGISTRARME </button>
+                <Link to='/login'>
+                <button type='button' id='buton' className="btn btn-outline-success btn-sm"> REGISTRARME </button>
+                </Link>
             </div>
             </div>
     )

@@ -1,18 +1,51 @@
-.cardTipoAnimal{
+/* TipoAnimal.css */
+.divCards {
     display: flex;
-    flex-direction: column;
-    padding: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.cardTipoAnimal {
+    width: 100%;
+    max-width: 300px;
+    padding: 20px;
     border: 1px solid #ddd;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    transition: box-shadow 0.3s ease, transform 0.3s ease; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
     background-color: #fff;
 }
 
-.cardTipoAnimal:hover{
-    box-shadow: rgba(79, 79, 79, 0.6) -5px 5px, rgba(79, 79, 79, 0.5) -10px 10px, rgba(79, 79, 79, 0.4) -15px 15px, rgba(79, 79, 79, 0.3) -20px 20px; /* Cambiar el color y la opacidad de la sombra */
+.cardTipoAnimal:hover {
+    box-shadow: rgba(79, 79, 79, 0.6) -5px 5px, rgba(79, 79, 79, 0.5) -10px 10px, rgba(79, 79, 79, 0.4) -15px 15px, rgba(79, 79, 79, 0.3) -20px 20px;
+    transform: translateY(-5px); /* Añade un pequeño efecto de elevación al hacer hover */
 }
-.btn-visualizar{
+
+.img-container-Tipo {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.img-tipo {
+    width: 80%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.content-Tipo {
+    text-align: center;
+}
+
+.card-name {
+    font-size: 1.25em;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.btn-visualizar {
     padding: 10px 20px;
     background: #0e690f;
     color: #fff;
@@ -23,34 +56,18 @@
     font-size: 1.1em;
 }
 
-.img-tipo{
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    width: 50%;
-}
-
-.content-Tipo{
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-}
-
-.btn-visualizar:hover{
+.btn-visualizar:hover {
     background: #0d580e;
     transform: scale(1.05);
 }
 
-
-@media (min-width: 769px) {
-
-    .cardDataAnimal {
-        width: calc(35% - 20px);
-    }
-}
-
+/* Responsividad */
 @media (max-width: 768px) {
-    .cardDataAnimal {
-        width: calc(100% - 20px); 
+    .cardTipoAnimal {
+        width: calc(100% - 20px);
+    }
+
+    .img-tipo {
+        width: 100%;
     }
 }

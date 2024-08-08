@@ -9,7 +9,7 @@ export default function Card({ animal }) {
                 </div>
                 <div className="content">
                     <h5 className="card-name">{animal.name}</h5>
-                    <Link to='/publicar-subasta'>
+                    <Link to='/Subastar'>
                     <button className='btn-subastar'>Subastar</button>
                     </Link>
                 </div>

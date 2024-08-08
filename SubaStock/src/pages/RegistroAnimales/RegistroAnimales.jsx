@@ -1,7 +1,6 @@
-import React from 'react';
 import './RegistroAnimales.css';
 
-const Registro = () => {
+const RegistroAnimales = () => {
     return (
         <div className="registro-container">
             <h1 >REGISTRO ANIMAL</h1>
@@ -33,4 +32,4 @@ const Registro = () => {
     );
 };
 
-export default Registro;
+export default RegistroAnimales;

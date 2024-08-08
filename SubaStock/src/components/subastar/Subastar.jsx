@@ -3,7 +3,7 @@ import "./subastar.css"
 export function Subastar() {
   
   return (
-    <div className="body container-md p-2 d-flex flex-column align-items-center">
+    <div className="body container-md p-2 d-flex flex-column align-items-center bg-white">
       <div className="w-100 d-flex justify-content-start align-items-center mb-3">
         <button className="back-button ms-2">
           <i className="bi bi-arrow-bar-left"></i> Regresar

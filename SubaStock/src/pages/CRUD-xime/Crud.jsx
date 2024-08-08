@@ -1,6 +1,6 @@
-import React from 'react';
-import './Crud.css'; 
+import './Crud.css';
 import Swal from 'sweetalert2';
+
 function Crud() {
 
     const estaSeguro = () => {
@@ -23,7 +23,6 @@ function Crud() {
         });
     };
 
-
     return (
         <div className="auction-app">
             <div className="cow-icons">
@@ -32,23 +31,27 @@ function Crud() {
                 <img src="/src/pages/CRUD-xime/img/image.png" alt="Icono" />
             </div>
             <div className='body'>
-                <div className="botones">
-                    <div className="btn">INICIO</div>
-                    <div className="btn">INSERTAR</div>
-                    <div className="btn" onClick={estaSeguro}>ELIMINAR</div>
+                <div className="contenido">
+                    <div className="botones">
+                        <div className="btn">INICIO</div>
+                        <div className="btn">INSERTAR</div>
+                        <div className="btn" onClick={estaSeguro}>ELIMINAR</div>
+                    </div>
+                    <div className="tabla">
+                        <p className='raza'>Vaca de raza Brahman</p>
+                        <div className="menu">
+                            <p>HISTORIAL DE PESO Y SALUD</p>
+                        </div>
+                        <div className="menu">
+                            <p>HISTORIAL DE ALIMENTOS</p>
+                        </div>
+                        <div className="menu">
+                            <p>HISTORIAL DE MEDICAMENTOS</p>
+                        </div>
+                    </div>
+
                 </div>
-                <div className="tabla">
-                    <p className='raza'>Vaca de raza Brahman</p>
-                    <div className="menu">
-                        <p>HISTORIAL DE PESO Y SALUD</p>
-                    </div>
-                    <div className="menu">
-                        <p>HISTORIAL DE ALIMENTOS</p>
-                    </div>
-                    <div className="menu">
-                        <p>HISTORIAL DE MEDICAMENTOS</p>
-                    </div>
-                </div>
+
             </div>
         </div>
     );

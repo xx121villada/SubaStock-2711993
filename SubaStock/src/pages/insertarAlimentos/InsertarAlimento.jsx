@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import '../insertarAlimentos/insertarAlimentos.css';
 
-function App() {
+function InsertarAlimento() {
   const [nombre, setNombre] = useState('');
   const [cantidad, setCantidad] = useState('');
 
@@ -47,4 +47,4 @@ function App() {
   );
 }
 
-export default App;
+export default InsertarAlimento;
