@@ -1,90 +1,44 @@
-// import  './Styles/core.css';
-// import './Styles/icon-font.min.css';
-// import './Styles/style.css';
+import React from 'react';
+import './login.css'; // Importa el archivo de estilos CSS
 
-import { Link } from "react-router-dom"
+const Login = () => {
+  const handleGoogleLogin = () => {
+    // Aquí puedes añadir la lógica para el inicio de sesión con Google
+  };
 
-function Login() {
-    return (
-        <div>
-            <div className="login-header box-shadow">
-            <div className="container-fluid d-flex justify-content-between align-items-center">
-                <div className="brand-logo">
-                    <a href="login.html">
-                        {/* <img src="vendors/images/deskapp-logo.svg" alt=""> </img> */}
-                    </a>
+  return (
+    <div className="body">
+      <div className="login">
+        <h2>INICIO SESION</h2>
+      </div>
+      <div className="register-page-wrap d-flex align-items-center flex-wrap justify-content-center">
+        <div className="container">
+          <div className="form-wrap max-width-600 mx-auto">
+            <form>
+              <div className="form-group row">
+                <label htmlFor="email">Correo electrónico:</label>
+                <div className="col-sm-10">
+                  <input type="email" id="email" name="email" required placeholder='Ingrese su correo'/>
                 </div>
-                <div className="login-menu">
-                    <ul>
-                        <li><a href="register.html">Registrarse</a></li>
-                    </ul>
+              </div>
+              <div className="form-group row">
+                <label htmlFor="password">Contraseña:</label>
+                <div className="col-sm-10">
+                  <input type="password" id="password" name="password" required placeholder='Ingrese su contraseña'/>
                 </div>
-            </div>
+              </div>
+              <button type="submit" className="login-button">
+                INGRESAR
+              </button>
+            </form>
+            <button className="google-button" onClick={handleGoogleLogin}>
+              Iniciar sesión con Google
+            </button>
+          </div>
         </div>
+      </div>
+    </div>
+  );
+};
 
-        <div className="login-wrap d-flex align-items-center flex-wrap justify-content-center">
-		<div className="container">
-			<div className="row align-items-center">
-				<div className="col-md-6 col-lg-7">
-					{/* <img src={LoginImg} alt=""/> */}
-				</div>
-				<div className="col-md-6 col-lg-5">
-					<div className="login-box bg-white box-shadow border-radius-10">
-						<div className="login-title">
-							<h2 className="text-center text-primary">Iniciar sesión</h2>
-						</div>
-						<form>
-							
-							<div className="input-group custom">
-								<input type="text" className="form-control form-control-lg" placeholder="Correo"/>
-								<div className="input-group-append custom">
-									<span className="input-group-text"><i className="icon-copy dw dw-user1"></i></span>
-								</div>
-							</div>
-							<div className="input-group custom">
-								<input type="password" className="form-control form-control-lg" placeholder="**********"/>
-								<div className="input-group-append custom">
-									<span className="input-group-text"><i className="dw dw-padlock1"></i></span>
-								</div>
-							</div>
-							<div className="row pb-30">
-								<div className="col-6">
-									<div className="custom-control custom-checkbox">
-										<input type="checkbox" className="custom-control-input" id="customCheck1"/>
-										<label className="custom-control-label" htmlFor="customCheck1">Recordar</label>
-									</div>
-								</div>
-								<div className="col-6">
-									<div className="forgot-password"><a>Recuperar Contraseña</a></div>
-								</div>
-							</div>
-							<div className="row">
-								<div className="col-sm-12">
-									<div className="input-group mb-0">
-										<Link to='/sesion-iniciada'>
-										<a className="btn btn-primary btn-lg btn-block">Iniciar Sesión</a>
-										</Link>
-									</div>
-									<div className="font-16 weight-600 pt-10 pb-10 text-center" data-color="#707373">O</div>
-									<div className="input-group mb-0">
-										<Link to='/registro'>
-										<a className="btn btn-outline-primary btn-lg btn-block">Registrase para crear cuenta</a>
-										</Link>
-									</div>
-								</div>
-
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-
-
-        </div>
-    )
-}
-
-export default Login
+export default Login;

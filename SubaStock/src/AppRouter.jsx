@@ -3,7 +3,7 @@ import Inicio from './App'
 import Login from './pages/Login/Login.jsx'
 import Registro from './pages/Registro/Registro'
 import { DetalleSubasta } from './components/detalleSubasta/DetalleSubasta'
-import DetalleAnimales from './pages/DetalleAnimales/DetallesAnimal'
+import DetalleAnimales from './pages/RegistroAnimales/RegistroAnimales.jsx'
 import SesionIniciada from './pages/sesionIniciada/sesionIniciada'
 import VisualizarAnimal from './pages/VisualizarAnimales/VisualizarAnimal';
 import InsertarAlimentos from './pages/insertarAlimentos/InsertarAlimento.jsx'
