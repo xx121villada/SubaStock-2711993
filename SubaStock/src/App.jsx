@@ -1,10 +1,11 @@
-import RegistroA from "./pages/RegistroAnimales/RegistroAnimales"
+import Crud from '../src/pages/CRUD-xime/Crud'
+
 
 function App() {
 
   return (
     <>
-      <RegistroA/>
+      <Crud/>
     </>
   )
 }

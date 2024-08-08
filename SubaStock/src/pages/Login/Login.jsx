@@ -1,9 +1,9 @@
 import React from 'react';
 import LoginImg from './img/Login.png';
 
-import  './Styles/core.css';
-import './Styles/icon-font.min.css';
-import './Styles/style.css';
+// import  './Styles/core.css';
+// import './Styles/icon-font.min.css';
+// import './Styles/style.css';
 
 function Login() {
     return (
