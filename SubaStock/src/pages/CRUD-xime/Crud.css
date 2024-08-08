@@ -1,0 +1,70 @@
+.auction-app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; 
+}
+
+div header {
+    padding: 20px;
+    border: 3px solid black; 
+    background-color: #a81010;
+    min-height: 100px; 
+
+}
+
+.body {
+    background-color: rgb(48, 233, 104);
+    flex-grow: 1; 
+}
+
+.botones {
+    display: flex; 
+}
+
+div .btn {
+    font-size: 1.3em;
+    border: 2px solid black;
+    text-align: center;
+}
+
+.tabla {
+    border: 2px solid rgb(184, 52, 153);
+    background-color: aliceblue;
+    margin: 4px;
+    padding: 2px;
+}
+
+div .raza {
+    font-size: 35px;
+    text-align: center;
+}
+
+div .menu {
+    border: 1px solid black; 
+    border-radius: 7px; 
+    margin: 15px;
+    font-size: 20px;
+    text-align: left;
+    margin-top: 50px;
+}
+
+.cow-icons {
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    margin-left: 37%;
+    margin-right: 37%;
+}
+
+.cow-icons img {
+    margin: 0 10px;
+    width: 70px;
+    height: 70px;
+}
+
+.cow-icons p {
+    margin: 0 10px;
+    font-size: 20px;
+}
