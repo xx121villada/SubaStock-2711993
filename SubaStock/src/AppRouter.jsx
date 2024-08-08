@@ -1,9 +1,9 @@
 import {Routes, Route, HashRouter} from 'react-router-dom'
 import Inicio from './App'
-import Login from './pages/Login/Login'
+// import Login from './'
 import Registro from './pages/Registro/Registro'
 import { DetalleSubasta } from './components/detalleSubasta/DetalleSubasta'
-import DetalleAnimales from './pages/detalleAnimales/DetalleAnimales'
+import DetalleAnimales from './pages/detalleAnimales/DetallesAnimal.jsx'
 import SesionIniciada from './pages/sesionIniciada/sesionIniciada'
 import InsertarAlimentos from './pages/insertarAlimentos/insertarAlimentos.jsx'
 

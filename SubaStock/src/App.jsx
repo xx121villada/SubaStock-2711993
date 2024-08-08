@@ -1,10 +1,10 @@
-import Registro from './pages/Registro/Registro';
+import RegistroA from "./pages/RegistroAnimales/RegistroAnimales"
 
 function App() {
 
   return (
     <>
-      <Registro/>
+      <RegistroA/>
     </>
   )
 }

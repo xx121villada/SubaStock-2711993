@@ -1,4 +1,4 @@
-import Buscador from '../Subastas/components/Buscador';
+import Buscador from '../../components/Subastas/Buscador';
 import { Link } from 'react-router-dom';
 import './styles/CardAnimal.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
