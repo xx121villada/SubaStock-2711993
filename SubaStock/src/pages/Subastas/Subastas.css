@@ -1,10 +1,14 @@
 #main-subastas {
   --primary-color: #237e0d;
   --bg-color: #ffffff;
-  box-sizing: border-box;
+  box-sizing: content-box;
 }
 
-#main-subastas button {
+#main-subastas * {
+  box-sizing: content-box;
+}
+
+#main-subastas .boton-autenticacion {
   background-color: var(--primary-color);
   color: white;
   border: none;
@@ -17,14 +21,22 @@
 
 @media screen and (max-width: 767.9999999px) {
   #main-subastas {
-    --header-height: 92.5px;
+    --header-height: 60.5px;
     --footer-height: 50px;
   }
 }
 
 @media screen and (min-width: 768px) {
   #main-subastas {
-    --header-height: 72px;
+    --header-height: 50px;
     --footer-height: 0px;
   }
+
+  #buscador {
+    width: 300px !important;
+  }
+}
+
+.tarjeta {
+  cursor: pointer;
 }

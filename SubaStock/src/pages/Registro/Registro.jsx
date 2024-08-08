@@ -59,6 +59,6 @@ export default function Registro() {
             <div className='espacioBoton'>
             <button type='button' id='buton' class="btn btn-outline-success btn-sm"> REGISTRARME </button>
             </div>
-        </div>
+            </div>
     )
 }
