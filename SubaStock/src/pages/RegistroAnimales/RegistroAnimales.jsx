@@ -9,22 +9,22 @@ const RegistroAnimales = () => {
                 <img src="/src/pages/CRUD-xime/img/2.png" alt="Icono" />
                 <img src="/src/pages/CRUD-xime/img/3.png" alt="Icono" />
             </div>
-            <form className="registro-form">
-                <div className="form-group">
+            <form className="registro-animales">
+                <div className="animales-div">
                     <p >Id</p>
-                    <input type="text" id="identificacion" name="identificacion" placeholder='Ingrese la identificacion del animal' />
+                    <input className="campos" type="text" id="identificacion" name="identificacion" placeholder='Ingrese la identificacion del animal' />
                 </div>
-                <div className="form-group">
+                <div className="animales-div">
                     <p >Raza</p>
-                    <input type="text" id="raza" name="raza" placeholder='Ingrese la raza del animal' />
+                    <input className="campos" type="text" id="raza" name="raza" placeholder='Ingrese la raza del animal' />
                 </div>
-                <div className="form-group">
+                <div className="animales-div">
                     <p >Peso</p>
-                    <input type="text" id="peso" name="peso" placeholder='Ingrese el peso del animal'/>
+                    <input className="campos" type="text" id="peso" name="peso" placeholder='Ingrese el peso del animal'/>
                 </div>
-                <div className="form-group">
+                <div className="animales-div">
                     <p >Especie</p>
-                    <input type="text" id="especie" name="especie" placeholder='Ingrese la especie del animal' />
+                    <input className="campos" type="text" id="especie" name="especie" placeholder='Ingrese la especie del animal' />
                 </div>
                 <button type="submit" className="registro-button">Registrar</button>
             </form>

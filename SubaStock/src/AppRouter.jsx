@@ -11,6 +11,7 @@ import { Subastar } from './components/subastar/Subastar'
 import RegistroAnimales from './pages/RegistroAnimales/RegistroAnimales.jsx'
 import Animales from './pages/Animales/Animales'
 import Crud from './pages/CRUD-xime/Crud.jsx'
+import Subastar1 from './pages/Subastas/Subastas.jsx'
 
 export default function AppRouter() {
   return (

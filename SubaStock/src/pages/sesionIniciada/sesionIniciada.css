@@ -15,6 +15,7 @@
     background-color: white;
     padding: 20px;
     border: none;
+    margin-top: 2%;
   }
   
   .header-content {
@@ -47,6 +48,7 @@
     flex-direction: column;
     width: 100%;
     max-width: 400px; /* Optional: Limits the maximum width of the buttons */
+    margin-top: 7%;
   }
   
   .button {
@@ -54,12 +56,13 @@
     color: white;
     padding: 15px 30px;
     border-radius: 5px;
-    font-size: 16px;
+    font-size: 20px;
     border: none;
     cursor: pointer;
     transition: background-color 0.3s ease;
     flex: 1;
     margin: 5px 0;
+    width: 100%;
   }
   
   .button:hover {
@@ -92,9 +95,9 @@
   }
   
   .icon {
-    font-size: 24px;
+    font-size: 40px;
   }
-  
+
   h1 {
     font-size: 32px;
     font-weight: bold;

@@ -18,7 +18,7 @@ function SesionIniciada() {
       </header>
       <main className="App-main">
         <div className="button-container">
-          <Link to='/detalle-animales'>
+          <Link to='/Subastar'>
           <button className="button">SUBASTAR</button>
           </Link>
           <button className="button">VER SUBASTAS</button>

@@ -1,67 +1,101 @@
-/* Estilos generales para el contenedor del formulario */
 .login-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: #f0f8f0; /* Fondo muy suave */
-  }
-  
-  /* Estilos para el formulario */
-  .login-form {
-    display: flex;
-    flex-direction: column;
-    width: 300px;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: #ffffff;
-  }
-  
-  /* Estilos para las etiquetas y los campos del formulario */
-  .login-form label {
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  
-  .login-form input {
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #dcdcdc;
-    border-radius: 5px;
-  }
-  
-  /* Estilos para el botón de iniciar sesión */
-  .login-button {
-    padding: 10px;
-    background-color: #12c749; /* Verde */
-    color: #ffffff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  .login-button:hover {
-    background-color: #218838; /* Verde más oscuro */
-  }
-  
-  /* Estilos para el botón de Google */
-  .google-button {
-    margin-top: 10px;
-    padding: 10px;
-    background-color: #db4437; /* Color de Google */
-    color: #ffffff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  .google-button:hover {
-    background-color: #c1351d; /* Color de Google más oscuro */
-  }
-  .body{
-    
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Estilos para el título */
+.container-registro h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Estilos para los inputs */
+.container-registro .form-control {
+  border: 2px solid green;
+  margin-bottom: 15px;
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Estilos para el botón */
+.espacioBoton {
+  text-align: center;
+  margin-top: 20px;
+}
+
+
+.login-container img {
+  margin-left: 70px;
+  width: 40px;
+  height: 40px;
+}
+
+.login-form {
+  width: 30%;
+  height: 95%;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); /* Sombra negra */
+}
+
+.login-form .input-field{
+  display: block;
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 2px solid rgb(3, 155, 3); /* Borde verde */
+  border-radius: 4px;
+}
+
+.btn-login {
+  width: 100%;
+  padding: 10px;
+  background-color: green;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.login-form h1{
+  text-align: center;
+  font-size: 37px;
+  margin-top: 15px;
+}
+.nombre-input{
+  font-size: 20px;
+  margin: 5px;
+}
+.nombre-input{
+  margin-top: 30px;
+  margin-bottom: 7px;
+}
+
+.google-login-button {
+  background-color: white;
+  color: black;
+  width: 80%; /* Ancho del 80% */
+  margin: 40px auto; /* Centrar horizontalmente y agregar espacio vertical */
+  border: 2px solid rgb(3, 155, 3); /* Borde gris */
+  border-radius: 8px; /* Ajusta según tus preferencias */
+  padding: 4px 8px; /* Espaciado interno */
+  display: flex; /* Para alinear la imagen y el texto en línea */
+  align-items: center;
+}
+
+
+.google-login-button img{
+  align-items: right;
+  border: 2px solid black;
+  width: 30px;
+  height: 30px;
+}
+
+.registrarse{
+  text-align: center;
+  margin:10px;
+  color: black;
+}
