@@ -1,50 +1,114 @@
-import { useState } from 'react';
-import '../insertarAlimentos/insertarAlimentos.css';
+import { useState, useEffect } from 'react';
+import './insertarAlimentos.css';
+import bovino from '../Animales/img/Bovino.png';
+import Swal from 'sweetalert2';
 
 function InsertarAlimento() {
-  const [nombre, setNombre] = useState('');
-  const [cantidad, setCantidad] = useState('');
+    const [marca, setMarca] = useState('');
+    const [idAnimal, setIdAnimal] = useState('');
 
-  const handleNombreChange = (event) => {
-    setNombre(event.target.value);
-  };
+    useEffect(() => {
+        const storedMarca = localStorage.getItem('marcaAnimal');
+        const storedIdAnimal = localStorage.getItem('idAnimal');
 
-  const handleCantidadChange = (event) => {
-    setCantidad(event.target.value);
-  };
+        if (storedIdAnimal) {
+            setIdAnimal(storedIdAnimal);
+        }
 
-  const handleInsertarAlimento = () => {
-    // Aquí se realiza la lógica para insertar el alimento
-    console.log('Nombre:', nombre);
-    console.log('Cantidad:', cantidad);
-  };
+        if (storedMarca) {
+            setMarca(storedMarca);
+        }
+    }, []);
 
-  return (
-    <div className="container">
-      <h1>INSERTAR ALIMENTOS</h1>
-      <div className="cow-container">
-        <img src="cow.svg" alt="imagen" />
-        <button>433DRG</button>
-        <img src="cow.svg" alt="imagen" />
-      </div>
-      <div className="input-container">
-        <label htmlFor="nombre">Nombre:</label>
-        <input
-          type="text"
-          id="nombre"
-          value={nombre}
-          onChange={handleNombreChange}
-        />
-        <label htmlFor="cantidad">Cantidad:</label>
-        <select id="cantidad" value={cantidad} onChange={handleCantidadChange}>
-          <option value="">Escoja la cantidad de alimento</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-        </select>
-      </div>
-      <button onClick={handleInsertarAlimento}>INSERTAR ALIMENTO</button>
-    </div>
-  );
+    const [valores, setValores] = useState({
+        tipo_alimento: '',
+        cantidad: ''
+    });
+
+    useEffect(() => {
+        setValores((prevValores) => ({
+            ...prevValores,
+            idAnimal: idAnimal,
+        }));
+    }, [idAnimal]);
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setValores({ ...valores, [name]: value });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log('Datos enviados:', valores);
+        console.log('id', idAnimal);
+        fetch('http://localhost:8000/alimentacion/Insertar', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(valores)
+        })
+        .then(response => {
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            return response.json();
+        })
+        .then((data) => {
+            if (data.status) {
+              Swal.fire({ title: data.message, icon:'success' });
+                setValores({
+                    idAnimal: idAnimal,
+                    tipo_alimento: '',
+                    cantidad: ''
+                });
+            } else {
+              Swal.fire({ title: data.message, icon:'error' });
+                setValores({
+                    idAnimal: idAnimal,
+                    tipo_alimento: '',
+                    cantidad: ''
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error al insertar alimento:', error);
+        });
+    }
+
+    return (
+        <div>
+            <form onSubmit={handleSubmit}>
+                <div className='container-alimento'>
+                    <div className="form-container-div">
+                        <h1>Insertar Alimentos</h1>
+                        <div className="cow-container-img">
+                            <img src={bovino} alt="Imagen de vaca" className="cow-icon" />
+                            <p>Marca del Animal: {marca ? marca : "No disponible"}</p>
+                            <img src={bovino} alt="Imagen de vaca" className="cow-icon" />
+                        </div>
+                        <div className="input-container-alimento">
+                            <label htmlFor="nombre">Nombre del Alimento:</label>
+                            <input
+                                type="text"
+                                id="nombre"
+                                name="tipo_alimento"
+                                onChange={handleChange}
+                                placeholder="Ingrese el nombre del alimento"
+                            />
+                            <label htmlFor="cantidad">Cantidad:</label>
+                            <select id="cantidad" name="cantidad" onChange={handleChange}>
+                                <option value="">Seleccione la cantidad de alimento</option>
+                                <option value="1">1 kg</option>
+                                <option value="2">2 kg</option>
+                            </select>
+                        </div>
+                        <button className="submit-button" type='submit'>
+                            Insertar Alimento
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    );
 }
 
 export default InsertarAlimento;

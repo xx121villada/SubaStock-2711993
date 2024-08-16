@@ -3,99 +3,102 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-}
-
-/* Estilos para el título */
-.container-registro h2 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-/* Estilos para los inputs */
-.container-registro .form-control {
-  border: 2px solid green;
-  margin-bottom: 15px;
-  padding: 10px;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-/* Estilos para el botón */
-.espacioBoton {
-  text-align: center;
-  margin-top: 20px;
-}
-
-
-.login-container img {
-  margin-left: 70px;
-  width: 40px;
-  height: 40px;
+  background-color: #f4f4f4;
+  padding: 20px;
 }
 
 .login-form {
-  width: 30%;
-  height: 95%;
+  width: 100%;
+  max-width: 400px;
   background-color: white;
   padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); /* Sombra negra */
+  border-radius: 10px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
 }
 
-.login-form .input-field{
-  display: block;
+.login-form h1 {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.nombre-input {
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: #555;
+}
+
+.input-field {
   width: 100%;
-  margin-bottom: 15px;
-  padding: 10px;
-  border: 2px solid rgb(3, 155, 3); /* Borde verde */
-  border-radius: 4px;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
 }
 
 .btn-login {
   width: 100%;
-  padding: 10px;
-  background-color: green;
+  padding: 12px;
+  background-color: #139713;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
 }
-.login-form h1{
-  text-align: center;
-  font-size: 37px;
-  margin-top: 15px;
-}
-.nombre-input{
-  font-size: 20px;
-  margin: 5px;
-}
-.nombre-input{
-  margin-top: 30px;
-  margin-bottom: 7px;
+
+.btn-login:hover {
+  background-color: #087a08;
 }
 
 .google-login-button {
   background-color: white;
   color: black;
-  width: 80%; /* Ancho del 80% */
-  margin: 40px auto; /* Centrar horizontalmente y agregar espacio vertical */
-  border: 2px solid rgb(3, 155, 3); /* Borde gris */
-  border-radius: 8px; /* Ajusta según tus preferencias */
-  padding: 4px 8px; /* Espaciado interno */
-  display: flex; /* Para alinear la imagen y el texto en línea */
+  width: 100%;
+  margin: 20px 0;
+  border: 2px solid #0b6d0b ;
+  border-radius: 5px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
   align-items: center;
+  transition: background-color 0.3s ease-in-out;
 }
 
-
-.google-login-button img{
-  align-items: right;
-  border: 2px solid black;
-  width: 30px;
-  height: 30px;
+.google-login-button:hover {
+  background-color: #f1f1f1;
 }
 
-.registrarse{
+.google-login-button img {
+  margin-left: 10px;
+  width: 20px;
+  height: 20px;
+}
+
+.registrarse {
   text-align: center;
-  margin:10px;
-  color: black;
+  margin-top: 20px;
+  color: #0b6d0b;
+  text-decoration: none;
+  transition: color 0.3s ease-in-out;
+}
+
+.registrarse:hover {
+  color: #25c725;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* Responsividad */
+@media (max-width: 600px) {
+  .login-form {
+    padding: 15px;
+    max-width: 100%;
+  }
+
+  .btn-login, .google-login-button {
+    padding: 10px;
+  }
 }

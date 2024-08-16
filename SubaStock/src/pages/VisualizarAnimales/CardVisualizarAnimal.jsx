@@ -2,19 +2,29 @@
 import { Link } from "react-router-dom";
 import '../Animales/styles/TipoAnimal.css';
 
-export default function CardVisualizarAnimal({ visualizarAnimal,  }) {
+export default function CardVisualizarAnimal({ visualizarAnimal, imagen }) {
+
+    const handleVisualizarClick = () => {
+        localStorage.setItem('marcaAnimal', visualizarAnimal.marca);
+        localStorage.setItem('idAnimal', visualizarAnimal.idAnimal);
+    };
+
     return (
         <div className="cardTipoAnimal">
             <div className="img-container-Tipo">
                 <img
                     className="img-tipo"
-                    src={visualizarAnimal.img}
-                    alt={visualizarAnimal.name}
+                    src={imagen}
+                    alt={visualizarAnimal.raza}
                 />
             </div>
             <div className="content-Tipo">
-                <h5 className="card-name">{visualizarAnimal.name}</h5>
-                <Link to='/crud-animal'>
+                <h5 className="card-name">{visualizarAnimal.raza}</h5>
+                <h6>Marca: {visualizarAnimal.marca}</h6>
+                <Link 
+                    to={`/crud-animal/${visualizarAnimal.idAnimal}`}
+                    onClick={handleVisualizarClick}
+                >
                     <button className='btn-visualizar'>Visualizar</button>
                 </Link>
             </div>

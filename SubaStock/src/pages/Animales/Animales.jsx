@@ -6,7 +6,7 @@ export default function Animales() {
     return (
         <div>
             <div className="back-container p-2">
-                <Link to='/detalle-animales' className="back-link">
+                <Link to='/sesion-iniciada' className="back-link">
                     <i className="link-back bi bi-caret-left-fill fw-semibold">Regresar</i>
                 </Link>
             </div>

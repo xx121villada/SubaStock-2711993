@@ -1,57 +1,67 @@
 .registro-container {
-    max-width: 400px;
-    margin: 10px auto;
-    padding: 30px;
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); 
-    background-color: white;
+    max-width: 450px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); 
+    background-color: #f9f9f9;
 }
 
-.registro-container h1{
+.registro-container h1 {
     text-align: center;
-    font-size: 37px;
-    margin-bottom: 18px;
-}
-img {
-    margin-left: 50px;
-    width: 40px;
-    height: 40px;
+    font-size: 30px;
+    color: #333;
+    margin-bottom: 25px;
 }
 
-p {
+.logos-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.logos-container img {
     margin: 0 10px;
-    font-size: 20px;
+    width: 50px;
+    height: 50px;
 }
 
 .registro-animales {
     display: flex;
     flex-direction: column;
+    gap: 15px;
 }
 
 .animales-div {
-    margin-bottom: 8px;
+    display: flex;
+    flex-direction: column;
 }
 
-.animales-div .campos{
-    width: 100%;
-    padding: 5px;
-    border: 2px solid #03a90e;
-    border-radius: 7px;
-}
-.animales-div p{
+.animales-div label {
+    font-size: 16px;
+    color: #333;
     margin-bottom: 5px;
-    font-size: 23px;
+}
+
+.animales-div .campos {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #03a90e;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #333;
 }
 
 .registro-button {
-    padding: 10px;
+    padding: 12px;
     background-color: #28a745;
     color: white;
-    font-size: 22px;
+    font-size: 18px;
     border: none;
-    border-radius: 8px;
+    border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 .registro-button:hover {
