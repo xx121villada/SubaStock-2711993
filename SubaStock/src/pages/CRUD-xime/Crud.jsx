@@ -1,12 +1,29 @@
 import './Crud.css';
-import Swal from 'sweetalert2';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import HistorialAliemto from '../Historiales/HistorialAliemto';
+import HistorialVacunacion from '../Historiales/HistorialVacunacion';
+import HistorialPesoSalud from '../Historiales/HistorialPesoSalud';
+
 
 function Crud() {
     const navigate = useNavigate();
+    const [showAlimentacion, setShowAlimentacion] = useState(false);
+    const [showVacunacion, setShowVacunacion] = useState(false);
+    const [showPesoSalud, setShowPesoSalud] = useState(false);
     const [marca, setMarca] = useState('');
     const [idAnimal, setIdAnimal] = useState('');
+
+    const toggleAlimentacion = () => {
+        setShowAlimentacion(!showAlimentacion);
+    };
+    const toggleVacunacion = () => {
+        setShowVacunacion(!showVacunacion);
+    };
+    const togglePesoSalud = () => {
+        setShowPesoSalud(!showPesoSalud);
+    };
+
 
     useEffect(() => {
         const storedMarca = localStorage.getItem('marcaAnimal');
@@ -31,36 +48,15 @@ function Crud() {
                 navigate('/insertar-alimentos');
                 break;
             case "2":
-                navigate('/ruta-insertar-medicamentos');
+                navigate('/insertar-medicamentos');
                 break;
             case "3":
-                navigate('/ruta-insertar-peso-salud');
+                navigate('/insertar-peso-salud');
                 break;
             default:
                 break;
         }
     };
-
-    const estaSeguro = () => {
-        Swal.fire({
-            title: '¿Estás seguro?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Sí, eliminar',
-            cancelButtonText: 'No, cancelar'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                Swal.fire(
-                    'Eliminado',
-                    'El elemento ha sido eliminado.',
-                    'success'
-                );
-            }
-        });
-    };
-
     return (
         <div className="auction-app">
             <div className="cow-icons">
@@ -84,24 +80,32 @@ function Crud() {
                                 <option value="3">Insertar Peso y Salud</option>
                             </select>
                         </div>
-                        <div className="btn" onClick={estaSeguro}>ELIMINAR</div>
+                        <div className="btn">
+                        <div className='Insertar'>
+                            <label htmlFor="">Eliminar</label>
+                        </div>
+                        </div>
                     </div>
                     <div className="tabla">
                         <p className='raza'>Vaca de raza Brahman</p>
                         <div className="menu">
-                            <button>
-                                HISTORIAL DE PESO Y SALUD
+                            <button onClick={toggleVacunacion}>
+                            {showVacunacion? 'Cerrar Vacunación' : 'Abrir Vacunación'}
                             </button>
+                            {showVacunacion && <HistorialVacunacion/>}
+    
                         </div>
                         <div className="menu">
-                        <Link to={`/historial-alimento/${idAnimal}`}>
-                        <button>
-                                HISTORIAL DE ALIMENTOS
+                        <button onClick={toggleAlimentacion}>
+                        {showAlimentacion ? 'Cerrar Alimentación' : 'Abrir Alimentación'}
                             </button>
-                            </Link>
-                        </div>
+                            {showAlimentacion && <HistorialAliemto/>}
+                            </div>
                         <div className="menu">
-                            <p>HISTORIAL DE MEDICAMENTOS</p>
+                            <button onClick={togglePesoSalud}>
+                            {showPesoSalud? 'Cerrar Peso y Salud' : 'Abrir Peso y Salud'}
+                            </button>
+                            {showPesoSalud && <HistorialPesoSalud/>}
                         </div>
                     </div>
                 </div>

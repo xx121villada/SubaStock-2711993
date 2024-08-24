@@ -11,7 +11,9 @@ import { Subastar } from './components/subastar/Subastar'
 import RegistroAnimales from './pages/RegistroAnimales/RegistroAnimales.jsx'
 import Animales from './pages/Animales/Animales'
 import Crud from './pages/CRUD-xime/Crud.jsx'
-import HistorialAliemto from './pages/HistoriaAlimento/HistorialAliemto.jsx'
+import InsertarEstadoPeso from './pages/insertarEstadoPeso/InsertarEstadoPeso.jsx'
+
+import Medicamentos from './pages/Informacion/Medicamentos.jsx'
 
 
 export default function AppRouter() {
@@ -29,8 +31,9 @@ export default function AppRouter() {
           <Route exact path="/registro-animales" element={<RegistroAnimales />} />
           <Route exact path='/ver-animales' element={<Animales />} />
           <Route exact path="Subastar" element={<Subastar />}/>
-          <Route exact path="/crud-animal/:id" element={<Crud />} />
-          <Route exact path="/historial-alimento/:idAnimal" element={<HistorialAliemto />} />
+          <Route exact path="/crud-animal/:idAnimal" element={<Crud />} />
+          <Route exact path="/insertar-peso-salud" element={<InsertarEstadoPeso />} />
+          <Route exact path="/insertar-medicamentos" element={<Medicamentos />} />
           </Routes>
       </HashRouter>
   )

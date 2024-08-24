@@ -89,18 +89,6 @@ const RegistroAnimales = () => {
                         />
                     </div>
                     <div className="animales-div">
-                        <label htmlFor="raza">Raza</label>
-                        <input
-                            className="campos"
-                            type="text"
-                            id="raza"
-                            name="raza"
-                            placeholder="Ingrese la raza del animal"
-                            required
-                            onChange={handleChange}
-                        />
-                    </div>
-                    <div className="animales-div">
                         <label htmlFor="especie">Especie</label>
                         <select
                             className="campos"
@@ -116,6 +104,18 @@ const RegistroAnimales = () => {
                             <option value="Equino">Equino</option>
                             <option value="Avicultura">Avicultura</option>
                         </select>
+                    </div>
+                    <div className="animales-div">
+                        <label htmlFor="raza">Raza</label>
+                        <input
+                            className="campos"
+                            type="text"
+                            id="raza"
+                            name="raza"
+                            placeholder="Ingrese la raza del animal"
+                            required
+                            onChange={handleChange}
+                        />
                     </div>
                     {/* <div className="animales-div">
                         <label htmlFor="peso">Peso (Kg)</label>
