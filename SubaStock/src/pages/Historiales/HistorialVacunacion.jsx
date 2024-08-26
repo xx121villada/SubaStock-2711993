@@ -1,18 +1,30 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
+import './styles/HistorialVacunacion.css';
 
 export default function HistorialVacunacion() {
     const [idAnimal, setIdAnimal] = useState('');
     const [historial, setHistorial] = useState([]);
+    const [marca, setMarca] = useState('');
 
     useEffect(() => {
         const storedIdAnimal = localStorage.getItem('idAnimal');
         if (storedIdAnimal) {
             setIdAnimal(storedIdAnimal);
         }
+        const storedMarca = localStorage.getItem('marcaAnimal');
+        if (storedMarca) {
+            setMarca(storedMarca);
+        }
     }, []);
 
+    useEffect(() => {
+        if (idAnimal) {
+            fetchHistorial();
+        }
+    }, [idAnimal]);
+    
     const fetchHistorial = async () => {
         try {
             const response = await fetch(`http://localhost:8000/medicamento/Obtener/${idAnimal}`, {
@@ -22,14 +34,16 @@ export default function HistorialVacunacion() {
                 }
             });
             const data = await response.json();
+            console.log(data);
+            console.log(idAnimal)
 
             if (data.status) {
-                setHistorial(data.historial);
+                setHistorial(data.medicamento);
             } else {
                 Swal.fire({
                     icon: 'info',
-                    title: 'Informacion',
-                    text: "NO hay registros de vacunas"
+                    title: 'Información',
+                    text: "No hay registros de vacunas"
                 });
             }
         } catch (error) {
@@ -40,9 +54,9 @@ export default function HistorialVacunacion() {
             });
         }
     };
-    
+
     const eliminarVacuna = async (idMedicamento) => {
-        try{
+        try {
             const result = await Swal.fire({
                 title: '¿Estás seguro de eliminar esta vacuna?',
                 text: "Esta acción no se puede deshacer",
@@ -50,9 +64,9 @@ export default function HistorialVacunacion() {
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Si, eliminar'
+                confirmButtonText: 'Sí, eliminar'
             });
-            if(result.isConfirmed){
+            if (result.isConfirmed) {
                 const response = await fetch(`http://localhost:8000/medicamento/Eliminar/${idMedicamento}`, {
                     method: 'DELETE',
                     headers: {
@@ -61,14 +75,14 @@ export default function HistorialVacunacion() {
                 });
                 const data = await response.json();
 
-                if(data.status){
+                if (data.status) {
                     Swal.fire({
-                        icon:'success',
-                        title: 'Exito',
+                        icon: 'success',
+                        title: 'Éxito',
                         text: 'Vacuna eliminada correctamente'
                     });
                     fetchHistorial();
-                }else{
+                } else {
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
@@ -76,7 +90,7 @@ export default function HistorialVacunacion() {
                     });
                 }
             }
-        }catch(e){
+        } catch (e) {
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
@@ -85,14 +99,10 @@ export default function HistorialVacunacion() {
         }
     };
 
-    useEffect(() => {
-        fetchHistorial();
-    }, [idAnimal]);
-
     return (
-        <div>
-            <h1>Historial de Vacunación {idAnimal}</h1>
-            <table>
+        <div className="historia-container-vacunacion">
+            <h1 className="vacuancion-title">Historial de Vacunación {marca}</h1>
+            <table className="historial-table-vacunacion">
                 <thead>
                     <tr>
                         <th>Vacuna</th>
@@ -107,15 +117,17 @@ export default function HistorialVacunacion() {
                                 <td>{vacuna.nombre}</td>
                                 <td>{vacuna.fecha}</td>
                                 <td>
-                                     <button onClick={() => eliminarVacuna(vacuna.idMedicamento)}>
+                                    <button 
+                                        className="btn-delete-vacunacion"
+                                        onClick={() => eliminarVacuna(vacuna.idMedicamento)}>
                                         Eliminar
-                                     </button>
+                                    </button>
                                 </td>
                             </tr>
                         ))
                     ) : (
                         <tr>
-                            <td colSpan="2">No hay datos para mostrar</td>
+                            <td colSpan="3" className="no-data">No hay datos para mostrar</td>
                         </tr>
                     )}
                 </tbody>

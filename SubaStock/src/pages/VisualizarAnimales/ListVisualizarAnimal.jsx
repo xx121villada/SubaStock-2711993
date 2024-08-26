@@ -4,36 +4,52 @@ import CardVisualizarAnimal from "./CardVisualizarAnimal";
 import bovino from '../Animales/img/Bovino.png'
 import porcino from '../Animales/img/Porcino.png'
 import notFount from '../Animales/img/Notfount.png';
+import caprino from '../Animales/img/Caprino.png';
 
 export default function ListVisualizarAnimal() {
     const [animals, setAnimals] = useState([]);
     const { tipoAnimal } = useParams();
+    const [idUsuario, setIdUsuario] = useState('');
+
+    useEffect(() => {
+        const storedIdUsuario = localStorage.getItem('idUsuario');
+        if (storedIdUsuario) {
+            setIdUsuario(storedIdUsuario);
+        }
+    }, []);
 
     const especieToImageMap = {
         "Bovino": bovino,
         "Porcino": porcino,
+        "Caprino": caprino,
         "default": notFount
     };
 
     useEffect(() => {
-        fetch('http://localhost:8000/animal/Obtener')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+        if (idUsuario) {
+            fetch(`http://localhost:8000/animal/Obtener/${idUsuario}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
                 }
+            })
+            .then(response => {
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                 return response.json();
             })
             .then(data => {
-
-                const animalesFiltrados = data.animales.filter(animal =>
-                    animal.especie.toLowerCase() === tipoAnimal.toLowerCase()
-                );
-                setAnimals(animalesFiltrados);
+                if (data.animal) {
+                    const animalesFiltrados = data.animal.filter(animal =>
+                        animal.especie.toLowerCase() === tipoAnimal.toLowerCase()
+                    );
+                    setAnimals(animalesFiltrados);
+                }
             })
             .catch(error => {
                 console.error("Error fetching data:", error);
             });
-    }, [tipoAnimal]);
+        }
+    }, [tipoAnimal, idUsuario]);
 
     const cards = animals.map((animal) =>
         <CardVisualizarAnimal

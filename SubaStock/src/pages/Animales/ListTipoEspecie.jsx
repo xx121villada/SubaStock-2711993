@@ -2,52 +2,65 @@ import { useEffect, useState } from "react";
 import CardTiposEspecie from "./CardTiposEspecie";
 import bovino from './img/Bovino.png'
 import porcino from './img/Porcino.png'
+import caprino from './img/Caprino.png';
 import notFount from './img/Notfount.png';
 import './styles/TipoAnimal.css';
 
-// Mapeo de especies a imágenes
-const especieToImageMap = {
+const imageMapEspecies = {
     "Bovino": bovino,
     "Porcino": porcino,
+    "Caprino": caprino,
     "default": notFount
+
 };
 
 export default function ListTipoEspecie() {
     const [especies, setEspecies] = useState([]);
+    const [idUsuario, setIdUsuario] = useState('');
 
     useEffect(() => {
-        fetch('http://localhost:8000/animal/Obtener', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response => {
-            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-            return response.json();
-        })
-        .then(data => {
-            const especiesUnicas = {};
-            data.animales.forEach(animal => {
-                if (!especiesUnicas[animal.especie]) {
-                    especiesUnicas[animal.especie] = animal;
-                }
-            });
-
-            // Convertir el objeto de especies únicas en un array
-            setEspecies(Object.values(especiesUnicas));
-        })
-        .catch(error => {
-            console.error('Error al obtener las especies:', error);
-        });
+        const storedIdUsuario = localStorage.getItem('idUsuario');
+        if (storedIdUsuario) {
+            setIdUsuario(storedIdUsuario);
+        }
     }, []);
 
-    // Crear las tarjetas
+    useEffect(() => {
+        if (idUsuario) {
+            fetch(`http://localhost:8000/animal/Obtener/${idUsuario}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                return response.json();
+            })
+            .then(data => {
+                if (data.animal) {
+                    const especiesUnicas = {};
+                    data.animal.forEach(animal => {
+                        if (!especiesUnicas[animal.especie]) {
+                            especiesUnicas[animal.especie] = animal;
+                        }
+                    });
+
+                    // Convertir el objeto de especies unicas en un array
+                    setEspecies(Object.values(especiesUnicas));
+                }
+            })
+            .catch(error => {
+                console.error('Error al obtener las especies:', error);
+            });
+        }
+    }, [idUsuario]);
+
     const cards = especies.map((animal) =>
         <CardTiposEspecie
             key={animal.especie}
             tipoEspecie={animal}
-            imagen={especieToImageMap[animal.especie] || especieToImageMap["default"]}
+            imagen={imageMapEspecies[animal.especie] || imageMapEspecies["default"]}
         />
     );
 

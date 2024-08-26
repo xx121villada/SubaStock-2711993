@@ -1,19 +1,23 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
+import './styles/HistorialPesoSalud.css';
 
 export default function HistorialPesoSalud() {
     const [historial, setHistorial] = useState([]);
     const [idAnimal, setIdAnimal] = useState('');
+    const [marca, setMarca] = useState('');
 
     useEffect(() => {
         const storedIdAnimal = localStorage.getItem('idAnimal');
         if (storedIdAnimal) {
             setIdAnimal(storedIdAnimal);
         }
+        const storedMarca = localStorage.getItem('marcaAnimal');
+        if (storedMarca) {
+            setMarca(storedMarca);
+        }
     }, []);
-
-
 
     const fetchHistorial = async () => {
         try {
@@ -29,7 +33,11 @@ export default function HistorialPesoSalud() {
             if (data.status) {
                 setHistorial(data.estadoSalud);
             } else {
-                Swal.fire({ title: data.message, icon: 'error' });
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Información',
+                    text: "No hay registros de peso ni de salud" 
+                });
             }
         } catch (e) {
             Swal.fire({ title: 'Error al cargar datos', icon: 'error' });
@@ -77,9 +85,9 @@ export default function HistorialPesoSalud() {
     }, [idAnimal]);
 
     return (
-        <div>
-            <h1>Historial de Peso y Estado de Salud del Animal {idAnimal}</h1>
-            <table>
+        <div className="historial-container-pesoSalud">
+            <h1 className="alimento-title">Historial de Peso y Estado de Salud del Animal - {marca}</h1>
+            <table className="historial-table-pesoSalud">
                 <thead>
                     <tr>
                         <th>Peso</th>
@@ -92,11 +100,13 @@ export default function HistorialPesoSalud() {
                     {historial.length > 0 ? (
                         historial.map((pesoSalud) => (
                             <tr key={pesoSalud.idEstado_Salud}>
-                                <td>{pesoSalud.peso}</td>
+                                <td>{pesoSalud.peso}-Kl</td>
                                 <td>{pesoSalud.fecha}</td>
                                 <td>{pesoSalud.estado}</td>
                                 <td>
-                                    <button onClick={() => eliminarPeso(pesoSalud.idEstado_Salud)}>
+                                    <button 
+                                        className="btn-delete-pesoSalud"
+                                        onClick={() => eliminarPeso(pesoSalud.idEstado_Salud)}>
                                         Eliminar
                                     </button>
                                 </td>
@@ -104,7 +114,7 @@ export default function HistorialPesoSalud() {
                         ))
                     ) : (
                         <tr>
-                            <td colSpan="4">No hay datos para mostrar</td>
+                            <td colSpan="4" className="no-data">No hay datos para mostrar</td>
                         </tr>
                     )}
                 </tbody>

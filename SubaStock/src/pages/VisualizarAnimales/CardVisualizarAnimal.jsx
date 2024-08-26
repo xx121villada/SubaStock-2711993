@@ -7,6 +7,7 @@ export default function CardVisualizarAnimal({ visualizarAnimal, imagen }) {
     const handleVisualizarClick = () => {
         localStorage.setItem('marcaAnimal', visualizarAnimal.marca);
         localStorage.setItem('idAnimal', visualizarAnimal.idAnimal);
+        localStorage.setItem('razaAnimal', visualizarAnimal.raza);
     };
 
     return (
@@ -19,7 +20,7 @@ export default function CardVisualizarAnimal({ visualizarAnimal, imagen }) {
                 />
             </div>
             <div className="content-Tipo">
-                <h5 className="card-name">{visualizarAnimal.raza}</h5>
+                <h5 className="card-name">raza : {visualizarAnimal.raza}</h5>
                 <h6>Marca: {visualizarAnimal.marca}</h6>
                 <Link 
                     to={`/crud-animal/${visualizarAnimal.idAnimal}`}

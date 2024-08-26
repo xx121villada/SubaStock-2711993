@@ -1,15 +1,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
+import './styles/HistorialAlimento.css';
 
-export default function HistorialAliemto() {
+export default function HistorialAlimento() {
     const [idAnimal, setIdAnimal] = useState('');
+    const [marca, setMarca] = useState('');
     const [historial, setHistorial] = useState([]);
 
     useEffect(() => {
         const storedIdAnimal = localStorage.getItem('idAnimal');
         if (storedIdAnimal) {
             setIdAnimal(storedIdAnimal);
+        }
+        const storedMarca = localStorage.getItem('marcaAnimal');
+        if (storedMarca) {
+            setMarca(storedMarca);
         }
     }, []);
 
@@ -22,15 +28,14 @@ export default function HistorialAliemto() {
                 }
             });
             const data = await response.json();
-            console.log(data);
 
             if (data.status) {
                 setHistorial(data.alimentos);
             } else {
                 Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: data.message
+                    icon: 'info',
+                    title: 'Información',
+                    text: "No hay registros de Alimentos"
                 });
             }
         } catch (error) {
@@ -94,9 +99,9 @@ export default function HistorialAliemto() {
     }, [idAnimal]);
 
     return (
-        <div>
-            <h1>Historial de Alimentos {idAnimal}</h1>
-            <table>
+        <div className="historial-container-alimento">
+            <h1 className="historial-title">Historial de Alimentos - {marca}</h1>
+            <table className="historial-table-alimento">
                 <thead>
                     <tr>
                         <th>Tipo de Alimento</th>
@@ -110,10 +115,10 @@ export default function HistorialAliemto() {
                         historial.map((alimento) => (
                             <tr key={alimento.idAlimentacion}>
                                 <td>{alimento.tipo_alimento}</td>
-                                <td>{alimento.cantidad}</td>
+                                <td>{alimento.cantidad}Kl</td>
                                 <td>{alimento.fecha}</td>
                                 <td>
-                                    <button onClick={() => eliminarAlimento(alimento.idAlimentacion)}>
+                                    <button className="btn-delete-alimento" onClick={() => eliminarAlimento(alimento.idAlimentacion)}>
                                         Eliminar
                                     </button>
                                 </td>
@@ -121,7 +126,7 @@ export default function HistorialAliemto() {
                         ))
                     ) : (
                         <tr>
-                            <td colSpan="4">No hay datos para mostrar</td>
+                            <td colSpan="4" className="no-data">No hay datos para mostrar</td>
                         </tr>
                     )}
                 </tbody>

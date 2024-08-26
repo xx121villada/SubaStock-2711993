@@ -1,45 +1,34 @@
 import './Crud.css';
-import { useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import HistorialAliemto from '../Historiales/HistorialAliemto';
 import HistorialVacunacion from '../Historiales/HistorialVacunacion';
 import HistorialPesoSalud from '../Historiales/HistorialPesoSalud';
 
-
 function Crud() {
+
     const navigate = useNavigate();
     const [showAlimentacion, setShowAlimentacion] = useState(false);
     const [showVacunacion, setShowVacunacion] = useState(false);
     const [showPesoSalud, setShowPesoSalud] = useState(false);
     const [marca, setMarca] = useState('');
-    const [idAnimal, setIdAnimal] = useState('');
-
-    const toggleAlimentacion = () => {
-        setShowAlimentacion(!showAlimentacion);
-    };
-    const toggleVacunacion = () => {
-        setShowVacunacion(!showVacunacion);
-    };
-    const togglePesoSalud = () => {
-        setShowPesoSalud(!showPesoSalud);
-    };
-
+    const [raza, setRaza] = useState('');
 
     useEffect(() => {
         const storedMarca = localStorage.getItem('marcaAnimal');
-        const storedIdAnimal = localStorage.getItem('idAnimal');
         if (storedMarca) {
             setMarca(storedMarca);
         }
-        if (storedIdAnimal) {
-            setIdAnimal(storedIdAnimal);
+        const storedRaza = localStorage.getItem('razaAnimal');
+        if (storedRaza) {
+            setRaza(storedRaza);
         }
     }, []);
 
-    const selectAccion = ()=>{
-        localStorage.setItem('idAnimal',idAnimal);
-        localStorage.setItem('marcaAnimal', marca);
-    }
+
+    const toggleAlimentacion = () => setShowAlimentacion(!showAlimentacion);
+    const toggleVacunacion = () => setShowVacunacion(!showVacunacion);
+    const togglePesoSalud = () => setShowPesoSalud(!showPesoSalud);
 
     const insertar = (event) => {
         const selectedValue = event.target.value;
@@ -57,56 +46,46 @@ function Crud() {
                 break;
         }
     };
+
     return (
-        <div className="auction-app">
-            <div className="cow-icons">
-                <img src="/src/pages/CRUD-xime/img/image.png" alt="Icono" />
-                <p>Marca del Animal: {marca ? marca : "No disponible"}</p>
-                <img src="/src/pages/CRUD-xime/img/image.png" alt="Icono" />
+        <div className="crud-app">
+            <div className="header-crud">
+                <img src="/src/pages/CRUD-xime/img/image.png" alt="Icono" className="header-icon" />
+                <h1 className="header-title">Marca del Animal: {marca || "No disponible"}</h1>
+                <img src="/src/pages/CRUD-xime/img/image.png" alt="Icono" className="header-icon" />
             </div>
-            <div className='body'>
-                <div className="contenido">
-                    <div className="botones">
-                        <div className="btn">INICIO</div>
-                        <div className='Insertar'>
-                            <label htmlFor="">Insertar</label>
-                            <select name="Insertar" id=""
-                            onChange={insertar}
-                            onClick={selectAccion}
-                            >
-                                <option value="">Seleccione una opción</option>
-                                <option value="1">Insertar Alimentación</option>
-                                <option value="2">Insertar Medicamentos</option>
-                                <option value="3">Insertar Peso y Salud</option>
-                            </select>
-                        </div>
-                        <div className="btn">
-                        <div className='Insertar'>
-                            <label htmlFor="">Eliminar</label>
-                        </div>
-                        </div>
+            <div className="content">
+                <div className="buttons-crud">
+                    <button className="button-inicio-crud">INICIO</button>
+                    <div className="dropdown">
+                        <label>Insertar</label>
+                        <select onChange={insertar}>
+                            <option value="">Seleccione una opción</option>
+                            <option value="1">Insertar Alimentación</option>
+                            <option value="2">Insertar Medicamentos</option>
+                            <option value="3">Insertar Peso y Salud</option>
+                        </select>
                     </div>
-                    <div className="tabla">
-                        <p className='raza'>Vaca de raza Brahman</p>
-                        <div className="menu">
-                            <button onClick={toggleVacunacion}>
-                            {showVacunacion? 'Cerrar Vacunación' : 'Abrir Vacunación'}
-                            </button>
-                            {showVacunacion && <HistorialVacunacion/>}
-    
-                        </div>
-                        <div className="menu">
-                        <button onClick={toggleAlimentacion}>
-                        {showAlimentacion ? 'Cerrar Alimentación' : 'Abrir Alimentación'}
-                            </button>
-                            {showAlimentacion && <HistorialAliemto/>}
-                            </div>
-                        <div className="menu">
-                            <button onClick={togglePesoSalud}>
-                            {showPesoSalud? 'Cerrar Peso y Salud' : 'Abrir Peso y Salud'}
-                            </button>
-                            {showPesoSalud && <HistorialPesoSalud/>}
-                        </div>
+                </div>
+                <div className="table">
+                    <h2 className="animal-breed">Vaca de raza {raza}</h2>
+                    <div className="menu-crud">
+                        <button onClick={toggleVacunacion} className="menu-crud-button">
+                            {showVacunacion ? 'Cerrar Vacunación' : 'Abrir Vacunación'}
+                        </button>
+                        {showVacunacion && <HistorialVacunacion />}
+                    </div>
+                    <div className="menu-crud">
+                        <button onClick={toggleAlimentacion} className="menu-crud-button">
+                            {showAlimentacion ? 'Cerrar Alimentación' : 'Abrir Alimentación'}
+                        </button>
+                        {showAlimentacion && <HistorialAliemto />}
+                    </div>
+                    <div className="menu-crud">
+                        <button onClick={togglePesoSalud} className="menu-crud-button">
+                            {showPesoSalud ? 'Cerrar Peso y Salud' : 'Abrir Peso y Salud'}
+                        </button>
+                        {showPesoSalud && <HistorialPesoSalud />}
                     </div>
                 </div>
             </div>
