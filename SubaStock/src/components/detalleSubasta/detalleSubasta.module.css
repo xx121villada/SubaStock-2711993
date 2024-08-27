@@ -1,14 +1,13 @@
-
-
 .body {
     --primary-color: #237e0d;
     --bg-color: white;
     background-color: var(--bg-color);
     margin: 0 auto;
     padding: 16px;
+    height: auto;
 }
-
-.back-button {
+    
+.backButton {
     background: none;
     border: none;
     color: #000000;
@@ -18,15 +17,15 @@
     font-weight: 500;
 }
 
-.info{
+.info {
     width: 400px;
 }
 
-.content-carrusel{
+.contentCarrusel {
     flex-grow: 1;
 }
 
-.titulo-favoritos{
+.tituloFavoritos {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -36,10 +35,9 @@
     font-size: 24px;
     font-weight: bold;
     margin: 16px 12px;
-    
 }
 
-.favoritos{
+.favoritos {
     background: none;
     border: none;
     color: #000000;
@@ -84,7 +82,7 @@
     margin-bottom: 16px;
 }
 
-.input-puja {
+.inputPuja {
     padding: 8px;
     font-size: 16px;
     border: 1px solid var(--primary-color);
@@ -111,12 +109,11 @@
     border-radius: 5px;
 }
 
-
-#contenedor-historial{
+.contenedorHistorial {
     background-color: white;
 }
 
-#titulo button{
+.titulo button {
     background-color: green;
     color: #fff;
     border: none;
@@ -126,24 +123,24 @@
     cursor: pointer;
 }
 
-.imgCarrusel{
+.imgCarrusel {
     width: 400px;
     height: 400px;
     object-fit: cover;
 }
 
 @media screen and (min-width: 768px) {
-    .body{
+    .body {
         max-width: none;
     }
-    .info{
+    .info {
         margin-left: 40px;
     }
 }
 
 @media screen and (max-width: 767.9999999px) {
-    .imgCarrusel{
+    .imgCarrusel {
         width: 300px;
         height: 300px;
     }
-  }
+}
