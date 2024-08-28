@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import cerdo from '../CRUD-xime/img/1.png';
 import vaca from '../CRUD-xime/img/2.png';
 import pollo from '../CRUD-xime/img/3.png';
+import img_principal from '../Login/img/img_principalR.png';
 
 // Hook personalizado para manejar el formulario
 const useForm = (initialValues) => {
@@ -80,43 +81,44 @@ const Login = () => {
 
   return (
     <div className="login-container">
-      <form className="login-form" onSubmit={handleSubmit}>
-        <h1 className='titulo-login'>INICIO SESION</h1>
-        <div className="logos-container">
-          <img src={cerdo} alt="Icono" />
-          <img src={vaca} alt="Icono" />
-          <img src={pollo} alt="Icono" />
+      <h1 className="centered-title">INICIO SESIÓN</h1>
+      <div className="content-container">
+        <div className="image-container">
+          <img src={img_principal} alt="Imagen de inicio de sesión" className="left-image" />
         </div>
-        <div>
-          <label className='nombre-input'>CORREO</label>
-          <input
-            type="email"
-            placeholder="Ingrese su correo"
-            className="input-field"
-            name='correo'
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label className='nombre-input'>CONTRASEÑA</label>
-          <input
-            type="password"
-            placeholder="Ingrese su contraseña"
-            className="input-field"
-            name='contraseña'
-            onChange={handleChange}
-          />
-        </div>
-        <FiraBaseAuth/>
-        <div>
-          <button type="submit" className="btn-login">INICIAR SESION</button>
-        </div>
-        <Link to="/registro" className='text-decoration-none'>
-          <p className='registrarse'>No tienes una cuenta? Regístrate</p>
-        </Link>
-      </form>
+        <form className="login-form" onSubmit={handleSubmit}>
+          <div>
+            <label className="nombre-input">CORREO</label>
+            <input
+              type="email"
+              placeholder="Ingrese su correo"
+              className="input-field"
+              name="correo"
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <label className="nombre-input">CONTRASEÑA</label>
+            <input
+              type="password"
+              placeholder="Ingrese su contraseña"
+              className="input-field"
+              name="contraseña"
+              onChange={handleChange}
+            />
+          </div>
+          <FiraBaseAuth />
+          <div>
+            <button type="submit" className="btn-login">INICIAR SESIÓN</button>
+          </div>
+          <Link to="/registro" className="text-decoration-none">
+            <p className="registrarse">¿No tienes una cuenta? Regístrate</p>
+          </Link>
+        </form>
+      </div>
     </div>
   );
 };
 
 export default Login;
+

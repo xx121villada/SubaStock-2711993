@@ -1,28 +1,52 @@
+/* Contenedor principal */
 .login-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
   height: 100vh;
-  background-color: #f4f4f4;
+  background-color: white;
   padding: 20px;
 }
 
-.login-form {
+/* Título centrado en la parte superior */
+.centered-title {
+  text-align: center;
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* Contenedor que divide la pantalla en dos */
+.content-container {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  background-color: white;
+}
+
+/* Contenedor para la imagen a la izquierda */
+.image-container {
+  flex: 0.4; /* Ajusta el tamaño del contenedor de la imagen */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.left-image {
   width: 100%;
-  max-width: 400px;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Contenedor del formulario de inicio de sesión a la derecha */
+.login-form {
+  flex: 0.6; /* Ajusta el tamaño del contenedor del formulario */
   background-color: white;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
 }
 
-.login-form h1 {
-  text-align: center;
-  font-size: 28px;
-  margin-bottom: 20px;
-  color: #333;
-}
-
+/* Estilos de los campos y botones del formulario */
 .nombre-input {
   font-size: 16px;
   margin-bottom: 8px;
@@ -53,30 +77,6 @@
   background-color: #087a08;
 }
 
-.google-login-button {
-  background-color: white;
-  color: black;
-  width: 100%;
-  margin: 20px 0;
-  border: 2px solid #0b6d0b ;
-  border-radius: 5px;
-  padding: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: background-color 0.3s ease-in-out;
-}
-
-.google-login-button:hover {
-  background-color: #f1f1f1;
-}
-
-.google-login-button img {
-  margin-left: 10px;
-  width: 20px;
-  height: 20px;
-}
-
 .registrarse {
   text-align: center;
   margin-top: 20px;
@@ -91,14 +91,24 @@
   text-decoration: none;
 }
 
-/* Responsividad */
-@media (max-width: 600px) {
-  .login-form {
-    padding: 15px;
-    max-width: 100%;
+/* Ajustes para pantallas más pequeñas */
+@media (max-width: 768px) {
+  .content-container {
+    flex-direction: column;
   }
 
-  .btn-login, .google-login-button {
-    padding: 10px;
+  .image-container,
+  .login-form {
+    width: 100%;
+  }
+
+  .centered-title {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .centered-title {
+    font-size: 18px;
   }
 }

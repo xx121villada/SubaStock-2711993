@@ -1,39 +1,39 @@
 import { Link } from 'react-router-dom';
 import '../sesionIniciada/sesionIniciada.css';
+import img_principal from '../sesionIniciada/img/img_principalR.png';
 
 
 function SesionIniciada() {
   return (
-    <div className="App">
+    <div className="sesion-container">
       <header className="App-header">
-        <div className="header-content">
-          <span className="icon">🐷</span>
-          <h1>BIENVENIDO A</h1>
-          <h1>AGROSTOCK</h1>
-          <span className="icon">🐮</span>
-        </div>
-        <div className="chicken-icon">
-          <span className="icon">🐔</span>
-        </div>
+        <h1 className="centered-title">BIENVENIDO A AGROSTOCK</h1>
       </header>
-      <main className="App-main">
-        <div className="button-container">
-          <Link to='/Subastar'>
-          <button className="button">SUBASTAR</button>
-          </Link>
-          <button className="button">VER SUBASTAS</button>
-          <button className="button">FAVORITOS</button>
-          <Link to='/registro-animales'>
-          <button className="button">REGISTRAR ANIMAL</button>
-          </Link>
-          <Link to='/ver-animales'>
-          <button className="button">VER ANIMALES</button>
-          </Link>
-          <Link to={'/'}>
-          <button className="button">CERRAR SESION</button>
-          </Link>
+      <div className="content-container">
+        <div className="image-container">
+          <img src={img_principal} alt="Imagen descriptiva" className="left-image" />
         </div>
-      </main>
+        <div className="menu-container">
+          <main className="App-main">
+            <div className="button-container">
+              <Link to='/Subastar'>
+                <button className="button">SUBASTAR</button>
+              </Link>
+              <button className="button">VER SUBASTAS</button>
+              <button className="button">FAVORITOS</button>
+              <Link to='/registro-animales'>
+                <button className="button">REGISTRAR ANIMAL</button>
+              </Link>
+              <Link to='/ver-animales'>
+                <button className="button">VER ANIMALES</button>
+              </Link>
+              <Link to={'/'}>
+                <button className="button">CERRAR SESION</button>
+              </Link>
+            </div>
+          </main>
+        </div>
+      </div>
     </div>
   );
 }
