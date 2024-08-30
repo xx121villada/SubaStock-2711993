@@ -22,16 +22,14 @@
   margin: 0;
 }
 
-/* Contenedor del contenido que divide la pantalla en dos */
 .content-container {
   display: flex;
   flex: 1;
   background-color: white;
 }
 
-/* Contenedor para la imagen en la parte izquierda */
 .image-container {
-  flex: 0.6; /* Reduce el tamaño del contenedor de la imagen */
+  flex: 0.6; 
   display: flex;
   align-items: center;
   justify-content: center;
@@ -45,11 +43,10 @@
   object-fit: cover;
 }
 
-/* Contenedor del menú en la parte derecha */
 .menu-container {
-  flex: 0.4; /* Aumenta el tamaño del contenedor del menú */
+  flex: 0.4;
   display: flex;
-  justify-content: flex-start; /* Ajusta la posición del menú hacia la derecha */
+  justify-content: flex-start;
   align-items: center;
   background-color: white;
   padding: 20px;
@@ -62,7 +59,6 @@
   width: 100%;
 }
 
-/* Estilos para los botones */
 .button-container {
   display: flex;
   flex-direction: column;
@@ -87,7 +83,6 @@
   background-color: #4CAF50;
 }
 
-/* Ajustes para pantallas más pequeñas */
 @media (max-width: 768px) {
   .content-container {
     flex-direction: column;
