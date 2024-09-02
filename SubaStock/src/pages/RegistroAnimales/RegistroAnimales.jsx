@@ -24,7 +24,7 @@ const RegistroAnimales = () => {
 
         const idUsuario = localStorage.getItem('idUsuario');
 
-        const data ={
+        const data = {
             ...animales,
             idUsuario
         };
@@ -36,38 +36,39 @@ const RegistroAnimales = () => {
             },
             body: JSON.stringify(data)
         })
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then((data) => {
-            if (data.status) {
-                form.current.reset();
-                Swal.fire({
-                    title: data.message,
-                    icon: 'success',
-                    confirmButtonText: 'Continuar'
-                });
-            } else {
-                Swal.fire({
-                    title: data.message,
-                    icon: 'error',
-                    confirmButtonText: 'Continuar'
-                });
-            }
-        });
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then((data) => {
+                if (data.status) {
+                    form.current.reset();
+                    Swal.fire({
+                        title: data.message,
+                        icon: 'success',
+                        confirmButtonText: 'Continuar'
+                    });
+                } else {
+                    Swal.fire({
+                        title: data.message,
+                        icon: 'error',
+                        confirmButtonText: 'Continuar'
+                    });
+                }
+            });
     };
 
     return (
         <div className="container-Animales">
-            <Link to={'/sesion-iniciada'}>
-                <button>
-                    <i className="bi bi-arrow-left-short"></i>
-                    Regresar al menú
+            <div className="w-100 d-flex justify-content-start align-items-center mb-3">
+                <button className="back-button ms-2">
+                    <Link to={'/sesion-iniciada'} className="text-decoration-none text-dark">
+                        Regresar
+                    </Link>
                 </button>
-            </Link>
+            </div>
             <div className="registro-container">
                 <h1>Registro de Animales</h1>
                 <div className="logos-container">

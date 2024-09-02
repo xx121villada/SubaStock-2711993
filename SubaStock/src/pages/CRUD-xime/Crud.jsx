@@ -1,12 +1,11 @@
 import './Crud.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import HistorialAliemto from '../Historiales/HistorialAliemto';
 import HistorialVacunacion from '../Historiales/HistorialVacunacion';
 import HistorialPesoSalud from '../Historiales/HistorialPesoSalud';
 
 function Crud() {
-
     const navigate = useNavigate();
     const [showAlimentacion, setShowAlimentacion] = useState(false);
     const [showVacunacion, setShowVacunacion] = useState(false);
@@ -16,15 +15,11 @@ function Crud() {
 
     useEffect(() => {
         const storedMarca = localStorage.getItem('marcaAnimal');
-        if (storedMarca) {
-            setMarca(storedMarca);
-        }
-        const storedRaza = localStorage.getItem('razaAnimal');
-        if (storedRaza) {
-            setRaza(storedRaza);
-        }
-    }, []);
+        if (storedMarca) setMarca(storedMarca);
 
+        const storedRaza = localStorage.getItem('razaAnimal');
+        if (storedRaza) setRaza(storedRaza);
+    }, []);
 
     const toggleAlimentacion = () => setShowAlimentacion(!showAlimentacion);
     const toggleVacunacion = () => setShowVacunacion(!showVacunacion);
@@ -49,6 +44,13 @@ function Crud() {
 
     return (
         <div className="crud-app">
+            <div className="d-flex justify-content-start align-items-center mb-3">
+                <button className="back-button">
+                    <Link to={'/sesion-iniciada'} className="text-decoration-none text-dark">
+                        Regresar
+                    </Link>
+                </button>
+            </div>
             <div className="header-crud">
                 <img src="/src/pages/CRUD-xime/img/image.png" alt="Icono" className="header-icon" />
                 <h1 className="header-title">Marca del Animal: {marca || "No disponible"}</h1>
