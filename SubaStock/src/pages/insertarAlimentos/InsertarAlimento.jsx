@@ -39,7 +39,7 @@ function InsertarAlimento() {
         e.preventDefault();
         console.log('Datos enviados:', valores);
         console.log('id', idAnimal);
-        fetch('http://localhost:8000/alimentacion/Insertar', {
+        fetch('https://apisubastock.cleverapps.io/alimentacion/Insertar', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
