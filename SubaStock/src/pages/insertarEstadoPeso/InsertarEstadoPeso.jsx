@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import './insertarAlimentos.css';
+import './InsertarEstadoSaludPeso.css';
 import bovino from '../Animales/img/Bovino.png';
 import Swal from 'sweetalert2';
 
-function InsertarAlimento() {
+export default function InsertarEstadoPeso() {
     const [marca, setMarca] = useState('');
     const [idAnimal, setIdAnimal] = useState('');
 
@@ -19,8 +19,8 @@ function InsertarAlimento() {
     }, []);
 
     const [valores, setValores] = useState({
-        tipo_alimento: '',
-        cantidad: ''
+        peso: '',
+        estado: ''
     });
 
     useEffect(() => {
@@ -39,7 +39,7 @@ function InsertarAlimento() {
         e.preventDefault();
         console.log('Datos enviados:', valores);
         console.log('id', idAnimal);
-        fetch('http://localhost:8000/alimentacion/Insertar', {
+        fetch('http://localhost:8000/estadoSalud/Insertar', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -55,15 +55,15 @@ function InsertarAlimento() {
                     Swal.fire({ title: data.message, icon: 'success' });
                     setValores({
                         idAnimal: idAnimal,
-                        tipo_alimento: '',
-                        cantidad: ''
+                        peso: '',
+                        estado: ''
                     });
                 } else {
                     Swal.fire({ title: data.message, icon: 'error' });
                     setValores({
                         idAnimal: idAnimal,
-                        tipo_alimento: '',
-                        cantidad: ''
+                        peso: '',
+                        estado: ''
                     });
                 }
             })
@@ -77,39 +77,37 @@ function InsertarAlimento() {
             <form onSubmit={handleSubmit}>
                 <div className='container-alimento'>
                     <div className="form-container-div">
-                        <h1>Insertar Alimentos</h1>
+                        <h1>Insertar Estado y peso</h1>
                         <div className="cow-container-img">
                             <img src={bovino} alt="Imagen de vaca" className="cow-icon" />
                             <p>Marca del Animal: {marca ? marca : "No disponible"}</p>
                             <img src={bovino} alt="Imagen de vaca" className="cow-icon" />
                         </div>
                         <div className="input-container-alimento">
-                            <label htmlFor="nombre">Nombre del Alimento:</label>
+                            <label htmlFor="peso">Ingrese el peso del amimal:</label>
                             <input
                                 type="text"
-                                id="nombre"
-                                name="tipo_alimento"
+                                id="peso"
+                                name="peso"
                                 onChange={handleChange}
-                                placeholder="Ingrese el nombre del alimento"
+                                placeholder="Ingrese el peso del amimal"
                                 required
                             />
-                            <label htmlFor="cantidad">Cantidad:</label>
-                            <select id="cantidad" name="cantidad" onChange={handleChange} required>
-                                <option value="">Seleccione la cantidad de alimento</option>
-                                <option value="1">1 kg</option>
-                                <option value="2">2 kg</option>
-                                <option value="3">3 kg</option>
-                                <option value="4">4 kg</option>
-                                <option value="5">5 kg</option>
-                                <option value="6">6 kg</option>
-                                <option value="7">7 kg</option>
-                                <option value="8">8 kg</option>
-                                <option value="9">9 kg</option>
-                                <option value="10">10 kg</option>
+                            <label htmlFor="estado">Estado:</label>
+                            <select id="estado" name="estado" onChange={handleChange} required>
+                                <option value="">Seleccione el estado de salud del animal</option>
+                                <option value="Normal">Normal</option>
+                                <option value="Desnutricion">Desnutrición</option>
+                                <option value="Excelente">Excelente</option>
+                                <option value="buena">Buena</option>
+                                <option value="regular">Regular</option>
+                                <option value="mala">Mala</option>
+                                <option value="muy-mala">Muy mala</option>
+
                             </select>
                         </div>
                         <button className="submit-button" type='submit'>
-                            Insertar Alimento
+                            Insertar Estado de salud y peso
                         </button>
                     </div>
                 </div>
@@ -117,5 +115,3 @@ function InsertarAlimento() {
         </div>
     );
 }
-
-export default InsertarAlimento;

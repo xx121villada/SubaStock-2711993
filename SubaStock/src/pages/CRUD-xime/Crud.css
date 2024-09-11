@@ -1,129 +1,135 @@
-.auction-app {
+.crud-app {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     min-height: 100vh;
     background-color: #f4f4f4;
     padding: 20px;
 }
 
-.cow-icons {
-    background-color: #ffffff;
+.header-crud {
     display: flex;
-    justify-content: center;
     align-items: center;
-    padding: 15px;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 900px;
     margin-bottom: 20px;
-    width: 80%;
-    max-width: 400px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.cow-icons img {
-    margin: 0 10px;
+.header-icon {
     width: 50px;
     height: 50px;
 }
 
-.cow-icons p {
-    margin: 0 10px;
-    font-size: 1.4em;
-    font-weight: bold;
+.header-title {
+    font-size: 2em;
     color: #333;
+    font-weight: bold;
+    text-align: center;
+    margin: 0 10px;
 }
 
-.body {
-    background-color: #30e968;
-    flex-grow: 1;
-    padding: 20px;
-    border-radius: 10px;
+.content {
     width: 100%;
-    max-width: 90%;
+    max-width: 900px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.contenido {
+.buttons-crud {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 20px;
     align-items: center;
 }
 
-.botones {
+.button-inicio-crud {
+    background-color: #30e968;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button-inicio-crud:hover {
+    background-color: #28c457;
+}
+
+.dropdown {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.dropdown label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.dropdown select {
+    padding: 8px 12px;
+    font-size: 1.1em;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.table {
     width: 100%;
+    margin-top: 20px;
+}
+
+.animal-breed {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
     margin-bottom: 20px;
 }
 
-.botones .btn {
-    font-size: 1.1em;
-    border: 2px solid black;
+.menu-crud {
+    margin-bottom: 20px;
     text-align: center;
-    padding: 8px 12px;
-    border-radius: 8px;
-    cursor: pointer;
-    background-color: black;
-    color: white;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    width: 22%;
 }
 
-.botones .btn:hover {
-    background-color: #122200;
+.menu-crud-button {
+    background-color: #30e968;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.menu-crud-button:hover {
+    background-color: #28c457;
     transform: scale(1.05);
 }
 
-.tabla {
-    border: 2px solid #b83499;
-    background-color: #f0f8ff;
-    border-radius: 10px;
-    padding: 15px;
-    width: 100%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.tabla .raza {
-    font-size: 1.6em;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 15px;
-    color: #333;
-}
-
-.menu {
-    border: 1px solid #333;
-    border-radius: 8px;
-    margin: 3% 0;
-    padding: 15px;
-    font-size: 1.1em;
-    background-color: #fff;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    cursor: pointer;
-}
-
-.menu:hover {
-    background-color: #e0e0e0;
-    transform: scale(1.02);
-}
-
 @media (max-width: 768px) {
-    .cow-icons {
-        width: 100%;
+    .header-crud {
+        flex-direction: column;
+        align-items: center;
     }
 
-    .botones .btn {
-        font-size: 1em;
-        padding: 8px 10px;
-        width: 30%;
+    .buttons-crud {
+        flex-direction: column;
+        align-items: center;
     }
 
-    .tabla .raza {
-        font-size: 1.4em;
+    .button-inicio-crud {
+        margin-bottom: 10px;
     }
 
-    .body {
+    .menu-crud-button {
         width: 100%;
     }
 }
