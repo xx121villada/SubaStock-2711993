@@ -8,13 +8,13 @@ const BotonesAutenticacion = ({
 }) => {
   return (
     <>
-      <Link to='/registro'>
+      <Link to='/registro' style={{textDecoration: "none"}}>
         <button className={className + " " + registrarseClassName}>
           Registrarse
         </button>
       </Link>
 
-      <Link to='login'>
+      <Link to='/login' style={{textDecoration: "none"}}>
         <button className={className + " " + iniciarSesionClassName}>
           Iniciar Sesion
         </button>

@@ -10,6 +10,7 @@ const Buscador = () => {
       id="buscador"
       style={{
         backgroundColor: "#E5E4E270",
+        height: "35px",
       }}
     >
       <input
@@ -20,6 +21,7 @@ const Buscador = () => {
         }}
         className="form-control border-0 rounded-pill shadow-none bg-transparent"
         onChange={(e) => setTextoBusqueda(e.target.value)}
+        style={{padding: "0 0 0 20px", margin: 0, height: "100%"}}
         type="text"
         placeholder="Buscar animal..."
       />
