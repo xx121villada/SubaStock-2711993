@@ -2,7 +2,6 @@ import { useState } from "react";
 import "./detalleSubasta.css";
 import { TablaHistorial } from "./TablaHistorial";
 import { Carrusel } from "./Carrusel";
-import { useLoaderData } from "react-router-dom";
 
 export function DetalleSubasta() {
   const [verTabla, setVerTabla] = useState(false);
@@ -20,6 +19,7 @@ export function DetalleSubasta() {
       </div>
 
       <div className="d-flex flex-column flex-md-row align-items-center justify-content-between">
+        
         <div className="content-carrusel flex-grow-1">
           <Carrusel />
         </div>

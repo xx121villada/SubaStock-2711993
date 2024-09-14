@@ -1,10 +1,14 @@
-#main-layout {
+#main-subastas {
   --primary-color: #237e0d;
   --bg-color: #ffffff;
   box-sizing: content-box;
 }
 
-#main-layout .boton-autenticacion {
+#main-subastas * {
+  box-sizing: content-box;
+}
+
+#main-subastas .boton-autenticacion {
   background-color: var(--primary-color);
   color: white;
   border: none;
@@ -15,22 +19,24 @@
   height: fit-content;
 }
 
-#main-app {
-  padding-top: calc(var(--header-height) + 50px);
-}
-
 @media screen and (max-width: 767.9999999px) {
-  #main-layout {
-    --header-height: 85.5px;
+  #main-subastas {
+    --header-height: 60.5px;
+    --footer-height: 50px;
   }
 }
 
 @media screen and (min-width: 768px) {
-  #main-layout {
-    --header-height: 55px;
+  #main-subastas {
+    --header-height: 50px;
+    --footer-height: 0px;
   }
 
-  #main-layout #buscador {
+  #buscador {
     width: 300px !important;
   }
+}
+
+.tarjeta {
+  cursor: pointer;
 }
