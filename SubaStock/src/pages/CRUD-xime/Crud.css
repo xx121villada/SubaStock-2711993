@@ -1,0 +1,135 @@
+.crud-app {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f4f4f4;
+    padding: 20px;
+}
+
+.header-crud {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 900px;
+    margin-bottom: 20px;
+}
+
+.header-icon {
+    width: 50px;
+    height: 50px;
+}
+
+.header-title {
+    font-size: 2em;
+    color: #333;
+    font-weight: bold;
+    text-align: center;
+    margin: 0 10px;
+}
+
+.content {
+    width: 100%;
+    max-width: 900px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.buttons-crud {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.button-inicio-crud {
+    background-color: #30e968;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button-inicio-crud:hover {
+    background-color: #28c457;
+}
+
+.dropdown {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.dropdown label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.dropdown select {
+    padding: 8px 12px;
+    font-size: 1.1em;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.table {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.animal-breed {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.menu-crud {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.menu-crud-button {
+    background-color: #30e968;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.menu-crud-button:hover {
+    background-color: #28c457;
+    transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+    .header-crud {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .buttons-crud {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .button-inicio-crud {
+        margin-bottom: 10px;
+    }
+
+    .menu-crud-button {
+        width: 100%;
+    }
+}

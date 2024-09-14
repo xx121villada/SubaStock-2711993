@@ -1,0 +1,149 @@
+
+
+.body {
+    --primary-color: #237e0d;
+    --bg-color: white;
+    background-color: var(--bg-color);
+    margin: 0 auto;
+    padding: 16px;
+}
+
+.back-button {
+    background: none;
+    border: none;
+    color: #000000;
+    font-size: 18px;
+    cursor: pointer;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.info{
+    width: 400px;
+}
+
+.content-carrusel{
+    flex-grow: 1;
+}
+
+.titulo-favoritos{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.titulo {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 16px 12px;
+    
+}
+
+.favoritos{
+    background: none;
+    border: none;
+    color: #000000;
+    font-size: 24px;
+    cursor: pointer;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.tiempoRestante {
+    font-size: 16px;
+    color: #888;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.fechas {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.ofertaActual {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.descripcion {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.puja {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.input-puja {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid var(--primary-color);
+    border-radius: 4px;
+}
+
+.pujar {
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    font-size: 16px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.historialPujas {
+    background: var(--primary-color);
+    color: white;
+    font-weight: 500;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 0 auto;
+    border-radius: 5px;
+}
+
+
+#contenedor-historial{
+    background-color: white;
+}
+
+#titulo button{
+    background-color: green;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    font-size: 16px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.imgCarrusel{
+    width: 400px;
+    height: 400px;
+    object-fit: cover;
+}
+
+@media screen and (min-width: 768px) {
+    .body{
+        max-width: none;
+    }
+    .info{
+        margin-left: 40px;
+    }
+}
+
+@media screen and (max-width: 767.9999999px) {
+    .imgCarrusel{
+        width: 300px;
+        height: 300px;
+    }
+  }

@@ -1,0 +1,90 @@
+.historial-container-pesoSalud {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.alimento-title {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.historial-table-pesoSalud {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 18px;
+    text-align: left;
+}
+
+.historial-table-pesoSalud thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+    font-weight: bold;
+}
+
+.historial-table-pesoSalud th,
+.historial-table-pesoSalud td {
+    padding: 12px 15px;
+}
+
+.historial-table-pesoSalud tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.historial-table-pesoSalud tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.historial-table-pesoSalud tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+
+.no-data {
+    text-align: center;
+    font-size: 18px;
+    color: #666;
+    padding: 20px;
+}
+
+.btn-delete-pesoSalud {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-delete-pesoSalud:hover {
+    background-color: #c0392b;
+}
+
+@media (max-width: 768px) {
+    .historial-container-pesoSalud {
+        padding: 15px;
+        margin: 10px;
+    }
+
+    .alimento-title {
+        font-size: 20px;
+    }
+
+    .historial-table-pesoSalud th,
+    .historial-table-pesoSalud td {
+        padding: 10px;
+        font-size: 16px;
+    }
+
+    .btn-delete-pesoSalud {
+        padding: 6px 10px;
+        font-size: 14px;
+    }
+}

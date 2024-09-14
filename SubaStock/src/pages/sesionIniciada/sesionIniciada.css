@@ -1,0 +1,115 @@
+
+.sesion-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: white;
+}
+
+.App-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  padding: 20px;
+}
+
+.centered-title {
+  font-size: 32px;
+  font-weight: bold;
+  text-align: center;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  margin: 0;
+}
+
+.content-container {
+  display: flex;
+  flex: 1;
+  background-color: white;
+}
+
+.image-container {
+  flex: 0.6; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  padding: 20px;
+}
+
+.left-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.menu-container {
+  flex: 0.4;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: white;
+  padding: 20px;
+}
+
+.App-main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 400px;
+}
+
+.button {
+  background-color: green;
+  color: white;
+  padding: 15px 30px;
+  border-radius: 5px;
+  font-size: 20px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 5px 0;
+  width: 100%;
+}
+
+.button:hover {
+  background-color: #4CAF50;
+}
+
+@media (max-width: 768px) {
+  .content-container {
+    flex-direction: column;
+  }
+
+  .image-container,
+  .menu-container {
+    width: 100%;
+  }
+
+  .button-container {
+    width: 100%;
+    max-width: none;
+  }
+
+  .button {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+
+  .centered-title {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .centered-title {
+    font-size: 18px;
+  }
+}
