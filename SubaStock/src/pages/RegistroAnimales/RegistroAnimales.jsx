@@ -22,14 +22,14 @@ const RegistroAnimales = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const idUsuario = localStorage.getItem('idUsuario');
+        const idUsuario = sessionStorage.getItem('idUsuario');
 
         const data = {
             ...animales,
             idUsuario
         };
 
-        fetch('http://localhost:8000/animal/Insertar', {
+        fetch('https://apisubastock.cleverapps.io/animal/Insertar', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

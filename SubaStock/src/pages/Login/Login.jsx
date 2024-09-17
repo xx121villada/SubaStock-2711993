@@ -21,7 +21,7 @@ const useForm = (initialValues) => {
 
 const iniciarSesion = async (values) => {
   try {
-    const response = await fetch('http://localhost:8000/usuario/Login', {
+    const response = await fetch('https://apisubastock.cleverapps.io/usuario/Login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ const iniciarSesion = async (values) => {
     const data = await response.json();
 
     if (data.status) {
-      localStorage.setItem('idUsuario', data.idUsuario);
+      sessionStorage.setItem('idUsuario', data.idUsuario);
       Swal.fire({
         title: 'Correcto!',
         text: "Inicio de Sesión exitoso",
@@ -52,7 +52,6 @@ const iniciarSesion = async (values) => {
         icon: 'error',
         confirmButtonText: 'Continuar',
       });
-      console.log('Error en el login:', data.message);
     }
   } catch (error) {
     Swal.fire({
