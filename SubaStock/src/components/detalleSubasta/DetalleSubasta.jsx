@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "./detalleSubasta.module.css";
 import { TablaHistorial } from "./TablaHistorial";
-import { Carrusel } from "./Carrusel";
+// import { Carrusel } from "./Carrusel";
 import { useLoaderData } from "react-router-dom";
 import LazyCarousel from "../Subastas/LazyCarousel";
 

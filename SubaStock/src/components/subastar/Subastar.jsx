@@ -1,5 +1,5 @@
 
-import "./subastar.css"
+import "./subastar.module.css"
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
