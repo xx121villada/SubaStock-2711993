@@ -23,7 +23,7 @@ export default function AppRouter() {
           <Route exact path="/" element={<Inicio />} />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/registro" element={<Registro />} />
-          <Route exact path='/detalle-subasta' element={<DetalleSubasta/>} />
+          <Route exact path='/detalle-subasta/:idSubasta' element={<DetalleSubasta/>} />
           <Route exact path="/detalle-animales" element={<DetalleAnimales />} />
           <Route exact path="/sesion-iniciada" element={<SesionIniciada />} />
           <Route exact path="insertar-alimentos" element={<InsertarAlimentos />}/>
