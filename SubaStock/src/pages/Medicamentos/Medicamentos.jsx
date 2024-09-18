@@ -1,15 +1,15 @@
 import React from "react";
-import './styles/style.css';
+import '../Medicamentos/style.css';
 import { PiCowDuotone } from "react-icons/pi";
 
 export default function Informacion() {
     return (
-        <div className='body'>
-            <div className="login">
+        <div className='bodyMedicamento'>
+            <div className="loginMedicamento">
                 <h3>INSERTAR MEDICAMENTOS</h3>
             </div>
-            <div className="icon-container">
-            <PiCowDuotone className="icon"/><button id="buton"> ------ </button><PiCowDuotone className="icon"/>
+            <div className="icon-containerMedicamento">
+            <PiCowDuotone className="iconMedicamento"/><button id="butonMedicamento"> ------ </button><PiCowDuotone className="iconMedicamento"/>
             </div>
             <div className="register-page-wrap d-flex align-items-center flex-wrap justify-content-center">
                 <div className="container">
@@ -29,7 +29,7 @@ export default function Informacion() {
                     </div>
                 </div>
             </div>
-            <div className="botones">
+            <div className="botonesMedicamento">
                 <button type='button' className='btn btn-success boton boton-insertar'>
                     INSERTAR MEDICAMENTO
                 </button>

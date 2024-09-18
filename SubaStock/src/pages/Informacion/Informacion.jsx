@@ -1,16 +1,16 @@
 import React from "react";
-import './styles/style.css';
+import '../Informacion/style.css';
 import { PiCowDuotone } from "react-icons/pi";
-import Medicamentos from './Medicamentos'
+import Medicamentos from '../Medicamentos/Medicamentos';
 
 export default function Informacion() {
     return (
-        <div className='body'>
-            <div className="login">
+        <div className='bodyInformacion'>
+            <div className="loginInformacion">
                 <h3>INSERTAR INFORMACIÓN</h3>
             </div>
-            <div className="icon-container">
-                <PiCowDuotone className="icon" /><button id="buton"> ------ </button><PiCowDuotone className="icon" />
+            <div className="icon-containerInformacion">
+                <PiCowDuotone className="iconInformacion" /><button id="butonInformacion"> ------ </button><PiCowDuotone className="iconInformacion" />
             </div>
             <div className="register-page-wrap d-flex align-items-center flex-wrap justify-content-center">
                 <div className="container">
@@ -38,7 +38,7 @@ export default function Informacion() {
                     </div>
                 </div>
             </div>
-            <div className="botones">
+            <div className="botonesInformacion">
                 <button type='button' className='btn btn-outline-success boton boton-registrar'>
                     REGISTRAR NUEVO MEDICAMENTO
                 </button>

@@ -1,19 +1,19 @@
-.body {
+.bodyInformacion {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
     padding: 20px;
 }
 
-.login {
+.loginInformacion {
     text-align: center;
     margin-bottom: 20px;
 }
 
-.login h2 {
+.loginInformacion h2 {
     color: #333;
 }
 
-.botones {
+.botonesInformacion {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -21,7 +21,7 @@
     margin-top: 5px;
 }
 
-#buton {
+#butonInformacion {
     background-color: whitesmoke;
     border: none;
     color: white;
@@ -36,17 +36,17 @@
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-#buton:hover {
+#butonInformacion:hover {
     background-color: #89f462;
     transform: scale(1.05);
 }
 
-#buton:active {
+#butonInformacion:active {
     background-color: #89f462;
     transform: scale(0.95);
 }
 
-.icon-container {
+.icon-containerInformacion {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -54,7 +54,7 @@
     padding: 10px; 
 }
 
-.icon {
+.iconInformacion {
     font-size: 50px;
 }
   
