@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import styles from "./detalleSubasta.module.css";
 import { TablaHistorial } from "./TablaHistorial";
+// import { Carrusel } from "./Carrusel";
+import { useLoaderData } from "react-router-dom";
 import LazyCarousel from "../Subastas/LazyCarousel";
 
 export function DetalleSubasta() {
@@ -38,6 +40,8 @@ export function DetalleSubasta() {
       </div>
 
       <div className="d-flex flex-column flex-md-row align-items-center justify-content-between">
+        <div className="content-carrusel flex-grow-1">
+          <Carrusel />
         <div className={styles.contentCarrusel}>
           <LazyCarousel imgs={subasta.imagenes || ["https://wintechnology.co/wp-content/uploads/2021/11/imagen-no-disponible.jpg"]} />
         </div>
@@ -68,6 +72,7 @@ export function DetalleSubasta() {
         </div>
       </div>
       {verTabla && <TablaHistorial />}
+    </div>
     </div>
   );
 }

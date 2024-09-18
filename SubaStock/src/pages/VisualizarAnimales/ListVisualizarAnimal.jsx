@@ -12,7 +12,7 @@ export default function ListVisualizarAnimal() {
     const [idUsuario, setIdUsuario] = useState('');
 
     useEffect(() => {
-        const storedIdUsuario = localStorage.getItem('idUsuario');
+        const storedIdUsuario = sessionStorage.getItem('idUsuario');
         if (storedIdUsuario) {
             setIdUsuario(storedIdUsuario);
         }
@@ -27,7 +27,7 @@ export default function ListVisualizarAnimal() {
 
     useEffect(() => {
         if (idUsuario) {
-            fetch(`http://localhost:8000/animal/Obtener/${idUsuario}`, {
+            fetch(`https://apisubastock.cleverapps.io/animal/Obtener/${idUsuario}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'

@@ -6,10 +6,12 @@ const Buscador = () => {
 
   return (
     <div
-      className="input-group rounded-pill w-75"
+      className="input-group rounded-pill"
       id="buscador"
       style={{
         backgroundColor: "#E5E4E270",
+        height: "32px",
+        width: 290,
       }}
     >
       <input
@@ -20,6 +22,7 @@ const Buscador = () => {
         }}
         className="form-control border-0 rounded-pill shadow-none bg-transparent"
         onChange={(e) => setTextoBusqueda(e.target.value)}
+        style={{ padding: "0 0 0 20px", margin: 0, height: "100%" }}
         type="text"
         placeholder="Buscar animal..."
       />
