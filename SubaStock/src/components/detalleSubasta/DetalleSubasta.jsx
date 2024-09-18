@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import styles from "./detalleSubasta.module.css";
 import { TablaHistorial } from "./TablaHistorial";
-// import { Carrusel } from "./Carrusel";
-import { useLoaderData } from "react-router-dom";
 import LazyCarousel from "../Subastas/LazyCarousel";
 
 export function DetalleSubasta() {
@@ -24,7 +22,7 @@ export function DetalleSubasta() {
   };
 
   const handleBack = () => {
-    navigate(-1);
+    navigate(-2);
   };
 
   if (!subasta) {
@@ -41,23 +39,22 @@ export function DetalleSubasta() {
 
       <div className="d-flex flex-column flex-md-row align-items-center justify-content-between">
         <div className="content-carrusel flex-grow-1">
-          <Carrusel />
         <div className={styles.contentCarrusel}>
-          <LazyCarousel imgs={subasta.imagenes || ["https://wintechnology.co/wp-content/uploads/2021/11/imagen-no-disponible.jpg"]} />
+          <LazyCarousel imgs={[subasta.subasta.imagenUrl] || ["https://wintechnology.co/wp-content/uploads/2021/11/imagen-no-disponible.jpg"]} />
         </div>
 
         <div className={`d-flex flex-column d-md-flex-row ${styles.info}`}>
           <div className={`d-flex flex-row flex-md-row align-items-center justify-content-center mb-3 ${styles.tituloFavoritos}`}>
-            <h2 className={`${styles.titulo} mb-2 mb-md-0 me-md-2`}>{subasta.titulo}</h2>
+            <h2 className={`${styles.titulo} mb-2 mb-md-0 me-md-2`}>{subasta.subasta.tituloSubasta}</h2>
             <button className={styles.favoritos}>☆</button>
           </div>
-          <p className={`mb-3 ${styles.tiempoRestante}`}>Cierra en {subasta.tiempoRestante}</p>
+          <p className={`mb-3 ${styles.tiempoRestante}`}>Cierra en </p>
           <div className={`mb-3 text-center ${styles.fechas}`}>
-            <span className="d-block mx-1">Fecha Cierre: {subasta.fechaCierre}</span>
-            <span className="d-block mx-1">Fecha Apertura: {subasta.fechaApertura}</span>
+            <span className="d-block mx-1">Fecha Cierre: {subasta.subasta.fechaFin}</span>
+            <span className="d-block mx-1">Fecha Apertura: {subasta.subasta.fechaInicio}</span>
           </div>
-          <p className={`mb-3 ${styles.ofertaActual}`}>Oferta Actual: {subasta.ofertaActual} COP</p>
-          <p className={`mb-3 ${styles.descripcion}`}>{subasta.descripcion}</p>
+          <p className={`mb-3 ${styles.ofertaActual}`}>Oferta Actual: {subasta.subasta.pujaMinima} COP</p>
+          <p className={`mb-3 ${styles.descripcion}`}>{subasta.subasta.descripcion}</p>
           <div className={`w-100 d-flex flex-column justify-content-center flex-md-row align-items-center mb-3 ${styles.puja}`}>
             <input
               type="number"
