@@ -1,60 +1,51 @@
-.bodyMedicamento {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+.containerMedicamento {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f4f4f9;
     padding: 20px;
 }
 
-.loginMedicamento {
+.form-container-div {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    max-width: 600px;
+    width: 100%;
     text-align: center;
-    margin-bottom: 20px;
 }
 
-.loginMedicamento h2 {
-    color: #333;
-}
-
-.botonesMedicamento {
+.cow-container-img {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
+    justify-content: space-around;
     align-items: center;
-    margin-top: 5px;
+    margin-bottom: 30px;
 }
 
-#butonMedicamento {
-    background-color: whitesmoke;
-    border: none;
+.cow-icon {
+    width: 80px;
+    height: 80px;
+}
+
+.inputMedicamento {
+    text-align: left;
+    margin-bottom: 30px;
+}
+
+.botonInsertar {
+    background-color: #28a745;
     color: white;
-    padding: 10px 25px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 10px 2px;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.3rem;
     cursor: pointer;
-    border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-#butonMedicamento:hover {
-    background-color: #89f462;
-    transform: scale(1.05);
-}
-
-#butonMedicamento:active {
-    background-color: #89f462;
-    transform: scale(0.95);
-}
-
-.icon-containerMedicamento {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    padding: 10px; 
-}
-
-.iconMedicamento {
-    font-size: 50px;
+    width: 100%;
+    transition: background-color 0.3s ease;
 }
   
+.botonInsertar {
+    background-color: #218838;
+}
