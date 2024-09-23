@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import styles from "./detalleSubasta.module.css";
 import { TablaHistorial } from "./TablaHistorial";
 import LazyCarousel from "../Subastas/LazyCarousel";
+import Temporizador from "../Subastas/Temporizador";
 
 export function DetalleSubasta() {
   const { idSubasta } = useParams();
@@ -25,8 +26,14 @@ export function DetalleSubasta() {
     navigate(-2);
   };
 
+  const [esTiempoCritico, setTiempoCritico] = useState(false);
+
   if (!subasta) {
-    return <div>Cargando...</div>;
+    return (
+      <div className={styles.loaderContainer}>
+        <div className={styles.spinner}></div>
+      </div>
+    );
   }
 
   return (
@@ -48,7 +55,24 @@ export function DetalleSubasta() {
             <h2 className={`${styles.titulo} mb-2 mb-md-0 me-md-2`}>{subasta.subasta.tituloSubasta}</h2>
             <button className={styles.favoritos}>☆</button>
           </div>
-          <p className={`mb-3 ${styles.tiempoRestante}`}>Cierra en </p>
+          <span
+          className={`badge rounded-pill ${styles.tiempoRestante}`}
+          style={{
+            backgroundColor: esTiempoCritico
+              ? "#ff0000"
+              : "var(--primary-color)",
+            width: "fit-content",
+          }}
+          >
+          Cierra en&nbsp;
+          {
+            <Temporizador
+              fechaFin={subasta.subasta.fechaFin}
+              onTiempoCritico={() => setTiempoCritico(true)}
+              minutosCriticos={5}
+            />
+          }
+        </span>
           <div className={`mb-3 text-center ${styles.fechas}`}>
             <span className="d-block mx-1">Fecha Cierre: {subasta.subasta.fechaFin}</span>
             <span className="d-block mx-1">Fecha Apertura: {subasta.subasta.fechaInicio}</span>
