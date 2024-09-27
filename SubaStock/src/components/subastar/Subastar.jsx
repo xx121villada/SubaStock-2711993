@@ -2,13 +2,16 @@
 import "./subastar.module.css"
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 export function Subastar() {
   const [idUsuario, setIdUsuario] = useState('');
   const [idAnimal, setIdAnimal] = useState('');
+  const [imagenes, setImagenes] = useState([]);
+  const [imagenPreviews, setImagenPreviews] = useState([]);
 
   useEffect(() => {
-    const storedIdUsuario = localStorage.getItem('idUsuario');
+    const storedIdUsuario = sessionStorage.getItem('idUsuario');
     if (storedIdUsuario) {
       setIdUsuario(storedIdUsuario);
     }
@@ -19,6 +22,7 @@ export function Subastar() {
     }
 
   }, []);
+
   const [values, setValues] = useState({
     pujaMinima: '',
     fechaInicio: '',
@@ -33,10 +37,7 @@ export function Subastar() {
       idUsuario: idUsuario,
       idAnimal: idAnimal,
     }));
-  },[idUsuario, idAnimal]);
-
-  const [imagen, setImagen] = useState(null);
-  const [imagenPreview, setImagenPreview] = useState(null);
+  }, [idUsuario, idAnimal]);
 
 
   const handleChange = (e) => {
@@ -45,21 +46,24 @@ export function Subastar() {
   }
 
   const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setImagen(file);
+    const files = Array.from(e.target.files);
+    setImagenes(files);
+
+    setImagenPreviews([]);
+
+    files.forEach((file) => {
       const reader = new FileReader();
-  
+
       reader.onloadend = () => {
-        setImagenPreview(reader.result);
+        setImagenPreviews((prev) => [
+          ...prev,
+          reader.result,
+        ]);
       };
-  
       reader.readAsDataURL(file);
-    } else {
-      setImagenPreview(null);
-    }
+    });
   };
-  
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -68,11 +72,17 @@ export function Subastar() {
     Object.keys(values).forEach(key => {
       formData.append(key, values[key]);
     });
-    if (imagen) {
-      formData.append('imagen', imagen);
-    }
 
-    fetch('http://localhost:8000/subasta/Insertar', {
+    imagenes.forEach((imagen, index) => {
+      if (index === 0) {
+        formData.append('imagen', imagen);
+      } else {
+        formData.append(`imagen${index}`, imagen);
+      }
+    });
+
+
+    fetch('https://apisubastock.cleverapps.io/subasta/Insertar', {
       method: 'POST',
       body: formData,
     })
@@ -83,14 +93,24 @@ export function Subastar() {
         return response.json();
       })
       .then((data) => {
-        console.log(data);
-        console.log(imagen)
-        console.log(values)
+        Swal.fire({
+          title: data.message,
+          icon: data.status ? 'success' : 'error',
+          confirmButtonText: 'Continuar'
+        })
+        if (data.status) {
+          localStorage.removeItem('idAnimal');
+          localStorage.removeItem('idAnimalSubasta');
+        }
 
-        
       })
       .catch((err) => {
         console.error('Error:', err);
+        Swal.fire({
+          title: 'Error al subastar',
+          icon: 'error',
+          confirmButtonText: 'Continuar'
+        });
       })
   };
 
@@ -102,7 +122,7 @@ export function Subastar() {
           <div className="w-100 d-flex justify-content-start align-items-center mb-3">
             <button className="back-button ms-2">
               <Link to={'/sesion-iniciada'} className="text-decoration-none text-dark">
-              Regresar
+                Regresar
               </Link>
             </button>
           </div>
@@ -114,17 +134,40 @@ export function Subastar() {
                 id="imagen"
                 onChange={handleImageChange}
                 accept="image/*"
+                multiple
                 name="imagen"
               />
             </div>
-            {imagenPreview && (
-              <img
-                src={imagenPreview}
-                alt="Imagen subasta"
-                className="img-fluid mx-auto d-block w-50"
-                style={{ maxHeight: "200px", maxWidth: "200px" }}
-              />
-            )}
+              {imagenPreviews.length > 0 ? (
+                imagenPreviews.length > 5 ? (
+                  <label className="mb-2 mb-md-0 me-md-2 text-danger">
+                    Solo se permiten hasta 5 imágenes. Por favor, elimina algunas imágenes.
+                  </label>
+                ) : (
+                  imagenPreviews.map((preview, index) => (
+                    <img
+                      key={index}
+                      src={preview}
+                      alt={`Imagen subasta ${index + 1}`}
+                      className="img-fluid mx-auto d-block w-50"
+                      style={{
+                        maxHeight: "250px",
+                        maxWidth: "250px",
+                        margin: "1px",
+                        borderRadius: "5px",
+                        border: "1px solid var(--border-color)",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        cursor: "pointer",
+                        transition: "transform 0.3s ease",
+                      }}
+                    />
+                  ))
+                )
+              ) : null}
+
 
             <div className="d-flex flex-column d-md-flex-row info">
               <div className="d-flex flex-row flex-md-row align-items-center justify-content-center mb-3 content-titulo">
@@ -179,7 +222,7 @@ export function Subastar() {
             </div>
           </div>
         </div>
-      </form>
-    </div>
+      </form >
+    </div >
   );
 }
