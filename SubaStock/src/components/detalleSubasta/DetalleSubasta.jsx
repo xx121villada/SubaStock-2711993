@@ -18,6 +18,10 @@ export function DetalleSubasta() {
       .catch((error) => console.error("Error al cargar la subasta:", error));
   }, [idSubasta]);
 
+  
+
+  console.log(subasta)
+
   const toggleTabla = () => {
     setVerTabla((prevVerTabla) => !prevVerTabla);
   };
@@ -47,7 +51,7 @@ export function DetalleSubasta() {
       <div className="d-flex flex-column flex-md-row align-items-center justify-content-between">
         <div className="content-carrusel flex-grow-1">
         <div className={styles.contentCarrusel}>
-          <LazyCarousel imgs={[subasta.subasta.imagenUrl] || ["https://wintechnology.co/wp-content/uploads/2021/11/imagen-no-disponible.jpg"]} />
+          <LazyCarousel imgs={[subasta.subasta.imagenUrl, subasta.subasta.imagenUrl2, subasta.subasta.imagenUrl3, subasta.subasta.imagenUrl4, subasta.subasta.imagenUrl5].filter(img=>img!= null) || ["https://wintechnology.co/wp-content/uploads/2021/11/imagen-no-disponible.jpg"]} />
         </div>
 
         <div className={`d-flex flex-column d-md-flex-row ${styles.info}`}>
