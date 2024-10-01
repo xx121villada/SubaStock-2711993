@@ -11,7 +11,6 @@ const imageMapEspecies = {
     "Porcino": porcino,
     "Caprino": caprino,
     "default": notFount
-
 };
 
 export default function ListTipoEspecie() {
@@ -19,41 +18,46 @@ export default function ListTipoEspecie() {
     const [idUsuario, setIdUsuario] = useState('');
 
     useEffect(() => {
-        const storedIdUsuario = localStorage.getItem('idUsuario');
-        if (storedIdUsuario) {
-            setIdUsuario(storedIdUsuario);
-        }
-    }, []);
+        const obtenerDatosEspecies = async () => {
 
-    useEffect(() => {
-        if (idUsuario) {
-            fetch(`http://localhost:8000/animal/Obtener/${idUsuario}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(response => {
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                return response.json();
-            })
-            .then(data => {
-                if (data.animal) {
-                    const especiesUnicas = {};
-                    data.animal.forEach(animal => {
-                        if (!especiesUnicas[animal.especie]) {
-                            especiesUnicas[animal.especie] = animal;
+            try {
+
+                const idUsuario = sessionStorage.getItem('idUsuario');
+                if (idUsuario) {
+                    setIdUsuario(idUsuario);
+
+                    const response = await fetch(`https://apisubastock.cleverapps.io/animal/Obtener/${idUsuario}`, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json'
                         }
                     });
 
-                    // Convertir el objeto de especies unicas en un array
-                    setEspecies(Object.values(especiesUnicas));
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+
+                    if (data.animal) {
+                        const especiesUnicas = {};
+                        data.animal.forEach(animal => {
+                            if (!especiesUnicas[animal.especie]) {
+                                especiesUnicas[animal.especie] = animal;
+                            }
+                        });
+
+                        // Convertir el objeto de especies unicas en un array
+                        setEspecies(Object.values(especiesUnicas));
+                    }
                 }
-            })
-            .catch(error => {
+            } catch (error) {
                 console.error('Error al obtener las especies:', error);
-            });
-        }
+            }
+        };
+
+        // Llama a la función asíncrona
+        obtenerDatosEspecies();
     }, [idUsuario]);
 
     const cards = especies.map((animal) =>
@@ -65,8 +69,16 @@ export default function ListTipoEspecie() {
     );
 
     return (
-        <div className='divCards'>
-            {cards}
+        <div>
+            {especies.length > 0 ? (
+
+                <>
+                    <h1>Tipo y especie de animales registrados:</h1>
+                    {cards}
+                </>
+            ) : (
+                <h1 className="text-center text-success p-2">No hay animales registrados.</h1>
+            )}
         </div>
     );
 }

@@ -44,7 +44,7 @@ export default function Registro() {
             }
         }
 
-        fetch('http://localhost:8000/usuario/Insertar', {
+        fetch('https://apisubastock.cleverapps.io/usuario/Insertar', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

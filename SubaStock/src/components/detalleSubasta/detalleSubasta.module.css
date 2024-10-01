@@ -1,23 +1,13 @@
-
-
 .body {
     --primary-color: #237e0d;
     --bg-color: white;
     background-color: var(--bg-color);
     margin: 0 auto;
     padding: 16px;
+    height: auto;
 }
-
-.body input{
-    padding: 8px;
-    font-size: 16px;
-    border: 2px solid var(--primary-color);
-    border-radius: 6px;
-    text-align: center;
-    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
-}
-
-.back-button {
+    
+.backButton {
     background: none;
     border: none;
     color: #000000;
@@ -27,15 +17,15 @@
     font-weight: 500;
 }
 
-.info{
+.info {
     width: 400px;
 }
 
-.content-agregar-imagen{
+.contentCarrusel {
     flex-grow: 1;
 }
 
-.content-titulo{
+.tituloFavoritos {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -47,11 +37,24 @@
     margin: 16px 12px;
 }
 
+.favoritos {
+    background: none;
+    border: none;
+    color: #000000;
+    font-size: 24px;
+    cursor: pointer;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
 .tiempoRestante {
     font-size: 16px;
-    color: black;
     margin-bottom: 8px;
     text-align: center;
+    justify-content: center;
+    align-items: center;
+    justify-self: center;
+    align-self: center;
 }
 
 .fechas {
@@ -62,6 +65,13 @@
     justify-content: space-between;
 }
 
+.ofertaActual {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
 .descripcion {
     font-size: 16px;
     color: #666;
@@ -69,13 +79,20 @@
     text-align: center;
 }
 
-.valor-inicial {
+.puja {
     display: flex;
     gap: 8px;
     margin-bottom: 16px;
 }
 
-.subastar {
+.inputPuja {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid var(--primary-color);
+    border-radius: 4px;
+}
+
+.pujar {
     background-color: var(--primary-color);
     color: #fff;
     border: none;
@@ -85,8 +102,21 @@
     cursor: pointer;
 }
 
+.historialPujas {
+    background: var(--primary-color);
+    color: white;
+    font-weight: 500;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 0 auto;
+    border-radius: 5px;
+}
 
-#titulo button{
+.contenedorHistorial {
+    background-color: white;
+}
+
+.titulo button {
     background-color: green;
     color: #fff;
     border: none;
@@ -96,24 +126,48 @@
     cursor: pointer;
 }
 
-.agregar-img{
+.imgCarrusel {
     width: 400px;
     height: 400px;
     object-fit: cover;
-    cursor: pointer;
 }
 
+.loaderContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .spinner {
+    border: 8px solid rgba(0, 0, 0, 0.1);
+    border-left-color: var(--primary-color);
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
 @media screen and (min-width: 768px) {
-    .body{
+    .body {
         max-width: none;
     }
-    .info{
+    .info {
         margin-left: 40px;
     }
 }
 
 @media screen and (max-width: 767.9999999px) {
-    .agregar-img{
+    .imgCarrusel {
         width: 300px;
         height: 300px;
     }

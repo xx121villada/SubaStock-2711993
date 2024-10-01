@@ -1,0 +1,10 @@
+#main-layout {
+  --primary-color: #237e0d;
+  --bg-color: #ffffff;
+  box-sizing: border-box;
+  --header-height: 55px;
+}
+
+#main-app {
+  padding-top: calc(var(--header-height) + 50px);
+}

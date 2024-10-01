@@ -1,4 +1,3 @@
-import "./detalleSubasta.css";
 
 export function TablaHistorial() {
   return (
