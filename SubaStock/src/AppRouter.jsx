@@ -46,7 +46,7 @@ export default function AppRouter() {
             element={<RegistroAnimales />}
           />
           <Route exact path="/ver-animales" element={<Animales />} />
-          <Route exact path="Subastar" element={<Subastar />} />
+          <Route exact path="Subastar/:idAnimal" element={<Subastar />} />
           <Route exact path="/crud-animal/:idAnimal" element={<Crud />} />
           <Route
             exact
