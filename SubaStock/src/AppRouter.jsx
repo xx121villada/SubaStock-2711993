@@ -18,6 +18,7 @@ import Layout from "./components/Layout/Layout.jsx";
 
 export default function AppRouter() {
   return (
+
     <HashRouter>
       <Routes>
         <Route exact path="/login" element={<Login />} />
@@ -26,7 +27,7 @@ export default function AppRouter() {
         <Route path="/" element={<Layout />}>
           {/* Poner ruta aqui si se desea heredar el layout */}
           <Route index element={<Inicio />} />
-          <Route exact path="/detalle-subasta" element={<DetalleSubasta />} />
+          <Route exact path="/detalle-subasta/:idSubasta" element={<DetalleSubasta />} />
           <Route exact path="/detalle-animales" element={<DetalleAnimales />} />
           <Route exact path="/sesion-iniciada" element={<SesionIniciada />} />
           <Route
