@@ -1,7 +1,6 @@
 import styles from "./subastar.module.css";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Swal from "sweetalert2";
 
 export function Subastar() {
   const [idUsuario, setIdUsuario] = useState("");
@@ -44,22 +43,19 @@ export function Subastar() {
   };
 
   const handleImageChange = (e) => {
-    const files = Array.from(e.target.files);
-    setImagenes(files);
-
-    setImagenPreviews([]);
-
-    files.forEach((file) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImagen(file);
       const reader = new FileReader();
 
       reader.onloadend = () => {
-        setImagenPreviews((prev) => [
-          ...prev,
-          reader.result,
-        ]);
+        setImagenPreview(reader.result);
       };
+
       reader.readAsDataURL(file);
-    });
+    } else {
+      setImagenPreview(null);
+    }
   };
 
   const handleSubmit = (e) => {
@@ -116,40 +112,17 @@ export function Subastar() {
                 id="imagen"
                 onChange={handleImageChange}
                 accept="image/*"
-                multiple
                 name="imagen"
               />
             </div>
-              {imagenPreviews.length > 0 ? (
-                imagenPreviews.length > 5 ? (
-                  <label className="mb-2 mb-md-0 me-md-2 text-danger">
-                    Solo se permiten hasta 5 imágenes. Por favor, elimina algunas imágenes.
-                  </label>
-                ) : (
-                  imagenPreviews.map((preview, index) => (
-                    <img
-                      key={index}
-                      src={preview}
-                      alt={`Imagen subasta ${index + 1}`}
-                      className="img-fluid mx-auto d-block w-50"
-                      style={{
-                        maxHeight: "250px",
-                        maxWidth: "250px",
-                        margin: "1px",
-                        borderRadius: "5px",
-                        border: "1px solid var(--border-color)",
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        cursor: "pointer",
-                        transition: "transform 0.3s ease",
-                      }}
-                    />
-                  ))
-                )
-              ) : null}
-
+            {imagenPreview && (
+              <img
+                src={imagenPreview}
+                alt="Imagen subasta"
+                className="img-fluid mx-auto d-block w-50"
+                style={{ maxHeight: "200px", maxWidth: "200px" }}
+              />
+            )}
 
             <div className={`${styles.info} d-flex flex-column d-md-flex-row`}>
               <div
@@ -212,7 +185,7 @@ export function Subastar() {
             </div>
           </div>
         </div>
-      </form >
-    </div >
+      </form>
+    </div>
   );
 }
