@@ -16,7 +16,7 @@ function SesionIniciada() {
       if (result.isConfirmed) {
         Swal.fire("Sesión cerrada", "Tu sesión ha sido finalizada", "success");
         localStorage.removeItem("idAnimal");
-        localStorage.removeItem("idUsuario");
+        sessionStorage.removeItem("idUsuario");
 
         window.location.hash = "/";
       }
@@ -27,7 +27,6 @@ function SesionIniciada() {
     <div className="sesion-container">
       
 
-      {/* Menú de botones flotando sobre la imagen */}
       <div className="content-container">
       
         <main className="App-main">
