@@ -31,7 +31,7 @@ function SesionIniciada() {
       
         <main className="App-main">
           <div className="button-container">
-          <h1 className="centered-title">BIENVENIDO A AGROSTOCK</h1>
+          <h1 className="centered-title">BIENVENIDO A SUBASTOCK</h1>
             <Link to="/Subastar">
               <button className="button">SUBASTAR</button>
             </Link>
