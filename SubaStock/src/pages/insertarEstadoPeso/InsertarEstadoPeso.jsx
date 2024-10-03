@@ -77,7 +77,7 @@ export default function InsertarEstadoPeso() {
             <form onSubmit={handleSubmit}>
                 <div className='container-alimento'>
                     <div className="form-container-div">
-                        <h1>Insertar Estado y peso</h1>
+                        <h1>INSERTAR INFORMACIÓN</h1>
                         <div className="cow-container-img">
                             <img src={bovino} alt="Imagen de vaca" className="cow-icon" />
                             <p>Marca del Animal: {marca ? marca : "No disponible"}</p>
@@ -107,7 +107,7 @@ export default function InsertarEstadoPeso() {
                             </select>
                         </div>
                         <button className="submit-button" type='submit'>
-                            Insertar Estado de salud y peso
+                            INSERTAR PESO Y SALUD
                         </button>
                     </div>
                 </div>

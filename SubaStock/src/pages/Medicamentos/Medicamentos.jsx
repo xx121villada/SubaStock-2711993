@@ -1,5 +1,6 @@
-import './styles/style.css';
-import { PiCowDuotone } from "react-icons/pi";
+import React from "react";
+import './style.css';
+import bovino from '../Animales/img/Bovino.png';
 import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 
@@ -78,51 +79,40 @@ export default function Informacion() {
     }
 
     return (
-        <div className='body'>
+        <div>
             <form onSubmit={handleSubmit}>
-            <div className="login">
-                <h3>INSERTAR MEDICAMENTOS</h3>
-            </div>
-            <div className="icon-container">
-                <PiCowDuotone className="icon" /><h4> {marca} </h4><PiCowDuotone className="icon" />
-            </div>
-            <div className="register-page-wrap d-flex align-items-center flex-wrap justify-content-center">
-                <div className="container">
-                    <div className="form-wrap max-width-600 mx-auto">
-                        <div className="form-group row">
+                <div className="containerMedicamento">
+                    <div className="form-container-div">
+                        <h3>INSERTAR MEDICAMENTOS</h3>
+                        <div className="cow-container-img">
+                            <img src={bovino} alt="Imagen de vaca" className="cow-icon" />
+                            <p>Marca del Animal: {marca ? marca : "No disponible"}</p>
+                            <img src={bovino} alt="Imagen de vaca" className="cow-icon" />
+                        </div>
+                        <div className="inputMedicamento">
                             <label>Nombre:</label>
-                            <div className="col-sm-15">
-                                <input type="text"
+                            <input type="text"
                                 id='nombre'
                                 name='nombre'
                                 required
                                 className="form-control"
                                 placeholder="Ingrese el nombre del medicamento"
                                 onChange={handleChange}
-                                />
-                            </div>
-                        </div>
-                        <div className="form-group row">
+                            />
+
                             <label>Dosis:</label>
-                            <div className="col-sm-10">
-                                <input type="number"
+                            <input type="number"
                                 id='dosis'
                                 name='dosis'
                                 required
                                 className="form-control"
-                                placeholder="Ingrese la dosis aplicada" 
+                                placeholder="Ingrese la dosis aplicada"
                                 onChange={handleChange}
-                                />
-                            </div>
+                            />
                         </div>
+                            <button type='submit' className='botonInsertar'> INSERTAR MEDICAMENTO</button>
                     </div>
                 </div>
-            </div>
-            <div className="botones">
-                <button type='submit' className='btn btn-success boton boton-insertar'>
-                    INSERTAR MEDICAMENTO
-                </button>
-            </div>
             </form>
         </div>
     );
