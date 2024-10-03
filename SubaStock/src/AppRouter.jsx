@@ -12,8 +12,7 @@ import RegistroAnimales from "./pages/RegistroAnimales/RegistroAnimales.jsx";
 import Animales from "./pages/Animales/Animales";
 import Crud from "./pages/CRUD-xime/Crud.jsx";
 import InsertarEstadoPeso from "./pages/insertarEstadoPeso/InsertarEstadoPeso.jsx";
-
-import Medicamentos from "./pages/Informacion/Medicamentos.jsx";
+import Medicamentos from "./pages/Medicamentos/Medicamentos.jsx";
 import Layout from "./components/Layout/Layout.jsx";
 
 export default function AppRouter() {
@@ -46,7 +45,7 @@ export default function AppRouter() {
             element={<RegistroAnimales />}
           />
           <Route exact path="/ver-animales" element={<Animales />} />
-          <Route exact path="Subastar" element={<Subastar />} />
+          <Route exact path="Subastar/:idAnimal" element={<Subastar />} />
           <Route exact path="/crud-animal/:idAnimal" element={<Crud />} />
           <Route
             exact

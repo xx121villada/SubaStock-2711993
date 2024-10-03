@@ -11,6 +11,7 @@ function Crud() {
     const [showVacunacion, setShowVacunacion] = useState(false);
     const [showPesoSalud, setShowPesoSalud] = useState(false);
     const [marca, setMarca] = useState('');
+    const [idAnimal, setIdAnimal] = useState();
     const [raza, setRaza] = useState('');
 
     useEffect(() => {
@@ -19,6 +20,9 @@ function Crud() {
 
         const storedRaza = localStorage.getItem('razaAnimal');
         if (storedRaza) setRaza(storedRaza);
+
+        const storedIdAnimal = localStorage.getItem('idAnimal');
+        if (storedIdAnimal) setIdAnimal(storedIdAnimal);
     }, []);
 
     const toggleAlimentacion = () => setShowAlimentacion(!showAlimentacion);
@@ -58,7 +62,9 @@ function Crud() {
             </div>
             <div className="content">
                 <div className="buttons-crud">
-                    <button className="button-inicio-crud">INICIO</button>
+                    <Link to={`/subastar/${idAnimal}`}>
+                    <button className="button-inicio-crud">Subastar</button>
+                    </Link>
                     <div className="dropdown">
                         <label>Insertar</label>
                         <select onChange={insertar}>

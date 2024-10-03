@@ -5,9 +5,11 @@ import { Link } from "react-router-dom";
 export function Subastar() {
   const [idUsuario, setIdUsuario] = useState("");
   const [idAnimal, setIdAnimal] = useState("");
+  const [imagenes, setImagenes] = useState(null);
+  const [imagenPreviews, setImagenPreviews] = useState([]);
 
   useEffect(() => {
-    const storedIdUsuario = localStorage.getItem("idUsuario");
+    const storedIdUsuario = sessionStorage.getItem("idUsuario");
     if (storedIdUsuario) {
       setIdUsuario(storedIdUsuario);
     }
@@ -34,29 +36,31 @@ export function Subastar() {
     }));
   }, [idUsuario, idAnimal]);
 
-  const [imagen, setImagen] = useState(null);
-  const [imagenPreview, setImagenPreview] = useState(null);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setValues({ ...values, [name]: value });
   };
 
   const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setImagen(file);
+    const files = Array.from(e.target.files);
+    setImagenes(files);
+  
+    const newPreviews = [];
+  
+    files.forEach((file) => {
       const reader = new FileReader();
-
+  
       reader.onloadend = () => {
-        setImagenPreview(reader.result);
+        newPreviews.push(reader.result);
+  
+        if (newPreviews.length === files.length) {
+          setImagenPreviews(newPreviews);
+        }
       };
-
       reader.readAsDataURL(file);
-    } else {
-      setImagenPreview(null);
-    }
+    });
   };
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -65,11 +69,16 @@ export function Subastar() {
     Object.keys(values).forEach((key) => {
       formData.append(key, values[key]);
     });
-    if (imagen) {
-      formData.append("imagen", imagen);
-    }
 
-    fetch("http://localhost:8000/subasta/Insertar", {
+    imagenes.forEach((imagen, index) => {
+      if (index === 0) {
+        formData.append("imagen", imagen);
+      } else {
+        formData.append(`imagen${index}`, imagen);
+      }
+    });
+
+    fetch(`https://apisubastock.cleverapps.io/subasta/Insertar/${idAnimal}`, {
       method: "POST",
       body: formData,
     })
@@ -81,6 +90,7 @@ export function Subastar() {
       })
       .then((data) => {
         console.log(data);
+        console.log(idUsuario);
       })
       .catch((err) => {
         console.error("Error:", err);
@@ -91,97 +101,112 @@ export function Subastar() {
     <div>
       <form action="" onSubmit={handleSubmit}>
         <div
-          className={`${styles.body} container-md p-2 d-flex flex-column align-items-center bg-white`}
+          className={`${styles.body} container-md p-4 d-flex flex-column align-items-center bg-light shadow-sm rounded`}
         >
           <div className="w-100 d-flex justify-content-start align-items-center mb-3">
             <button className={styles.backButton}>
-              <Link
-                to={"/sesion-iniciada"}
-                className="text-decoration-none text-dark"
-              >
+              <Link to={"/sesion-iniciada"} className="text-decoration-none text-dark">
                 Regresar
               </Link>
             </button>
           </div>
 
-          <div className="d-flex flex-column flex-md-row align-items-center justify-content-between">
-            <div className={styles.contentAgregarImagen}>
-              <h6>Agregar Imagenes</h6>
+          <h2 className="text-center mb-4">Subastar Animal</h2>
+
+          <div className="d-flex flex-column flex-md-row align-items-center justify-content-between w-100">
+            <div className="input-group">
+              <label className="form-label">Agregar Imágenes</label>
               <input
                 type="file"
-                id="imagen"
-                onChange={handleImageChange}
+                multiple
                 accept="image/*"
-                name="imagen"
+                onChange={handleImageChange}
+                className="form-control"
               />
+              <div className={`${styles.containerImages} mt-3`}>
+                {imagenPreviews.length > 5 ? (
+                  <div className={styles.errorMessage}>
+                    <p>Solo se permiten hasta 5 imágenes. Elimina algunas.</p>
+                  </div>
+                ) : (
+                  imagenPreviews.map((preview, index) => (
+                    <img
+                      key={index}
+                      src={preview}
+                      alt={`Imagen subasta ${index + 1}`}
+                      className={styles.imagePreview}
+                    />
+                  ))
+                )}
+              </div>
             </div>
-            {imagenPreview && (
-              <img
-                src={imagenPreview}
-                alt="Imagen subasta"
-                className="img-fluid mx-auto d-block w-50"
-                style={{ maxHeight: "200px", maxWidth: "200px" }}
-              />
-            )}
 
-            <div className={`${styles.info} d-flex flex-column d-md-flex-row`}>
-              <div
-                className={`${styles.contentTitulo} d-flex flex-row flex-md-row align-items-center justify-content-center mb-3`}
-              >
-                <label className="mb-2 mb-md-0 me-md-2">
-                  Ingresa el nombre de la subasta
-                </label>
+            <div className={`${styles.info} ms-md-4 mt-4 mt-md-0`}>
+              <div className="mb-3">
+                <label htmlFor="tituloSubasta">Nombre de la Subasta</label>
                 <input
                   type="text"
                   onChange={handleChange}
-                  className={styles.titulo}
-                  placeholder="Ingrese El Titulo"
+                  className="form-control"
+                  placeholder="Ingrese el Título"
                   id="tituloSubasta"
                   name="tituloSubasta"
                 />
               </div>
-              <h6 className={styles.tiempoRestante}>Fechas Limites</h6>
-              <div className={styles.fechas}>
-                <h6>Fecha Inicio:</h6>
-                <input
-                  type="date"
-                  onChange={handleChange}
-                  name="fechaInicio"
-                  id="fechaInicio"
-                />
-                <h6>Fecha Cierre:</h6>
-                <input
-                  type="date"
-                  onChange={handleChange}
-                  name="fechaFin"
-                  id="fechaFin"
-                />
+
+              <div className="mb-3">
+                <label>Fechas Límites</label>
+                <div className="d-flex justify-content-between">
+                  <div>
+                    <label htmlFor="fechaInicio">Fecha Inicio:</label>
+                    <input
+                      type="date"
+                      onChange={handleChange}
+                      name="fechaInicio"
+                      id="fechaInicio"
+                      className="form-control"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="fechaFin">Fecha Fin:</label>
+                    <input
+                      type="date"
+                      onChange={handleChange}
+                      name="fechaFin"
+                      id="fechaFin"
+                      className="form-control"
+                    />
+                  </div>
+                </div>
               </div>
-              <div className="d-flex flex-column my-2 text-center">
-                <h6 className={styles.descripcion}>Descripcion:</h6>
-                <input
-                  className={styles.descripcion}
-                  placeholder="Ingrese Descripcion"
+
+              <div className="mb-3">
+                <label htmlFor="descripcion">Descripción</label>
+                <textarea
+                  className="form-control"
+                  placeholder="Ingrese la Descripción"
                   onChange={handleChange}
                   name="descripcion"
                   id="descripcion"
+                  rows="3"
                 />
               </div>
 
-              <div className={styles.valorInicial}>
-                <h6>Valor Inicial De La Puja:</h6>
+              <div className="d-flex align-items-center justify-content-between mb-3">
+                <label htmlFor="pujaMinima">Valor Inicial de la Puja:</label>
                 <input
                   type="number"
-                  className="mx-2 my-2 w-50 input-valor"
-                  placeholder="ingrese el valor inicial"
+                  className="form-control w-50"
+                  placeholder="Valor Inicial"
                   onChange={handleChange}
                   name="pujaMinima"
                   id="pujaMinima"
                 />
-                <button className={styles.subastar} type="submit">
-                  Subastar
-                </button>
               </div>
+
+              <button className={`${styles.subastar} w-100 mt-3`} type="submit">
+                Subastar
+              </button>
             </div>
           </div>
         </div>
