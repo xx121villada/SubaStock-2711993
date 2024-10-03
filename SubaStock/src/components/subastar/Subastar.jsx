@@ -1,7 +1,7 @@
 import styles from "./subastar.module.css";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-
+import Swal from "sweetalert2";
 export function Subastar() {
   const [idUsuario, setIdUsuario] = useState("");
   const [idAnimal, setIdAnimal] = useState("");
@@ -90,10 +90,26 @@ export function Subastar() {
       })
       .then((data) => {
         console.log(data);
-        console.log(idUsuario);
+        if(data.status){
+          Swal.fire({
+            title: 'Subasta Creada con exito',
+            icon:'success',
+          })
+        }else{
+          Swal.fire({
+            title: 'Error al crear la subasta',
+            text: data.message,
+            icon: 'error',
+          })
+        }
       })
       .catch((err) => {
         console.error("Error:", err);
+        Swal.fire({
+          title: 'Error al crear la subasta',
+          text: err.message,
+          icon: 'error',
+        })
       });
   };
 

@@ -60,6 +60,29 @@
     background-color: #28c457;
 }
 
+.button-enabled {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button-enabled:hover {
+    background-color: #218838;
+}
+
+.button-disabled {
+    background-color: #656161;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: not-allowed;
+    opacity: 0.65;
+}
+
+
 .dropdown {
     display: flex;
     flex-direction: column;

@@ -6,6 +6,7 @@ import HistorialVacunacion from '../Historiales/HistorialVacunacion';
 import HistorialPesoSalud from '../Historiales/HistorialPesoSalud';
 
 function Crud() {
+
     const navigate = useNavigate();
     const [showAlimentacion, setShowAlimentacion] = useState(false);
     const [showVacunacion, setShowVacunacion] = useState(false);
@@ -13,6 +14,7 @@ function Crud() {
     const [marca, setMarca] = useState('');
     const [idAnimal, setIdAnimal] = useState();
     const [raza, setRaza] = useState('');
+    const [btnActived, setBtnActived] = useState(false);
 
     useEffect(() => {
         const storedMarca = localStorage.getItem('marcaAnimal');
@@ -24,6 +26,35 @@ function Crud() {
         const storedIdAnimal = localStorage.getItem('idAnimal');
         if (storedIdAnimal) setIdAnimal(storedIdAnimal);
     }, []);
+
+    // Función asincrónica que espera a que el ID del animal esté disponible antes de realizar el fetch
+    useEffect(() => {
+        const fetchAnimalData = async () => {
+            if (!idAnimal) return;  // Si no hay idAnimal, salimos de la función
+
+            try {
+                const response = await fetch(`https://apisubastock.cleverapps.io/subasta/Obtener/${idAnimal}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+                const data = await response.json();
+                if (data.status) {
+                    setBtnActived(true);
+                } else {
+                    setBtnActived(false);
+                }
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchAnimalData();
+    }, [idAnimal]);
 
     const toggleAlimentacion = () => setShowAlimentacion(!showAlimentacion);
     const toggleVacunacion = () => setShowVacunacion(!showVacunacion);
@@ -63,8 +94,15 @@ function Crud() {
             <div className="content">
                 <div className="buttons-crud">
                     <Link to={`/subastar/${idAnimal}`}>
-                    <button className="button-inicio-crud">Subastar</button>
+                        <button
+                            className={`button-inicio-crud ${btnActived ? 'button-disabled' : 'button-enabled'}`}
+                            disabled={btnActived}
+                        >
+                            {btnActived ? 'Animal ya subastado' : 'Iniciar Subasta'}
+                        </button>
+
                     </Link>
+
                     <div className="dropdown">
                         <label>Insertar</label>
                         <select onChange={insertar}>
