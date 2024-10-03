@@ -27,10 +27,9 @@ function Crud() {
         if (storedIdAnimal) setIdAnimal(storedIdAnimal);
     }, []);
 
-    // Función asincrónica que espera a que el ID del animal esté disponible antes de realizar el fetch
     useEffect(() => {
         const fetchAnimalData = async () => {
-            if (!idAnimal) return;  // Si no hay idAnimal, salimos de la función
+            if (!idAnimal) return; 
 
             try {
                 const response = await fetch(`https://apisubastock.cleverapps.io/subasta/Obtener/${idAnimal}`, {
