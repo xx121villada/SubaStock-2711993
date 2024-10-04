@@ -1,13 +1,26 @@
-.container {
+
+.register-container {
     display: flex;
-    justify-content: center;
+    height: 100vh;
+    background-image: url("../Registro/img/img_principal.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    justify-content: right;
+    align-items: right;
+    align-self: right;
+    position: relative;
+  }
+
+.content-register {
+    display: flex;
+    flex: 1;
     align-items: center;
-    min-height: 100vh;
-    background-color: #f4f4f4;
-    border: 1px solid #ccc;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
+    justify-content: center;
+    padding-right: 5%; 
+    
 }
+
 
 .registro-form {
     background-color: white;

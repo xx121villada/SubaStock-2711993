@@ -2,7 +2,6 @@ import './login.css';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import Swal from 'sweetalert2';
-import img_principal from '../Login/img/imgPrincipalR.png';
 
 // Hook personalizado para manejar el formulario
 const useForm = (initialValues) => {
@@ -77,9 +76,7 @@ const Login = () => {
   return (
     <div className="login-container">
       <div className="content-container">
-        <div className="image-container">
-          <img src={img_principal} alt="Imagen de inicio de sesión" className="left-image" />
-        </div>
+        
         <div className="form-container">
           <h1 className="centered-title">INICIO SESIÓN</h1>
           <form className="login-form" onSubmit={handleSubmit}>

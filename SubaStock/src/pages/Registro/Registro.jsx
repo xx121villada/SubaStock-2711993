@@ -81,7 +81,9 @@ export default function Registro() {
     };
 
     return (
-        <div className='container'>
+        <div className='register-container'>
+            <div className='content-register'>
+            
             <form onSubmit={handleSubmit} ref={form} className='registro-form'>
                 <section className='container-registro'>
                     <h1 className="titulo">Registro</h1>
@@ -168,6 +170,7 @@ export default function Registro() {
                     </div>
                 </section>
             </form>
+            </div>
         </div>
     );
 }
