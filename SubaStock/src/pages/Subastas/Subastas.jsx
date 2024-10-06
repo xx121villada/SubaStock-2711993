@@ -19,8 +19,8 @@ const Subastas = () => {
         padding:
           "calc(var(--header-height) + 30px + 16px) 20px calc(var(--footer-height) + 30px + 16px) 20px",
         minHeight: "100svh",
-
         boxSizing: "border-box",
+        marginTop: 100,
       }}
     >
       {animals.map((animal) => (

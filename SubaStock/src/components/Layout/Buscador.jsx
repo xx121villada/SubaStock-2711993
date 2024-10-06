@@ -6,7 +6,7 @@ const Buscador = () => {
 
   return (
     <div
-      className="input-group rounded-pill"
+      className="input-group rounded-pill d-xsm-none d-sm-flex"
       id="buscador"
       style={{
         backgroundColor: "#E5E4E270",
