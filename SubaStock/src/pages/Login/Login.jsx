@@ -2,8 +2,7 @@ import './login.css';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Corrige el nombre de 'boostrap' a 'bootstrap'
-import SPLoader from '../loader/Loader'; // Importa tu componente SPLoader
+import SPLoader from '../loader/Loader'; 
 
 
 const useForm = (initialValues) => {
@@ -69,14 +68,14 @@ const Login = () => {
         contraseña: ''
     });
 
-    const [loading, setLoading] = useState(true); // Estado para controlar la carga
+    const [loading, setLoading] = useState(true); 
 
     useEffect(() => {
-        // Simula la carga de datos o inicialización
+        
         const loadData = async () => {
-            // Simula un delay, reemplázalo con tu lógica de carga real
-            await new Promise((resolve) => setTimeout(resolve, 1000));
-            setLoading(false); // Cambia el estado a false una vez que se carga el contenido
+            
+            await new Promise((resolve) => setTimeout(resolve, 600));
+            setLoading(false);
         };
 
         loadData();
@@ -87,9 +86,9 @@ const Login = () => {
         iniciarSesion(values);
     };
 
-    if (loading) {
-        return <SPLoader />; // Muestra el loader mientras se carga
-    }
+        if (loading) {
+            return <SPLoader />;
+        }
 
     return (
         <div className="login-container">
@@ -100,6 +99,7 @@ const Login = () => {
                         <div>
                             <label className="nombre-input">CORREO</label>
                             <input
+                                required
                                 type="email"
                                 placeholder="Ingrese su correo"
                                 className="input-field"
@@ -110,6 +110,7 @@ const Login = () => {
                         <div>
                             <label className="nombre-input">CONTRASEÑA</label>
                             <input
+                                required
                                 type="password"
                                 placeholder="Ingrese su contraseña"
                                 className="input-field"
