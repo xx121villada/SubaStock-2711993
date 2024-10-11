@@ -27,7 +27,7 @@ export default function HistorialVacunacion() {
     
     const fetchHistorial = async () => {
         try {
-            const response = await fetch(`http://localhost:8000/medicamento/Obtener/${idAnimal}`, {
+            const response = await fetch(`https://apisubastock.cleverapps.io/medicamento/Obtener/${idAnimal}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -67,7 +67,7 @@ export default function HistorialVacunacion() {
                 confirmButtonText: 'Sí, eliminar'
             });
             if (result.isConfirmed) {
-                const response = await fetch(`http://localhost:8000/medicamento/Eliminar/${idMedicamento}`, {
+                const response = await fetch(`https://apisubastock.cleverapps.io/medicamento/Eliminar/${idMedicamento}`, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json'
@@ -117,7 +117,7 @@ export default function HistorialVacunacion() {
                                 <td>{vacuna.nombre}</td>
                                 <td>{vacuna.fecha}</td>
                                 <td>
-                                    <button 
+                                    <button
                                         className="btn-delete-vacunacion"
                                         onClick={() => eliminarVacuna(vacuna.idMedicamento)}>
                                         Eliminar

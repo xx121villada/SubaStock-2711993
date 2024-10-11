@@ -2,6 +2,7 @@ import './registro.css';
 import { useState, useRef } from 'react';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
+import Loader from '../loader/Loader'
 
 export default function Registro() {
     const validarCorreo = (email) => /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/.test(email);

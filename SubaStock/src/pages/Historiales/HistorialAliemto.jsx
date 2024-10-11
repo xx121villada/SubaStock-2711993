@@ -21,7 +21,7 @@ export default function HistorialAlimento() {
 
     const fetchHistorial = async () => {
         try {
-            const response = await fetch(`http://localhost:8000/alimentacion/Obtener/${idAnimal}`, {
+            const response = await fetch(`https://apisubastock.cleverapps.io/alimentacion/Obtener/${idAnimal}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
