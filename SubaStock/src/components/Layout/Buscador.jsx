@@ -14,33 +14,30 @@ const Buscador = () => {
   
 
   const buscar = (query) => {
-    // Si no hay texto de búsqueda, no hacemos la consulta
     if (!query.trim()) {
       setAnimales([]);
       return;
     }
 
-    // Aquí realizamos la llamada al servidor para obtener los animales del usuario
     fetch(`http://localhost:8000/buscador/Buscar.php/${idUsuario}/${query}`)
       .then((response) => response.json())
       .then((data) => {
         if (data.animal) {
           setAnimales(data.animal);
         } else {
-          setAnimales([]); // No se encontraron resultados
+          setAnimales([]); 
         }
       })
       .catch((error) => {
         console.error("Error al buscar animales:", error);
-        setAnimales([]); // En caso de error, vaciamos los resultados
+        setAnimales([]); 
       });
   };
 
-  // Efecto que se activa cada vez que cambia el texto de búsqueda
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
       buscar(textoBusqueda);
-    }, 300); // Delay de 300ms para evitar búsquedas excesivas
+    }, 300); 
 
     return () => clearTimeout(delayDebounceFn);
   }, [textoBusqueda]);
@@ -77,7 +74,7 @@ const Buscador = () => {
         </div>
       </div>
 
-      {/* Mostrar los resultados */}
+
       {animales.length > 0 && (
         <div className="resultados-busqueda">
           {animales.map((animal) => (
