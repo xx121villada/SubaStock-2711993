@@ -1,0 +1,21 @@
+#tarjeta-ganada {
+    width: 240px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+    h3.text-green {
+        color: #237e0d;
+    }
+
+    .btn-whatsapp {
+        background-color: #40cf13;
+
+        .icon-whatsapp {
+            width: 34px;
+            height: 34px;
+        }
+
+        .text-button {
+            font-size: 0.8rem;
+        }
+    }
+}
