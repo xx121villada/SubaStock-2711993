@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
-import '../Animales/styles/TipoAnimal.css';
+import styles from "./styles/VisualizarAnimales.module.css"
 
 export default function CardVisualizarAnimal({ visualizarAnimal, imagen }) {
 
@@ -11,22 +11,22 @@ export default function CardVisualizarAnimal({ visualizarAnimal, imagen }) {
     };
 
     return (
-        <div className="cardTipoAnimal">
-            <div className="img-container-Tipo">
+        <div className={styles.containerPrincipal}>
+            <div className={styles.imgContainerTipo}>
                 <img
-                    className="img-tipo"
+                    className={styles.cardImage}
                     src={imagen}
                     alt={visualizarAnimal.raza}
                 />
             </div>
-            <div className="content-Tipo">
-                <h5 className="card-name">raza : {visualizarAnimal.raza}</h5>
+            <div className={styles.contentTipo} >
+                <h5 className={styles.cardName}>raza : {visualizarAnimal.raza}</h5>
                 <h6>Marca: {visualizarAnimal.marca}</h6>
-                <Link 
+                <Link
                     to={`/crud-animal/${visualizarAnimal.idAnimal}`}
                     onClick={handleVisualizarClick}
                 >
-                    <button className='btn-visualizar'>Visualizar</button>
+                    <button className={styles.btnVisualizar}>Visualizar</button>
                 </Link>
             </div>
         </div>
