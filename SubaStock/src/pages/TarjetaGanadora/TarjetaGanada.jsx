@@ -1,5 +1,5 @@
-import LazyCarousel from "./LazyCarousel";
-import './TarjetaGanada.css'
+import LazyCarousel from "../../components/Subastas/LazyCarousel";
+import '../TarjetaGanadora/TarjetaGanada.css';
 
 // eslint-disable-next-line react/prop-types
 const TarjetaGanada = ({ titulo = "", imgs = ["https://wintechnology.co/wp-content/uploads/2021/11/imagen-no-disponible.jpg"]}) => {
