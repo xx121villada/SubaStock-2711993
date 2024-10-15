@@ -1,17 +1,18 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import './Buscador.css'; 
 
 const Buscador = () => {
   const [textoBusqueda, setTextoBusqueda] = useState("");
   const [animales, setAnimales] = useState([]);
-  const [idUsuario, setIdUsuario] = useState('');
+  const [idUsuario, setIdUsuario] = useState("");
 
-    useEffect(() => {
-        const storedIdUsuario = sessionStorage.getItem('idUsuario');
-        if (storedIdUsuario) {
-            setIdUsuario(storedIdUsuario);
-        }
-    }, []);
-  
+  useEffect(() => {
+    const storedIdUsuario = sessionStorage.getItem("idUsuario");
+    if (storedIdUsuario) {
+      setIdUsuario(storedIdUsuario);
+    }
+  }, []);
 
   const buscar = (query) => {
     if (!query.trim()) {
@@ -19,48 +20,57 @@ const Buscador = () => {
       return;
     }
 
-    fetch(`http://localhost:8000/buscador/Buscar.php/${idUsuario}/${query}`)
+    fetch(`http://localhost:8000/buscador/Buscar/${idUsuario}/${query}`)
       .then((response) => response.json())
       .then((data) => {
         if (data.animal) {
           setAnimales(data.animal);
         } else {
-          setAnimales([]); 
+          setAnimales([]);
         }
       })
       .catch((error) => {
         console.error("Error al buscar animales:", error);
-        setAnimales([]); 
+        setAnimales([]);
       });
   };
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
       buscar(textoBusqueda);
-    }, 300); 
+    }, 300);
 
     return () => clearTimeout(delayDebounceFn);
   }, [textoBusqueda]);
 
+  const handleAnimalClick = () => {
+    setTextoBusqueda("");  
+    setAnimales([]);  
+  };
+
   return (
-    <div>
+    <div style={{ position: "relative", width: "290px" }}>
       <div
         className="input-group rounded-pill"
         id="buscador"
         style={{
           backgroundColor: "#E5E4E270",
           height: "32px",
-          width: 290,
+          width: "100%",
         }}
       >
         <input
+          value={textoBusqueda}  
           onChange={(e) => setTextoBusqueda(e.target.value)}
           className="form-control border-0 rounded-pill shadow-none bg-transparent"
           style={{ padding: "0 0 0 20px", margin: 0, height: "100%" }}
           type="text"
           placeholder="Buscar animal..."
         />
-        <div className="input-group-text bg-transparent border-0 pointer-click" role="button">
+        <div
+          className="input-group-text bg-transparent border-0 pointer-click"
+          role="button"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -74,13 +84,19 @@ const Buscador = () => {
         </div>
       </div>
 
-
       {animales.length > 0 && (
         <div className="resultados-busqueda">
           {animales.map((animal) => (
-            <div key={animal.idAnimal}>
-              <h5>{animal.raza} - {animal.marca}</h5>
-            </div>
+            <Link 
+              key={animal.idAnimal} 
+              to={`/crud-animal/${animal.idAnimal}`} 
+              className="resultado-item-link"
+              onClick={handleAnimalClick}  
+            >
+              <div className="resultado-item">
+                <h5>{animal.raza} - {animal.marca}</h5>
+              </div>
+            </Link>
           ))}
         </div>
       )}
