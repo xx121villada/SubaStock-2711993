@@ -6,6 +6,8 @@ const Buscador = () => {
   const [textoBusqueda, setTextoBusqueda] = useState("");
   const [animales, setAnimales] = useState([]);
   const [idUsuario, setIdUsuario] = useState("");
+  const [idAnimal, setIdAnimal] = useState("");
+
 
   useEffect(() => {
     const storedIdUsuario = sessionStorage.getItem("idUsuario");
@@ -25,6 +27,7 @@ const Buscador = () => {
       .then((data) => {
         if (data.animal) {
           setAnimales(data.animal);
+
         } else {
           setAnimales([]);
         }
@@ -43,9 +46,13 @@ const Buscador = () => {
     return () => clearTimeout(delayDebounceFn);
   }, [textoBusqueda]);
 
-  const handleAnimalClick = () => {
-    setTextoBusqueda("");  
-    setAnimales([]);  
+  const handleAnimalClick = (idAnimal, marca, raza) => {
+    setTextoBusqueda("");
+    setIdAnimal(idAnimal)
+    setAnimales([]);
+    localStorage.setItem('idAnimal', idAnimal)
+    localStorage.setItem('marcaAnimal', marca)
+    localStorage.setItem('razaAnimal', raza)
   };
 
   return (
@@ -60,7 +67,7 @@ const Buscador = () => {
         }}
       >
         <input
-          value={textoBusqueda}  
+          value={textoBusqueda}
           onChange={(e) => setTextoBusqueda(e.target.value)}
           className="form-control border-0 rounded-pill shadow-none bg-transparent"
           style={{ padding: "0 0 0 20px", margin: 0, height: "100%" }}
@@ -87,12 +94,13 @@ const Buscador = () => {
       {animales.length > 0 && (
         <div className="resultados-busqueda">
           {animales.map((animal) => (
-            <Link 
-              key={animal.idAnimal} 
-              to={`/crud-animal/${animal.idAnimal}`} 
+            <Link
+              key={animal.idAnimal}
+              to={`/crud-animal/${animal.idAnimal}`}
+              
               className="resultado-item-link"
-              onClick={handleAnimalClick}  
-            >
+              onClick={() => handleAnimalClick(animal.idAnimal, animal.marca, animal.raza)}
+              >
               <div className="resultado-item">
                 <h5>{animal.raza} - {animal.marca}</h5>
               </div>
