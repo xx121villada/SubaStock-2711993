@@ -1,5 +1,4 @@
 import { Routes, Route, HashRouter } from "react-router-dom";
-import Inicio from "./App";
 import Login from "./pages/Login/Login.jsx";
 import Registro from "./pages/Registro/Registro.jsx";
 import { DetalleSubasta } from "./components/detalleSubasta/DetalleSubasta";
@@ -16,6 +15,7 @@ import { AuthProvider } from "./contexts/AuthContext.jsx";
 
 import Medicamentos from "./pages/Informacion/Medicamentos.jsx";
 import Layout from "./components/Layout/Layout.jsx";
+import Subastas from "./pages/Subastas/Subastas.jsx";
 
 export default function AppRouter() {
   return (
@@ -27,7 +27,7 @@ export default function AppRouter() {
 
           <Route path="/" element={<Layout />}>
             {/* Poner ruta aqui si se desea heredar el layout */}
-            <Route index element={<Inicio />} />
+            <Route index element={<Subastas />} />
             <Route
               exact
               path="/detalle-subasta/:idSubasta"
