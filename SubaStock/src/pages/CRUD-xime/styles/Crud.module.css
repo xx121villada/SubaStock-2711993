@@ -1,4 +1,4 @@
-.crud-app {
+.crudApp {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -7,7 +7,7 @@
     padding: 20px;
 }
 
-.header-crud {
+.headerCrud {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -16,12 +16,12 @@
     margin-bottom: 20px;
 }
 
-.header-icon {
+.headerIcon {
     width: 50px;
     height: 50px;
 }
 
-.header-title {
+.headerTitle {
     font-size: 2em;
     color: #333;
     font-weight: bold;
@@ -38,14 +38,14 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.buttons-crud {
+.buttonsCrud {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
     align-items: center;
 }
 
-.button-inicio-crud {
+.buttonInicioCrud {
     background-color: #30e968;
     color: white;
     border: none;
@@ -56,11 +56,11 @@
     transition: background-color 0.3s ease;
 }
 
-.button-inicio-crud:hover {
-    background-color: #28c457;
+.buttonInicioCrud:hover {
+    background-color: #323533;
 }
 
-.button-enabled {
+.buttonEnabled {
     background-color: #28a745;
     color: white;
     border: none;
@@ -69,11 +69,11 @@
     transition: background-color 0.3s ease;
 }
 
-.button-enabled:hover {
+.buttonEnabled:hover {
     background-color: #218838;
 }
 
-.button-disabled {
+.buttonDisabled {
     background-color: #656161;
     color: white;
     border: none;
@@ -81,7 +81,6 @@
     cursor: not-allowed;
     opacity: 0.65;
 }
-
 
 .dropdown {
     display: flex;
@@ -108,7 +107,7 @@
     margin-top: 20px;
 }
 
-.animal-breed {
+.animalBreed {
     font-size: 1.8em;
     font-weight: bold;
     color: #333;
@@ -116,12 +115,12 @@
     margin-bottom: 20px;
 }
 
-.menu-crud {
+.menuCrud {
     margin-bottom: 20px;
     text-align: center;
 }
 
-.menu-crud-button {
+.menuCrudButton {
     background-color: #30e968;
     color: white;
     border: none;
@@ -132,27 +131,55 @@
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.menu-crud-button:hover {
+.menuCrudButton:hover {
     background-color: #28c457;
     transform: scale(1.05);
 }
 
 @media (max-width: 768px) {
-    .header-crud {
+    .headerCrud {
         flex-direction: column;
         align-items: center;
     }
 
-    .buttons-crud {
+    .buttonsCrud {
         flex-direction: column;
         align-items: center;
+        width: 100%; 
     }
 
-    .button-inicio-crud {
+    .buttonInicioCrud,
+    .menuCrudButton {
+        width: 100%;
         margin-bottom: 10px;
     }
 
-    .menu-crud-button {
-        width: 100%;
+    .content {
+        padding: 15px; 
+    }
+
+    .headerTitle {
+        font-size: 1.5em; 
+    }
+
+    .headerIcon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .animalBreed {
+        font-size: 1.5em;
+    }
+}
+
+@media (max-width: 480px) {
+    .headerTitle {
+        font-size: 1.2em;
+    }
+
+    .buttonInicioCrud,
+    .menuCrudButton {
+        padding: 8px 10px;
+        font-size: 1em;
     }
 }
