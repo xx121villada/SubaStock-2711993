@@ -60,7 +60,12 @@ function Crud() {
                 if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
                 const data = await response.json();
-                setBtnActived(data.status);
+
+                if (data.status) {
+                    setBtnActived(true);
+                } else {
+                    setBtnActived(false);
+                }
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -164,3 +169,4 @@ function Crud() {
 }
 
 export default Crud;
+
