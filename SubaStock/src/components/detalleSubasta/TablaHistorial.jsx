@@ -1,9 +1,40 @@
+import { useEffect, useState } from "react";
+import Swal from 'sweetalert2';
 
-export function TablaHistorial() {
+export function TablaHistorial({ idAnimal }) {
+  const [pujas, setPujas] = useState([]);
+
+  useEffect(() => {
+    const obtenerHistorialPujas = async () => {
+      try {
+        const response = await fetch(`https://apisubastock.cleverapps.io/subasta/PujasPorAnimal/${idAnimal}`);
+        const data = await response.json();
+
+        if (data.status) {
+          setPujas(data.pujas);  // Guardamos las pujas en el estado
+        } else {
+          Swal.fire({
+            text: data.message,
+            icon: "info",
+            confirmButtonText: "OK",
+          });
+        }
+      } catch (error) {
+        Swal.fire({
+          text: "Error al obtener el historial de pujas.",
+          icon: "error",
+          confirmButtonText: "OK",
+        });
+      }
+    };
+
+    if (idAnimal) {
+      obtenerHistorialPujas();
+    }
+  }, [idAnimal]);
+
   return (
-    <div
-      className= "container-md my-2 mx-3 p-2 d-md-flex flex-column align-items-center historial"
-    >
+    <div className="container-md my-2 mx-3 p-2 d-md-flex flex-column align-items-center historial">
       <div
         className="d-flex flex-column flex-md-row align-items-center m-1 p-1 justify-content-center"
         id="titulo"
@@ -19,30 +50,22 @@ export function TablaHistorial() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">J***n</th>
-              <td>2.200.000</td>
-            </tr>
-            <tr>
-              <th scope="row">K***a</th>
-              <td>2.100.000</td>
-            </tr>
-            <tr>
-              <th scope="row">L*****s</th>
-              <td>1.900.000</td>
-            </tr>
-            <tr>
-              <th scope="row">J***n</th>
-              <td>2.200.000</td>
-            </tr>
-            <tr>
-              <th scope="row">K***a</th>
-              <td>2.100.000</td>
-            </tr>
-            <tr>
-              <th scope="row">L*****s</th>
-              <td>1.900.000</td>
-            </tr>
+            {pujas.length > 0 ? (
+              pujas.map((puja, index) => (
+                <tr key={index}>
+                  <th scope="row">{`${puja.nombres.charAt(0)}***${puja.apellidos.charAt(0)}`}</th>
+                  <td>{parseFloat(puja.valor).toLocaleString('es-CO', {
+                    style: 'currency',
+                    currency: 'COP',
+                    minimumFractionDigits: 0,
+                  })}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="2">No se encontraron pujas.</td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
