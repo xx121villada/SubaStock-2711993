@@ -14,6 +14,7 @@ import Crud from "./pages/CRUD-xime/Crud.jsx";
 import InsertarEstadoPeso from "./pages/insertarEstadoPeso/InsertarEstadoPeso.jsx";
 import Medicamentos from "./pages/Medicamentos/Medicamentos.jsx";
 import Layout from "./components/Layout/Layout.jsx";
+import SubastaGanada from "./pages/TarjetaGanadora/TarjetaGanada.jsx"
 
 export default function AppRouter() {
   return (
@@ -56,6 +57,11 @@ export default function AppRouter() {
             exact
             path="/insertar-medicamentos"
             element={<Medicamentos />}
+          />
+          <Route
+            exact
+            path="/subasta-ganada"
+            element={<SubastaGanada />}
           />
         </Route>
       </Routes>
