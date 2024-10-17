@@ -22,7 +22,7 @@ const Buscador = () => {
       return;
     }
 
-    fetch(`http://localhost:8000/buscador/Buscar/${idUsuario}/${query}`)
+    fetch(`https://apisubastock.cleverapps.io/buscador/Buscar/${idUsuario}/${query}`)
       .then((response) => response.json())
       .then((data) => {
         if (data.animal) {
