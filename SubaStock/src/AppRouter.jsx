@@ -7,7 +7,7 @@ import DetalleAnimales from "./pages/RegistroAnimales/RegistroAnimales.jsx";
 import SesionIniciada from "./pages/sesionIniciada/sesionIniciada";
 import VisualizarAnimal from "./pages/VisualizarAnimales/VisualizarAnimal";
 import InsertarAlimentos from "./pages/insertarAlimentos/InsertarAlimento.jsx";
-import { Subastar } from "./components/subastar/Subastar";
+import { Subastar } from "./components/subastar/Subastar.jsx";
 import RegistroAnimales from "./pages/RegistroAnimales/RegistroAnimales.jsx";
 import Animales from "./pages/Animales/Animales";
 import Crud from "./pages/CRUD-xime/Crud.jsx";
@@ -15,6 +15,7 @@ import InsertarEstadoPeso from "./pages/insertarEstadoPeso/InsertarEstadoPeso.js
 import Medicamentos from "./pages/Medicamentos/Medicamentos.jsx";
 import Layout from "./components/Layout/Layout.jsx";
 import SubastaGanada from "./pages/TarjetaGanadora/TarjetaGanada.jsx"
+import VisualizarAnimalesSubasta from "./components/subastar/VisualizarAnimalesSubasta.jsx";
 
 export default function AppRouter() {
   return (
@@ -46,6 +47,7 @@ export default function AppRouter() {
             element={<RegistroAnimales />}
           />
           <Route exact path="/ver-animales" element={<Animales />} />
+          <Route exact path="Subastar" element={<VisualizarAnimalesSubasta />} />
           <Route exact path="Subastar/:idAnimal" element={<Subastar />} />
           <Route exact path="/crud-animal/:idAnimal" element={<Crud />} />
           <Route
