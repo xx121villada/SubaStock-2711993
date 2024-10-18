@@ -15,6 +15,7 @@ import InsertarEstadoPeso from "./pages/insertarEstadoPeso/InsertarEstadoPeso.js
 import Medicamentos from "./pages/Medicamentos/Medicamentos.jsx";
 import Layout from "./components/Layout/Layout.jsx";
 import SubastaGanada from "./pages/TarjetaGanadora/TarjetaGanada.jsx"
+import Favoritos from "./pages/favoritos/Favoritos.jsx"
 
 export default function AppRouter() {
   return (
@@ -64,6 +65,11 @@ export default function AppRouter() {
             element={<SubastaGanada />}
           />
         </Route>
+        <Route
+            exact
+            path="/favoritos"
+            element={<Favoritos />}
+          />
       </Routes>
     </HashRouter>
   );

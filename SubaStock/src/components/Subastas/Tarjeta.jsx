@@ -1,6 +1,7 @@
 import LazyCarousel from "./LazyCarousel";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Temporizador from "./Temporizador";
+import axios from "axios";
 
 /* eslint-disable react/prop-types */
 
@@ -11,8 +12,42 @@ const Tarjeta = ({
   ubicacion,
   numeroPujas,
   pujaMasAlta,
+  itemId, // Asegúrate de tener un ID único para cada tarjeta
 }) => {
   const [esTiempoCritico, setTiempoCritico] = useState(false);
+  const [esFavorito, setEsFavorito] = useState(false);
+
+  // Comprobar si el ítem es favorito cuando se carga la tarjeta
+  useEffect(() => {
+    axios
+      .get(`https://apisubastock.cleverapps.io/subasta/Obtener/${itemId}`)
+      .then((response) => {
+        if (response.data.isFavorito) {
+          setEsFavorito(true);
+        }
+      })
+      .catch((error) => console.error("Error comprobando favoritos:", error));
+  }, [itemId]);
+
+  const toggleFavorito = () => {
+    if (esFavorito) {
+      // Quitar de favoritos
+      axios
+        .delete(`https://apisubastock.cleverapps.io/subasta/Eliminar/${itemId}`)
+        .then(() => {
+          setEsFavorito(false);
+        })
+        .catch((error) => console.error("Error quitando de favoritos:", error));
+    } else {
+      // Agregar a favoritos
+      axios
+        .post(`https://apisubastock.cleverapps.io/subasta/Agregar/${itemId}`)
+        .then(() => {
+          setEsFavorito(true);
+        })
+        .catch((error) => console.error("Error agregando a favoritos:", error));
+    }
+  };
 
   return (
     <div
@@ -31,7 +66,17 @@ const Tarjeta = ({
         }
       />
       <div className="p-3 d-flex flex-column gap-2">
-        <span className="fs-4 text-bold">{titulo}</span>
+        {/* Título con la estrella al lado */}
+        <div className="d-flex justify-content-between align-items-center">
+          <span className="fs-4 text-bold">{titulo}</span>
+          <span
+            onClick={toggleFavorito}
+            style={{ cursor: "pointer", fontSize: "1.5rem", marginLeft: '10px' }}
+          >
+            {esFavorito ? "★" : "☆"} {/* Estrella rellena o vacía */}
+          </span>
+        </div>
+
         <span
           className={`badge rounded-pill`}
           style={{
