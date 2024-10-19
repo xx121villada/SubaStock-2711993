@@ -4,6 +4,7 @@ import Tarjeta from "../../components/Subastas/Tarjeta";
 const animals = [];
 
 const Subastas = () => {
+  
   // const data = useLoaderData();
   const [data, setData] = useState([]);
 
@@ -37,7 +38,7 @@ const Subastas = () => {
       }}
     >
       {subastas.map((subasta) => (
-        <Tarjeta {...subasta} key={subasta.pujaMinima} />
+        <Tarjeta {...subasta} key={subasta.idSubasta} />
       ))}
     </div>
   );
