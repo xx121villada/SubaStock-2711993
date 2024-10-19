@@ -15,8 +15,8 @@ function SesionIniciada() {
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire("Sesión cerrada", "Tu sesión ha sido finalizada", "success");
-        localStorage.removeItem("idAnimal");
-        sessionStorage.removeItem("idUsuario");
+        localStorage.clear();
+        sessionStorage.clear();
 
         window.location.hash = "/";
       }
@@ -25,13 +25,13 @@ function SesionIniciada() {
 
   return (
     <div className="sesion-container">
-      
+
 
       <div className="content-container">
-      
+
         <main className="App-main">
           <div className="button-container">
-          <h1 className="centered-title">BIENVENIDO A SUBASTOCK</h1>
+            <h1 className="centered-title">BIENVENIDO A SUBASTOCK</h1>
             <Link to="/Subastar">
               <button className="button">SUBASTAR</button>
             </Link>
