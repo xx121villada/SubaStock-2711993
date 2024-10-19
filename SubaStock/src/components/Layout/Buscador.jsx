@@ -56,7 +56,29 @@ const Buscador = () => {
   };
 
   return (
-    <div style={{ position: "relative", width: "290px" }}>
+      <div>
+     {/* <div style={{ position: "relative", width: "290px" }}>
+    <div
+      className="input-group rounded-pill d-xsm-none d-sm-flex"
+      id="buscador"
+      style={{
+        backgroundColor: "#E5E4E270",
+        height: "32px",
+        width: 290,
+      }}
+    >
+      <input
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            buscar(textoBusqueda);
+          }
+        }}
+        className="form-control border-0 rounded-pill shadow-none bg-transparent"
+        onChange={(e) => setTextoBusqueda(e.target.value)}
+        style={{ padding: "0 0 0 20px", margin: 0, height: "100%" }}
+        type="text"
+        placeholder="Buscar animal..."
+      />
       <div
         className="input-group rounded-pill"
         id="buscador"
@@ -107,9 +129,9 @@ const Buscador = () => {
             </Link>
           ))}
         </div>
-      )}
+      )} */}
     </div>
-  );
+ )
 };
 
 export default Buscador;
