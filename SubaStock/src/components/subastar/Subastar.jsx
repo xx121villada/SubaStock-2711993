@@ -1,9 +1,11 @@
 import styles from "./styles/subastar.module.css";
 import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 import BotonVolver from "../UI/BotonVolver";
 
 export function Subastar() {
+  const navigate = useNavigate();
   const [idUsuario, setIdUsuario] = useState("");
   const [idAnimal, setIdAnimal] = useState("");
   const [marca, setMarca] = useState("");
@@ -81,13 +83,19 @@ export function Subastar() {
         if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
         return res.json();
       })
-      .then((data) =>
+      .then((data) => {
         Swal.fire({
           title: data.status ? "Subasta Creada con Éxito" : "Error",
           text: data.message || "",
           icon: data.status ? "success" : "error",
-        })
-      )
+          showCancelButton: false,
+          confirmButtonText: "Aceptar",
+        }).then((result) => {
+          if (result.isConfirmed && data.status) {
+            navigate("/sesion-iniciada");
+          }
+        });
+      })
       .catch((err) =>
         Swal.fire({
           title: "Error al crear la subasta",
@@ -96,21 +104,24 @@ export function Subastar() {
         })
       );
   };
+  const limpiar = () => {
+    if (imagenes.length === 0) {
+      Swal.fire("Nada que limpiar", "No hay imágenes seleccionadas", "info");
+    } else {
+      setImagenes([]);
+      setImagenPreviews([]);
+    }
+  };
 
   return (
     <div className={styles.container}>
-      <form onSubmit={handleSubmit} className={styles.form}>
-        <div className={styles.header}>
-          <BotonVolver ruta={"/sesion-iniciada"} />
-          <h2>Subastar Animal con Marca: {marca}</h2>
-        </div>
+      <BotonVolver ruta={"/sesion-iniciada"} />
+      <h2 className={styles.title}>Subastar Animal con Marca: {marca}</h2>
 
-        <div className={styles.uploadSection}>
+      <div className={styles.content}>
+        <div className={styles.leftContainer}>
           <label className={styles.label}>Selecciona hasta 5 imágenes:</label>
-          <p className={styles.instructions}>
-            Selecciona las imágenes juntas para mostrar al animal en su
-            totalidad.
-          </p>
+          <label > imagenes seleccionada : {imagenes.length} </label>
           <input
             type="file"
             multiple
@@ -118,6 +129,10 @@ export function Subastar() {
             onChange={handleImageChange}
             className={styles.fileInput}
           />
+          <button onClick={limpiar} className={styles.clearButton}>
+            Limpiar Imágenes
+          </button>
+
           <div className={styles.imageCarousel}>
             {imagenPreviews.map((src, idx) => (
               <img
@@ -130,9 +145,10 @@ export function Subastar() {
           </div>
         </div>
 
-        <div className={styles.fields}>
+        <form onSubmit={handleSubmit} className={styles.form}>
           <input
             type="text"
+            required
             name="tituloSubasta"
             placeholder="Nombre de la Subasta"
             onChange={handleChange}
@@ -140,6 +156,7 @@ export function Subastar() {
           />
           <textarea
             name="descripcion"
+            required
             rows="3"
             placeholder="Descripción de la Subasta"
             onChange={handleChange}
@@ -149,12 +166,14 @@ export function Subastar() {
             <input
               type="date"
               name="fechaInicio"
+              required
               onChange={handleChange}
               className={styles.dateInput}
             />
             <input
               type="date"
               name="fechaFin"
+              required
               onChange={handleChange}
               className={styles.dateInput}
             />
@@ -162,16 +181,16 @@ export function Subastar() {
           <input
             type="number"
             name="pujaMinima"
+            required
             placeholder="Puja Mínima"
             onChange={handleChange}
             className={styles.input}
           />
-        </div>
-
-        <button type="submit" className={styles.submitButton}>
-          Subastar
-        </button>
-      </form>
+          <button type="submit" className={styles.submitButton}>
+            Subastar
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
