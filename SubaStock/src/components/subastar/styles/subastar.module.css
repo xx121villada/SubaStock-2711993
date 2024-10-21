@@ -1,45 +1,55 @@
 .container {
-  padding: 20px;
-  max-width: 800px;
+  max-width: 1200px;
   margin: auto;
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  padding: 20px;
 }
 
 .title {
+  text-align: center;
+  margin-bottom: 20px;
   font-size: 2rem;
   color: #333;
-  margin: 0;
 }
 
-.uploadSection {
-  border: 1px solid #ddd;
-  padding: 15px;
-  border-radius: 8px;
+.content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.leftContainer {
+  flex: 1;
+  min-width: 300px;
   background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
 }
 
-.instructions {
-  margin-top: 5px;
-  color: #555;
-  font-style: italic;
+.fileInput {
+  margin-top: 10px;
+}
+
+.clearButton {
+  margin-top: 10px;
+  padding: 8px 12px;
+  background-color: #3c913c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.clearButton:hover {
+  background-color: #1d4e1d;
 }
 
 .imageCarousel {
   display: flex;
   gap: 10px;
-  overflow-x: auto;
   margin-top: 10px;
+  overflow-x: auto;
 }
 
 .image {
@@ -49,10 +59,22 @@
   border-radius: 5px;
 }
 
-.input, .textarea, .dateInput {
+.form {
+  flex: 1;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.dateFields {
+  display: flex;
+  gap: 10px;
+}
+
+.input, .dateInput {
   width: 100%;
   padding: 10px;
-  margin-top: 5px;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
@@ -69,5 +91,4 @@
 
 .submitButton:hover {
   background-color: #166516;
-  transition: background-color 0.3s;
 }
