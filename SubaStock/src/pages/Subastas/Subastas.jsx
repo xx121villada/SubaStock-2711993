@@ -1,30 +1,44 @@
+import { useEffect, useState } from "react";
 import Tarjeta from "../../components/Subastas/Tarjeta";
 
 const animals = [];
 
-for (let i = 0; i < 40; i++) {
-  animals.push({
-    fechaFin: "2024-12-31 15:13:30",
-    pujaMasAlta: Math.floor(Math.random() * 18000000) + 1300000,
-    numeroPujas: Math.floor(Math.random() * 39) + 1,
-    titulo: "Toro Cebú",
-    ubicacion: "Pereira",
-  });
-}
 const Subastas = () => {
+  
+  // const data = useLoaderData();
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    fetch("https://apisubastock.cleverapps.io/subasta/Obtener")
+      .then((res) => res.json())
+      .then((data) => {
+        setData(data);
+      });
+  }, []);
+
+  const subastas = data.subastas || [];
+
+  if (subastas.length === 0) {
+    return null;
+  }
+
   return (
     <div
-      className="d-flex gap-3 flex-wrap justify-content-center container-lg"
+      className="container-lg"
       style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+        gap: 20,
+
         padding:
           "calc(var(--header-height) + 30px + 16px) 20px calc(var(--footer-height) + 30px + 16px) 20px",
         minHeight: "100svh",
-
         boxSizing: "border-box",
+        marginTop: 100,
       }}
     >
-      {animals.map((animal) => (
-        <Tarjeta {...animal} key={animal.pujaMasAlta} />
+      {subastas.map((subasta) => (
+        <Tarjeta {...subasta} key={subasta.idSubasta} />
       ))}
     </div>
   );
