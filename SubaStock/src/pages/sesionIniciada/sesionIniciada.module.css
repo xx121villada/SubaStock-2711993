@@ -1,5 +1,4 @@
-
-.sesion-container {
+.sesionContainer {
   display: flex;
   height: 100vh;
   background-image: url("../sesionIniciada/img/fondoO.png");
@@ -7,16 +6,16 @@
   margin-top: -4%;
   background-position: center;
   background-repeat: no-repeat;
-  justify-content: right;
-  align-items: right;
-  align-self: right;
+  justify-content: flex-end;
+  align-items: center;
   position: relative;
 }
 
+.contentContainer {
+  margin-right: 2%;
+}
 
-
-
-.button-container {
+.buttonContainer {
   display: flex;
   flex-direction: column;
   width: auto;
@@ -44,8 +43,12 @@
   background-color: #4CAF50;
 }
 
+.centeredTitle {
+  text-align: center;
+}
+
 @media (max-width: 768px) {
-  .button-container {
+  .buttonContainer {
     width: 90%;
   }
 
@@ -54,17 +57,17 @@
     font-size: 14px;
   }
 
-  .centered-title {
+  .centeredTitle {
     font-size: 24px;
   }
 }
 
 @media (max-width: 480px) {
-  .button-container {
+  .buttonContainer {
     width: 95%;
   }
 
-  .centered-title {
+  .centeredTitle {
     font-size: 18px;
   }
 }

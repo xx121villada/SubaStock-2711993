@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
-import './Buscador.css';
+
+import styles from './Buscador.module.css'; 
 
 const Buscador = () => {
   const [textoBusqueda, setTextoBusqueda] = useState("");
@@ -86,15 +87,17 @@ const Buscador = () => {
       </div>
 
       {animales.length > 0 && (
-        <div className="resultados-busqueda">
+        <div className={styles.resultadosBusqueda}>
           {animales.map((animal) => (
             <Link
               key={animal.idAnimal}
               to={`/crud-animal/${animal.idAnimal}`}
-              className="resultado-item-link"
+
+              
+              className={styles.resultadoItemLink}
               onClick={() => handleAnimalClick(animal.idAnimal, animal.marca, animal.raza)}
-            >
-              <div className="resultado-item">
+              >
+              <div className={styles.resultadoItem}>
                 <h5>{animal.raza} - {animal.marca}</h5>
               </div>
             </Link>
