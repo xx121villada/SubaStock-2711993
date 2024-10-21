@@ -1,6 +1,6 @@
 
   
-  .resultados-busqueda {
+  .resultadosBusqueda {
     position: absolute;
     top: 36px;
     width: 100%;
@@ -12,18 +12,18 @@
     z-index: 1000;
   }
   
-  .resultado-item {
+  .resultadoItem {
     padding: 10px;
     cursor: pointer;
     border-bottom: 1px solid #f0f0f0;
     transition: background-color 0.2s;
   }
   
-  .resultado-item:hover {
+  .resultadoItem:hover {
     background-color: #f7f7f7;
   }
 
-  .resultado-item-link {
+  .resultadoItemLink {
     text-decoration: none;
     color: inherit;
   }
