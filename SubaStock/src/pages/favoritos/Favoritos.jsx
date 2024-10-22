@@ -72,7 +72,7 @@ const Favoritos = () => {
 
     return (
         <div className="container">
-            <h1>Mis Favoritos</h1>
+            <p className={styles.titulo}>FAVORITOS</p>
             <div className={styles.containerLg}>
                 {favoritos.length > 0 ? (
                     favoritos.map((subasta) => (
