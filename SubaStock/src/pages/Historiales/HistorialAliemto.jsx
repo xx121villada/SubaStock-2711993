@@ -60,7 +60,7 @@ export default function HistorialAlimento() {
             });
 
             if (result.isConfirmed) {
-                const response = await fetch(`http://localhost:8000/alimentacion/Eliminar/${idAlimentacion}`, {
+                const response = await fetch(`https://apisubastock.cleverapps.io/alimentacion/Eliminar/${idAlimentacion}`, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json'

@@ -57,7 +57,7 @@ export default function HistorialPesoSalud() {
                 confirmButtonText: 'Sí, eliminar!',
             });
             if (result.isConfirmed) {
-                const response = await fetch(`http://localhost:8000/medicamento/Eliminar/${idEstado_Salud}`, {
+                const response = await fetch(`https://apisubastock.cleverapps.io/medicamento/Eliminar/${idEstado_Salud}`, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',
