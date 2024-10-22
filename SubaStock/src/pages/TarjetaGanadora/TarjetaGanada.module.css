@@ -12,17 +12,20 @@
     border-radius: 10px;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     padding: 40px;
-    min-height: 60vh;
-    width: 20%;
+    min-height: 70vh;
+    width: 25%;
     text-align: center;
 }
 
 h1.texto {
     color: #237e0d;
+    margin-top: 40%;
 }
 
 .btnWhatsapp {
     background-color: #40cf13;
+    margin-top: 30%;
+    padding: 20%;
 }
 
 .iconWhatsapp {

@@ -71,25 +71,47 @@ function Crud() {
     };
     console.log(idAnimal)
 
-    const handleDelete = () => {
+    const eliminarAnimal = async (idAnimal) => {
+        try {
+            const result = await Swal.fire({
+                title: '¿Estás seguro de eliminar el animal?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            });
 
-        Swal.fire({
-            title: '¿Estás seguro de eliminar el animal?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Sí, eliminar',
-            cancelButtonText: 'Cancelar'
-        }).then((result) => {
             if (result.isConfirmed) {
-                // camilaaa qui hace la llamada a la API para eliminar el animal
-                
-                Swal.fire({
-                    title: 'Animal eliminado exitosamente',
-                    icon: 'success',
-                    confirmButtonText: 'Continuar',
+                const response = await fetch(`http://localhost:8000/animal/Eliminar/${idAnimal}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
                 });
+                const data = await response.json();
+
+                if (data.status) {
+                    Swal.fire(
+                        'Eliminado!',
+                        'El animal ha sido eliminado.',
+                        'success'
+                    );
+
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: data.message
+                    });
+                }
             }
-        });
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Error al eliminar el animal.'
+            });
+        }
     };
 
     return (
@@ -128,7 +150,7 @@ function Crud() {
                                     </button>
                                 </Link>
                             )}
-                            
+
                         </div>
                     </div>
                 </div>
@@ -159,7 +181,7 @@ function Crud() {
                 <br />
                 <div className={styles.footerButtons}>
                     <BotonVolver ruta={`/visualizar/${especie}`} />
-                    <button onClick={handleDelete} className={styles.deleteButton}>
+                    <button onClick={eliminarAnimal} className={styles.deleteButton}>
                         Eliminar Animal
                     </button>
                 </div>
