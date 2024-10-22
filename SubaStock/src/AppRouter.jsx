@@ -18,6 +18,7 @@ import VisualizarAnimalesSubasta from "./components/subastar/VisualizarAnimalesS
 import { AuthProvider } from "./contexts/AuthContext.jsx";
 import Medicamentos from "./pages/Medicamentos/Medicamentos.jsx";
 import Subastas from "./pages/Subastas/Subastas.jsx";
+import Favoritos from "./pages/favoritos/Favoritos.jsx";
 
 export default function AppRouter() {
   return (
@@ -45,6 +46,7 @@ export default function AppRouter() {
             <Route path="/insertar-medicamentos" element={<Medicamentos />} />
             <Route path="/subasta-ganada" element={<SubastaGanada />} />
             <Route path="/subastas" element={<Subastas />} />
+            <Route path="/favoritos" element={<Favoritos />} />
           </Route>
         </Routes>
       </HashRouter>

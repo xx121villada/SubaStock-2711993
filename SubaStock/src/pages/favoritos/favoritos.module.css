@@ -1,0 +1,9 @@
+.containerLg {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    padding: calc(var(--header-height) + 30px + 16px) 20px calc(var(--footer-height) + 30px + 16px) 20px;
+    min-height: 100svh;
+    box-sizing: border-box;
+    margin-top: 100px;
+}
