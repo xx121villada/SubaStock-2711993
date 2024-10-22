@@ -15,7 +15,6 @@ const firebaseConfig = {
 };
 
 
-
 const appGoogle = initializeApp(firebaseConfig);
 
 const authGoogle = getAuth(appGoogle);

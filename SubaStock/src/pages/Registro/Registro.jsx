@@ -2,6 +2,7 @@ import './registro.css';
 import { useState, useRef } from 'react';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
+import Loader from '../loader/Loader'
 
 export default function Registro() {
     const validarCorreo = (email) => /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/.test(email);
@@ -81,7 +82,9 @@ export default function Registro() {
     };
 
     return (
-        <div className='container'>
+        <div className='register-container'>
+            <div className='content-register'>
+            
             <form onSubmit={handleSubmit} ref={form} className='registro-form'>
                 <section className='container-registro'>
                     <h1 className="titulo">Registro</h1>
@@ -168,6 +171,7 @@ export default function Registro() {
                     </div>
                 </section>
             </form>
+            </div>
         </div>
     );
 }

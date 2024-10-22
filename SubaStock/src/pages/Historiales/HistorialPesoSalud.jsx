@@ -21,7 +21,7 @@ export default function HistorialPesoSalud() {
 
     const fetchHistorial = async () => {
         try {
-            const response = await fetch(`http://localhost:8000/estadoSalud/Obtener/${idAnimal}`, {
+            const response = await fetch(`https://apisubastock.cleverapps.io/estadoSalud/Obtener/${idAnimal}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

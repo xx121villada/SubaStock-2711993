@@ -4,23 +4,115 @@ import styles from "./detalleSubasta.module.css";
 import { TablaHistorial } from "./TablaHistorial";
 import LazyCarousel from "../Subastas/LazyCarousel";
 import Temporizador from "../Subastas/Temporizador";
+import Swal from 'sweetalert2';
 
 export function DetalleSubasta() {
   const { idSubasta } = useParams();
   const navigate = useNavigate();
   const [subasta, setSubasta] = useState(null);
+  const [idUsuario, setIdUsuario] = useState("");
+  const [valorPuja, setValorPuja] = useState("");
   const [verTabla, setVerTabla] = useState(false);
 
   useEffect(() => {
     fetch(`https://apisubastock.cleverapps.io/subasta/Obtener/${idSubasta}`)
       .then((response) => response.json())
-      .then((data) => setSubasta(data))
-      .catch((error) => console.error("Error al cargar la subasta:", error));
+      .then((data) => {
+        
+        const valorActual = data?.valorActual;
+  
+        if (valorActual !== undefined && valorActual !== null) {
+          const valorFormateado = valorActual.toLocaleString('es-CO', {
+            style: 'currency',
+            currency: 'COP',
+            minimumFractionDigits: 0,
+          });
+  
+          setSubasta({
+            ...data,
+            valorActualFormateado: valorFormateado,  
+          });
+        } else {
+          setSubasta({
+            ...data,
+            valorActualFormateado: 'Sin oferta actual', 
+          });
+        }
+      })
+      .catch((error) =>
+        console.error("Error al cargar la subasta:", error),
+        Swal.fire({
+          text: "No se pudo cargar la subasta",
+          icon: "error",
+          confirmButtonText: "Continuar",
+        })
+      );
+  
+    const storedIdUsuario = sessionStorage.getItem("idUsuario");
+    if (storedIdUsuario) {
+      setIdUsuario(storedIdUsuario);
+    }
   }, [idSubasta]);
 
-  
+  const handlePujar = async () => {
+    if (!valorPuja) {
+      Swal.fire({
+        text: "Por favor, introduce un valor de puja.",
+        icon: "warning",
+        confirmButtonText: "OK",
+      });
+      return;
+    }
 
-  console.log(subasta)
+    const valorActual = subasta.valorActual;
+
+    if (parseFloat(valorPuja) <= valorActual) {
+      Swal.fire({
+        text: `La puja debe ser mayor a la oferta actual de ${subasta.valorActualFormateado}.`,
+        icon: "warning",
+        confirmButtonText: "OK",
+      });
+      return;
+    }
+
+    const datosPuja = {
+      idSubasta: idSubasta,
+      idUsuario: idUsuario,  
+      valor: valorPuja,
+    };
+
+    try {
+      const response = await fetch("https://apisubastock.cleverapps.io/puja/Insertar", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(datosPuja),
+      });
+
+      const resultado = await response.json();
+
+      if (response.ok) {
+        Swal.fire({
+          text: "Puja realizada exitosamente",
+          icon: "success",
+          confirmButtonText: "OK",
+        });
+      } else {
+        Swal.fire({
+          text: "No se pudo realizar la puja",
+          icon: "error",
+          confirmButtonText: "OK",
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        text: "Hubo un error al realizar la puja. Por favor, intenta nuevamente.",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+    }
+  };
 
   const toggleTabla = () => {
     setVerTabla((prevVerTabla) => !prevVerTabla);
@@ -81,22 +173,24 @@ export function DetalleSubasta() {
             <span className="d-block mx-1">Fecha Cierre: {subasta.subasta.fechaFin}</span>
             <span className="d-block mx-1">Fecha Apertura: {subasta.subasta.fechaInicio}</span>
           </div>
-          <p className={`mb-3 ${styles.ofertaActual}`}>Oferta Actual: {subasta.subasta.pujaMinima} COP</p>
+          <p className={`mb-3 ${styles.ofertaActual}`}>Oferta Actual: {subasta.valorActualFormateado} COP</p>
           <p className={`mb-3 ${styles.descripcion}`}>{subasta.subasta.descripcion}</p>
           <div className={`w-100 d-flex flex-column justify-content-center flex-md-row align-items-center mb-3 ${styles.puja}`}>
-            <input
-              type="number"
-              className={`mx-2 my-2 w-50 ${styles.inputPuja}`}
-              placeholder="Realice su puja"
-            />
-            <button className={styles.pujar}>Pujar</button>
+          <input
+                type="number"
+                className={`mx-2 my-2 w-50 ${styles.inputPuja}`}
+                placeholder="Realice su puja"
+                value={valorPuja}
+                onChange={(e) => setValorPuja(e.target.value)}
+              />
+              <button className={styles.pujar} onClick={handlePujar}>Pujar</button>
           </div>
           <button className={`w-50 ${styles.historialPujas}`} onClick={toggleTabla}>
             HISTORIAL DE PUJAS
           </button>
         </div>
       </div>
-      {verTabla && <TablaHistorial />}
+      {verTabla && <TablaHistorial idAnimal={subasta.subasta.idAnimal}/>}
     </div>
     </div>
   );
