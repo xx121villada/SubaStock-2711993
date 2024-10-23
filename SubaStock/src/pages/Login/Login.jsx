@@ -38,7 +38,7 @@ const iniciarSesion = async (values) => {
             sessionStorage.setItem('idUsuario', data.idUsuario);
             Swal.fire({
                 title: 'Correcto!',
-                text: "Inicio de Sesión exitoso",
+                text: "Inicio de sesión exitoso",
                 icon: 'success',
                 confirmButtonText: 'Continuar',
             }).then(() => {

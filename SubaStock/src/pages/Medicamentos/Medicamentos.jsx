@@ -86,11 +86,11 @@ export default function Informacion() {
                         <h3>INSERTAR MEDICAMENTOS</h3>
                         <div className="cow-container-img">
                             <img src={bovino} alt="Imagen de vaca" className="cow-icon" />
-                            <p>Marca del Animal: {marca ? marca : "No disponible"}</p>
+                            <p>MARCA DEL ANIMAL: {marca ? marca : "No disponible"}</p>
                             <img src={bovino} alt="Imagen de vaca" className="cow-icon" />
                         </div>
                         <div className="inputMedicamento">
-                            <label>Nombre:</label>
+                            <label>NOMBRE:</label>
                             <input type="text"
                                 id='nombre'
                                 name='nombre'
@@ -100,7 +100,7 @@ export default function Informacion() {
                                 onChange={handleChange}
                             />
 
-                            <label>Dosis:</label>
+                            <label>DOSIS:</label>
                             <input type="number"
                                 id='dosis'
                                 name='dosis'

@@ -82,7 +82,7 @@ function Crud() {
             });
 
             if (result.isConfirmed) {
-                const response = await fetch(`http://localhost:8000/animal/Eliminar/${idAnimal}`, {
+                const response = await fetch(`https://apisubastock.cleverapps.io/animal/Eliminar/${idAnimal}`, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json'
@@ -122,9 +122,9 @@ function Crud() {
                         <label>Insertar</label>
                         <select onChange={insertar}>
                             <option value="">Seleccione una opción</option>
-                            <option value="1">Insertar Alimentación</option>
-                            <option value="2">Insertar Medicamentos</option>
-                            <option value="3">Insertar Peso y Salud</option>
+                            <option value="1">Insertar alimentación</option>
+                            <option value="2">Insertar medicamentos</option>
+                            <option value="3">Insertar peso y salud</option>
                         </select>
                     </div>
                 </div>
@@ -158,21 +158,21 @@ function Crud() {
 
                 <div className={styles.menuCrud}>
                     <button onClick={() => setShowVacunacion(true)} className={styles.menuCrudButton}>
-                        Ver Vacunación
+                        VER VACUNACIÓN
                     </button>
                     <Modal show={showVacunacion} onClose={() => setShowVacunacion(false)}>
                         <HistorialVacunacion />
                     </Modal>
 
                     <button onClick={() => setShowAlimentacion(true)} className={styles.menuCrudButton}>
-                        Ver Alimentación
+                        VER ALIMENTACIÓN
                     </button>
                     <Modal show={showAlimentacion} onClose={() => setShowAlimentacion(false)}>
                         <HistorialAliemto />
                     </Modal>
 
                     <button onClick={() => setShowPesoSalud(true)} className={styles.menuCrudButton}>
-                        Ver Peso y Salud
+                        VER PESO Y SALUD
                     </button>
                     <Modal show={showPesoSalud} onClose={() => setShowPesoSalud(false)}>
                         <HistorialPesoSalud />
@@ -181,8 +181,8 @@ function Crud() {
                 <br />
                 <div className={styles.footerButtons}>
                     <BotonVolver ruta={`/visualizar/${especie}`} />
-                    <button onClick={eliminarAnimal} className={styles.deleteButton}>
-                        Eliminar Animal
+                    <button onClick={() => eliminarAnimal(idAnimal)} className={styles.deleteButton}>
+                        ELIMINAR ANIMAL
                     </button>
                 </div>
             </div>

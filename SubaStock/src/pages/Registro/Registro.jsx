@@ -52,94 +52,96 @@ export default function Registro() {
             },
             body: JSON.stringify(valores)
         })
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then((data) => {
-            if(data.status){
-                Swal.fire({ title: data.message, icon: 'success' });
-                form.current.reset();
-                setValores({ 
-                    nombres: '',
-                    apellidos: '',
-                    correo: '',
-                    contraseña: '',
-                    saldo: '',
-                    telefono: '',
-                    repetirContraseña: ''
-                });
-                window.location.hash = "/login";
-            } else {
-                Swal.fire({ title: data.message, icon: 'error' });
-            }
-        })
-        .catch((error) => {
-            Swal.fire({ title: `Error al registrar: ${error.message}`, icon: 'error' });
-        });
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then((data) => {
+                if (data.status) {
+                    Swal.fire({ title: data.message, icon: 'success' });
+                    form.current.reset();
+                    setValores({
+                        nombres: '',
+                        apellidos: '',
+                        correo: '',
+                        contraseña: '',
+                        saldo: '',
+                        telefono: '',
+                        repetirContraseña: ''
+                    });
+                    window.location.hash = "/login";
+                } else {
+                    Swal.fire({ title: data.message, icon: 'error' });
+                }
+            })
+            .catch((error) => {
+                Swal.fire({ title: `Error al registrar: ${error.message}`, icon: 'error' });
+            });
     };
 
     return (
         <div className='register-container'>
             <div className='content-register'>
-            
-            <form onSubmit={handleSubmit} ref={form} className='registro-form'>
-                <section className='container-registro'>
-                    <h1 className="titulo">Registro</h1>
-                    <div className="form-row">
-                        <div className="input-container">
-                            <label>Nombres</label>
-                            <input 
-                                placeholder='Ingrese sus nombres'
-                                type="text"
-                                name='nombres'
-                                onChange={handleChange}
-                                className="form-input"
-                                required
-                            />
+
+                <form onSubmit={handleSubmit} ref={form} className='registro-form'>
+                    <section className='container-registro'>
+                        <h1 className="titulo">REGISTRO</h1>
+                        <div className="form-row">
+                            <div className="input-container">
+                                <label>NOMBRES</label>
+                                <input
+                                    placeholder='Ingrese sus nombres'
+                                    type="text"
+                                    name='nombres'
+                                    onChange={handleChange}
+                                    className="form-input"
+                                    required
+                                />
+                            </div>
+                            <div className="input-container">
+                                <label>APELLIDOS</label>
+                                <input
+                                    placeholder='Ingrese sus apellidos'
+                                    type="text"
+                                    name='apellidos'
+                                    onChange={handleChange}
+                                    className="form-input"
+                                    required
+                                />
+                            </div>
+                        </div>
+                        <div className="form-row">
+                            <div className="input-container">
+                                <label>TELÉFONO
+                                </label>
+                                <input
+                                    placeholder='Ingrese su número de teléfono'
+                                    type="tel"
+                                    name='telefono'
+                                    pattern="[0-9]{10}"
+                                    onChange={handleChange}
+                                    className="form-input"
+                                    required
+                                />
+                            </div>
+                            <div className="input-container">
+                                <label>
+                                    CORREO ELECTRÓNICO</label>
+                                <input
+                                    placeholder='Ingrese su correo electrónico'
+                                    type="email"
+                                    name='correo'
+                                    onChange={handleChange}
+                                    className="form-input"
+                                    required
+                                />
+                            </div>
                         </div>
                         <div className="input-container">
-                            <label>Apellidos</label>
-                            <input 
-                                placeholder='Ingrese sus apellidos'
-                                type="text"
-                                name='apellidos'
-                                onChange={handleChange}
-                                className="form-input"
-                                required
-                            />
-                        </div>
-                    </div>
-                    <div className="form-row">
-                        <div className="input-container">
-                            <label>Teléfono</label>
-                            <input 
-                                placeholder='Ingrese su número de teléfono'
-                                type="tel"
-                                name='telefono'
-                                pattern="[0-9]{10}"
-                                onChange={handleChange}
-                                className="form-input"
-                                required
-                            />
-                        </div>
-                        <div className="input-container">
-                            <label>Correo electrónico</label>
-                            <input 
-                                placeholder='Ingrese su correo electrónico'
-                                type="email"
-                                name='correo'
-                                onChange={handleChange}
-                                className="form-input"
-                                required
-                            />
-                        </div>
-                    </div>
-                        <div className="input-container">
-                            <label>Contraseña</label>
-                            <input 
+                            <label>CONTRASEÑA</label>
+                            <input
                                 placeholder='Crear contraseña'
                                 type="password"
                                 name='contraseña'
@@ -148,29 +150,29 @@ export default function Registro() {
                                 required
                             />
                         </div>
-                    <div className="form-row">
-                        <div className="input-container">
-                            <label>Confirmar contraseña</label>
-                            <input 
-                                placeholder='Repita su contraseña'
-                                type="password"
-                                name='repetirContraseña'
-                                onChange={handleChange}
-                                className="form-input"
-                                required
-                            />
+                        <div className="form-row">
+                            <div className="input-container">
+                                <label>CONFIRMAR CONTRASEÑA</label>
+                                <input
+                                    placeholder='Repita su contraseña'
+                                    type="password"
+                                    name='repetirContraseña'
+                                    onChange={handleChange}
+                                    className="form-input"
+                                    required
+                                />
+                            </div>
                         </div>
-                    </div>
-                    <div className="d-grid gap-2">
-                        <button className="btn btn-success" type="submit">Registrarse</button>
-                    </div>
-                    <div className='m-3'>
-                        <Link className='text-decoration-none text-black fs-5' to="/login"> 
-                        <p className='text-login'>¿Ya tienes una cuenta? Inicia sesión</p>
-                        </Link>
-                    </div>
-                </section>
-            </form>
+                        <div className="d-grid gap-2">
+                            <button className="btn btn-success" type="submit">REGISTRARSE</button>
+                        </div>
+                        <div className='m-3'>
+                            <Link className='text-decoration-none text-black fs-5' to="/login">
+                                <p className='text-login'>¿Ya tienes una cuenta? Inicia sesión</p>
+                            </Link>
+                        </div>
+                    </section>
+                </form>
             </div>
         </div>
     );

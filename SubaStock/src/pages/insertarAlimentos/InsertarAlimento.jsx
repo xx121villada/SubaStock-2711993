@@ -77,14 +77,14 @@ function InsertarAlimento() {
             <form onSubmit={handleSubmit}>
                 <div className='container-alimento'>
                     <div className="form-container-div">
-                        <h1>Insertar Alimentos</h1>
+                        <h1>INSERTAR ALIMENTOS</h1>
                         <div className="cow-container-img">
                             <img src={bovino} alt="Imagen de vaca" className="cow-icon" />
-                            <p>Marca del Animal: {marca ? marca : "No disponible"}</p>
+                            <p>MARCA DEL ANIMAL: {marca ? marca : "No disponible"}</p>
                             <img src={bovino} alt="Imagen de vaca" className="cow-icon" />
                         </div>
                         <div className="input-container-alimento">
-                            <label htmlFor="nombre">Nombre del Alimento:</label>
+                            <label htmlFor="nombre">NOMBRE DEL ALIMENTO:</label>
                             <input
                                 type="text"
                                 id="nombre"
@@ -93,7 +93,7 @@ function InsertarAlimento() {
                                 placeholder="Ingrese el nombre del alimento"
                                 required
                             />
-                            <label htmlFor="cantidad">Cantidad:</label>
+                            <label htmlFor="cantidad">CANTIDAD:</label>
                             <select id="cantidad" name="cantidad" onChange={handleChange} required>
                                 <option value="">Seleccione la cantidad de alimento</option>
                                 <option value="1">1 kg</option>
@@ -109,7 +109,7 @@ function InsertarAlimento() {
                             </select>
                         </div>
                         <button className="submit-button" type='submit'>
-                            Insertar Alimento
+                            INSERTAR ALIMENTO
                         </button>
                     </div>
                 </div>

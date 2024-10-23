@@ -3,36 +3,53 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #f4f4f9;
-    padding: 20px;
+    background-color: #e9edf0;
+    padding: 30px;
 }
 
 .tarjetaGanada {
     background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    padding: 40px;
-    min-height: 70vh;
-    width: 25%;
+    border-radius: 15px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 4px 12px;
+    padding: 50px;
+    min-height: 65vh;
+    width: 30%;
     text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.tarjetaGanada:hover {
+    transform: scale(1.05);
 }
 
 h1.texto {
-    color: #237e0d;
-    margin-top: 40%;
+    color: #1f6b0a;
+    padding-top: 10%;
+    font-size: 1.8rem;
+    position: relative;
+    top: 30px;
 }
 
 .btnWhatsapp {
-    background-color: #40cf13;
-    margin-top: 30%;
-    padding: 20%;
+    background-color: #25d366;
+    margin-top: 25%;
+    padding: 15%;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.btnWhatsapp:hover {
+    background-color: #1bb358;
 }
 
 .iconWhatsapp {
-    width: 34px;
-    height: 34px;
+    width: 40px;
+    height: 40px;
 }
 
 .textButton {
-    font-size: 0.8rem;
+    font-size: 1rem; 
+    letter-spacing: 0.5px; 
 }

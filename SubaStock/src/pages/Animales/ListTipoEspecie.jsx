@@ -72,7 +72,7 @@ export default function ListTipoEspecie() {
         <div style={styles.containerPrincipal}>
             {especies.length > 0 ? (
                 <>
-                    <h1 style={styles.tituloAnimales}>Tipos de Especie</h1>
+                    <h1 style={styles.tituloAnimales}>Tipos de especie</h1>
                     <div style={styles.containerCards}>{cards}</div>
                 </>
             ) : (
