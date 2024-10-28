@@ -1,7 +1,5 @@
-import React from "react";
-import './style.css';
-import bovino from '../Animales/img/Bovino.png';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
+import styles from './styles/insertarAlimentos.module.css';
 import Swal from 'sweetalert2';
 
 export default function Informacion() {
@@ -17,7 +15,6 @@ export default function Informacion() {
         if (storedIdAnimal) {
             setIdAnimal(storedIdAnimal);
         }
-
     }, []);
 
     const [valores, setValores] = useState({
@@ -81,37 +78,36 @@ export default function Informacion() {
     return (
         <div>
             <form onSubmit={handleSubmit}>
-                <div className="containerMedicamento">
-                    <div className="form-container-div">
-                        <h3>INSERTAR MEDICAMENTOS</h3>
-                        <div className="cow-container-img">
-                            <img src={bovino} alt="Imagen de vaca" className="cow-icon" />
-                            <p>MARCA DEL ANIMAL: {marca ? marca : "No disponible"}</p>
-                            <img src={bovino} alt="Imagen de vaca" className="cow-icon" />
-                        </div>
-                        <div className="inputMedicamento">
-                            <label>NOMBRE:</label>
-                            <input type="text"
-                                id='nombre'
-                                name='nombre'
-                                required
-                                className="form-control"
-                                placeholder="Ingrese el nombre del medicamento"
-                                onChange={handleChange}
-                            />
-
-                            <label>DOSIS:</label>
-                            <input type="number"
-                                id='dosis'
-                                name='dosis'
-                                required
-                                className="form-control"
-                                placeholder="Ingrese la dosis aplicada"
-                                onChange={handleChange}
-                            />
-                        </div>
-                            <button type='submit' className='botonInsertar'> INSERTAR MEDICAMENTO</button>
+                <div className={styles.formContainerDiv}>
+                    <h3 className={styles.title}>INSERTAR MEDICAMENTOS</h3>
+                    <div className={styles.cowContainerImg}>
+                        <p>Marca del Animal: {marca ? marca : "No disponible"}</p>
                     </div>
+                    <div className={styles.inputContainerAlimento}>
+                        <label className={styles.label}>Nombre:</label>
+                        <input
+                            type="text"
+                            id='nombre'
+                            name='nombre'
+                            required
+                            className={styles.textInput}
+                            placeholder="Ingrese el nombre del medicamento"
+                            onChange={handleChange}
+                        />
+                        <label className={styles.label}>Dosis:</label>
+                        <input
+                            type="number"
+                            id='dosis'
+                            name='dosis'
+                            required
+                            className={styles.selectInput}
+                            placeholder="Ingrese la dosis aplicada"
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <button type='submit' className={styles.submitButton}>
+                        INSERTAR MEDICAMENTO
+                    </button>
                 </div>
             </form>
         </div>

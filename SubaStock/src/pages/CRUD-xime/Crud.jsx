@@ -2,9 +2,12 @@ import { useNavigate, Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { useEffect, useState } from 'react';
 import styles from './styles/Crud.module.css';
-import HistorialAliemto from '../Historiales/HistorialAliemto';
+import HistorialAliemto from '../Historiales/HistorialAlimento';
 import HistorialVacunacion from '../Historiales/HistorialVacunacion';
 import HistorialPesoSalud from '../Historiales/HistorialPesoSalud';
+import InsertarAlimento from '../InsertarHistoriales/InsertarAlimento'
+import InsertarEstadoPeso from '../InsertarHistoriales/InsertarEstadoPeso'
+import InsertarMedicamentos from '../InsertarHistoriales/InsertarMedicamentos'
 import BotonVolver from '../../components/UI/BotonVolver';
 import Modal from '../../components/UI/Modal';
 
@@ -13,6 +16,9 @@ function Crud() {
     const [showAlimentacion, setShowAlimentacion] = useState(false);
     const [showVacunacion, setShowVacunacion] = useState(false);
     const [showPesoSalud, setShowPesoSalud] = useState(false);
+    const [insertarAlimentacion, setInsertarAlimentacion] = useState(false);
+    const [insertarVacunacion, setInsertarVacunacion] = useState(false);
+    const [insertarPesoSalud, setInsertarPesoSalud] = useState(false);
     const [marca, setMarca] = useState('');
     const [idAnimal, setIdAnimal] = useState();
     const [raza, setRaza] = useState('');
@@ -57,13 +63,13 @@ function Crud() {
         const selectedValue = event.target.value;
         switch (selectedValue) {
             case '1':
-                navigate('/insertar-alimentos');
+                setInsertarAlimentacion(true)
                 break;
             case '2':
-                navigate('/insertar-medicamentos');
+                setInsertarVacunacion(true)
                 break;
             case '3':
-                navigate('/insertar-peso-salud');
+                setInsertarPesoSalud(true)
                 break;
             default:
                 break;
@@ -120,6 +126,7 @@ function Crud() {
                 <div className={styles.headerCrud}>
                     <div className={styles.dropdown}>
                         <label>Insertar</label>
+                        <br />
                         <select onChange={insertar}>
                             <option value="">Seleccione una opción</option>
                             <option value="1">Insertar alimentación</option>
@@ -185,6 +192,15 @@ function Crud() {
                         ELIMINAR ANIMAL
                     </button>
                 </div>
+                <Modal show={insertarAlimentacion} onClose={() => setInsertarAlimentacion(false)}>
+                    <InsertarAlimento/>
+                </Modal>
+                <Modal show={insertarVacunacion} onClose={() => setInsertarVacunacion(false)}>
+                    <InsertarMedicamentos/>
+                </Modal>
+                <Modal show={insertarPesoSalud} onClose={() => setInsertarPesoSalud(false) }>
+                    <InsertarEstadoPeso/>
+                </Modal>
             </div>
         </div>
     );
