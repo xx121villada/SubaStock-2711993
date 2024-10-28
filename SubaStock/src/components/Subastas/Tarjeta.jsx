@@ -19,6 +19,7 @@ const Tarjeta = ({
   const [esFavorito, setEsFavorito] = useState(false);
   const [idUsuario, setIdUsuario] = useState('');
   const [maxPuja, setMaxPuja] = useState(0);
+  localStorage.setItem('idSubasta', idSubasta)
 
   useEffect(() => {
     const storedIdUsuario = sessionStorage.getItem('idUsuario');

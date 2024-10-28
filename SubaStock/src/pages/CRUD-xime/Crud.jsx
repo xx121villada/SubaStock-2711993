@@ -21,6 +21,7 @@ function Crud() {
     const [insertarPesoSalud, setInsertarPesoSalud] = useState(false);
     const [marca, setMarca] = useState('');
     const [idAnimal, setIdAnimal] = useState();
+    const [idSubasta, setIdSubasta] = useState();
     const [raza, setRaza] = useState('');
     const [especie, setEspecie] = useState('');
     const [btnActived, setBtnActived] = useState(false);
@@ -30,11 +31,14 @@ function Crud() {
         const storedRaza = localStorage.getItem('razaAnimal');
         const storedEspecie = localStorage.getItem('especieAnimal');
         const storedIdAnimal = localStorage.getItem('idAnimal');
+        const storedIdSubasta = localStorage.getItem('IdSubasta');
+
 
         if (storedMarca) setMarca(storedMarca);
         if (storedRaza) setRaza(storedRaza);
         if (storedEspecie) setEspecie(storedEspecie);
         if (storedIdAnimal) setIdAnimal(storedIdAnimal);
+        if (storedIdSubasta) setIdSubasta (storedIdSubasta);
     }, []);
 
     useEffect(() => {
@@ -42,7 +46,7 @@ function Crud() {
             if (!idAnimal) return;
 
             try {
-                const response = await fetch(`https://apisubastock.cleverapps.io/subasta/Obtener/${idAnimal}`, {
+                const response = await fetch(`https://apisubastock.cleverapps.io/subasta/Obtener/${idSubasta}`, {
                     method: 'GET',
                     headers: { 'Content-Type': 'application/json' },
                 });
@@ -57,7 +61,7 @@ function Crud() {
         };
 
         fetchAnimalData();
-    }, [idAnimal]);
+    }, [idSubasta]);
 
     const insertar = (event) => {
         const selectedValue = event.target.value;
