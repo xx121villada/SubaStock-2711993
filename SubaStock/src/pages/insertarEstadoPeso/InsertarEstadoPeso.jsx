@@ -80,20 +80,20 @@ export default function InsertarEstadoPeso() {
                         <h1>INSERTAR INFORMACIÓN</h1>
                         <div className="cow-container-img">
                             <img src={bovino} alt="Imagen de vaca" className="cow-icon" />
-                            <p>Marca del Animal: {marca ? marca : "No disponible"}</p>
+                            <p>MARCA DEL ANIMAL: {marca ? marca : "No disponible"}</p>
                             <img src={bovino} alt="Imagen de vaca" className="cow-icon" />
                         </div>
                         <div className="input-container-alimento">
-                            <label htmlFor="peso">Ingrese el peso del amimal:</label>
+                            <label htmlFor="peso">PESO:</label>
                             <input
                                 type="text"
                                 id="peso"
                                 name="peso"
                                 onChange={handleChange}
-                                placeholder="Ingrese el peso del amimal"
+                                placeholder="Ingrese el peso del animal"
                                 required
                             />
-                            <label htmlFor="estado">Estado:</label>
+                            <label htmlFor="estado">ESTADO:</label>
                             <select id="estado" name="estado" onChange={handleChange} required>
                                 <option value="">Seleccione el estado de salud del animal</option>
                                 <option value="Normal">Normal</option>

@@ -71,25 +71,47 @@ function Crud() {
     };
     console.log(idAnimal)
 
-    const handleDelete = () => {
+    const eliminarAnimal = async (idAnimal) => {
+        try {
+            const result = await Swal.fire({
+                title: '¿Estás seguro de eliminar el animal?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            });
 
-        Swal.fire({
-            title: '¿Estás seguro de eliminar el animal?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Sí, eliminar',
-            cancelButtonText: 'Cancelar'
-        }).then((result) => {
             if (result.isConfirmed) {
-                // camilaaa qui hace la llamada a la API para eliminar el animal
-                
-                Swal.fire({
-                    title: 'Animal eliminado exitosamente',
-                    icon: 'success',
-                    confirmButtonText: 'Continuar',
+                const response = await fetch(`https://apisubastock.cleverapps.io/animal/Eliminar/${idAnimal}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
                 });
+                const data = await response.json();
+
+                if (data.status) {
+                    Swal.fire(
+                        'Eliminado!',
+                        'El animal ha sido eliminado.',
+                        'success'
+                    );
+
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: data.message
+                    });
+                }
             }
-        });
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Error al eliminar el animal.'
+            });
+        }
     };
 
     return (
@@ -100,9 +122,9 @@ function Crud() {
                         <label>Insertar</label>
                         <select onChange={insertar}>
                             <option value="">Seleccione una opción</option>
-                            <option value="1">Insertar Alimentación</option>
-                            <option value="2">Insertar Medicamentos</option>
-                            <option value="3">Insertar Peso y Salud</option>
+                            <option value="1">Insertar alimentación</option>
+                            <option value="2">Insertar medicamentos</option>
+                            <option value="3">Insertar peso y salud</option>
                         </select>
                     </div>
                 </div>
@@ -128,7 +150,7 @@ function Crud() {
                                     </button>
                                 </Link>
                             )}
-                            
+
                         </div>
                     </div>
                 </div>
@@ -136,21 +158,21 @@ function Crud() {
 
                 <div className={styles.menuCrud}>
                     <button onClick={() => setShowVacunacion(true)} className={styles.menuCrudButton}>
-                        Ver Vacunación
+                        VER VACUNACIÓN
                     </button>
                     <Modal show={showVacunacion} onClose={() => setShowVacunacion(false)}>
                         <HistorialVacunacion />
                     </Modal>
 
                     <button onClick={() => setShowAlimentacion(true)} className={styles.menuCrudButton}>
-                        Ver Alimentación
+                        VER ALIMENTACIÓN
                     </button>
                     <Modal show={showAlimentacion} onClose={() => setShowAlimentacion(false)}>
                         <HistorialAliemto />
                     </Modal>
 
                     <button onClick={() => setShowPesoSalud(true)} className={styles.menuCrudButton}>
-                        Ver Peso y Salud
+                        VER PESO Y SALUD
                     </button>
                     <Modal show={showPesoSalud} onClose={() => setShowPesoSalud(false)}>
                         <HistorialPesoSalud />
@@ -159,8 +181,8 @@ function Crud() {
                 <br />
                 <div className={styles.footerButtons}>
                     <BotonVolver ruta={`/visualizar/${especie}`} />
-                    <button onClick={handleDelete} className={styles.deleteButton}>
-                        Eliminar Animal
+                    <button onClick={() => eliminarAnimal(idAnimal)} className={styles.deleteButton}>
+                        ELIMINAR ANIMAL
                     </button>
                 </div>
             </div>
