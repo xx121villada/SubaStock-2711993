@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import "../sesionIniciada/sesionIniciada.css";
+import styles from "./sesionIniciada.module.css";
 import Swal from "sweetalert2";
 
 function SesionIniciada() {
@@ -24,26 +24,26 @@ function SesionIniciada() {
   };
 
   return (
-    <div className="sesion-container">
 
-
-      <div className="content-container">
-
-        <main className="App-main">
-          <div className="button-container">
-            <h1 className="centered-title">BIENVENIDO A SUBASTOCK</h1>
+    <div className={styles.sesionContainer}>
+      <div className={styles.contentContainer}>
+        <main className={styles.appMain}>
+          <div className={styles.buttonContainer}>
+            <h1 className={styles.centeredTitle}>BIENVENIDO A SUBASTOCK</h1>
             <Link to="/Subastar">
-              <button className="button">SUBASTAR</button>
+              <button className={styles.button}>SUBASTAR</button>
             </Link>
-            <button className="button">VER SUBASTAS</button>
-            <button className="button">FAVORITOS</button>
+            <button className={styles.button}>VER SUBASTAS</button>
+            <Link to="/favoritos">
+              <button className={styles.button}>FAVORITOS</button>
+            </Link>
             <Link to="/registro-animales">
-              <button className="button">REGISTRAR ANIMAL</button>
+              <button className={styles.button}>REGISTRAR ANIMAL</button>
             </Link>
             <Link to="/ver-animales">
-              <button className="button">VER ANIMALES</button>
+              <button className={styles.button}>VER ANIMALES</button>
             </Link>
-            <button className="button" onClick={Cerrar}>
+            <button className={styles.button} onClick={Cerrar}>
               CERRAR SESION
             </button>
           </div>

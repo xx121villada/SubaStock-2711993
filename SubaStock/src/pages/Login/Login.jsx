@@ -1,9 +1,8 @@
-import './login.css';
+import styles from './login.module.css';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import SPLoader from '../loader/Loader'; 
-
 
 const useForm = (initialValues) => {
     const [values, setValues] = useState(initialValues);
@@ -39,7 +38,7 @@ const iniciarSesion = async (values) => {
             sessionStorage.setItem('idUsuario', data.idUsuario);
             Swal.fire({
                 title: 'Correcto!',
-                text: "Inicio de Sesión exitoso",
+                text: "Inicio de sesión exitoso",
                 icon: 'success',
                 confirmButtonText: 'Continuar',
             }).then(() => {
@@ -71,9 +70,7 @@ const Login = () => {
     const [loading, setLoading] = useState(true); 
 
     useEffect(() => {
-        
         const loadData = async () => {
-            
             await new Promise((resolve) => setTimeout(resolve, 600));
             setLoading(false);
         };
@@ -86,43 +83,43 @@ const Login = () => {
         iniciarSesion(values);
     };
 
-        if (loading) {
-            return <SPLoader />;
-        }
+    if (loading) {
+        return <SPLoader />;
+    }
 
     return (
-        <div className="login-container">
-            <div className="content-container">
-                <div className="form-container">
-                    <h1 className="centered-title">INICIO SESIÓN</h1>
-                    <form className="login-form" onSubmit={handleSubmit}>
+        <div className={styles.loginContainer}>
+            <div className={styles.contentContainer}>
+                <div className={styles.formContainer}>
+                    <h1 className={styles.centeredTitle}>INICIO SESIÓN</h1>
+                    <form className={styles.loginForm} onSubmit={handleSubmit}>
                         <div>
-                            <label className="nombre-input">CORREO</label>
+                            <label className={styles.nombreInput}>CORREO</label>
                             <input
                                 required
                                 type="email"
                                 placeholder="Ingrese su correo"
-                                className="input-field"
+                                className={styles.inputField}
                                 name="correo"
                                 onChange={handleChange}
                             />
                         </div>
                         <div>
-                            <label className="nombre-input">CONTRASEÑA</label>
+                            <label className={styles.nombreInput}>CONTRASEÑA</label>
                             <input
                                 required
                                 type="password"
                                 placeholder="Ingrese su contraseña"
-                                className="input-field"
+                                className={styles.inputField}
                                 name="contraseña"
                                 onChange={handleChange}
                             />
                         </div>
                         <div>
-                            <button type="submit" className="btn-login">INICIAR SESIÓN</button>
+                            <button type="submit" className={styles.btnLogin}>INICIAR SESIÓN</button>
                         </div>
-                        <Link to="/registro" className="text-decoration-none">
-                            <p className="registrarse">¿No tienes una cuenta? Regístrate</p>
+                        <Link to="/registro" className={styles.textDecorationNone}>
+                            <p className={styles.registrarse}>¿No tienes una cuenta? Regístrate</p>
                         </Link>
                     </form>
                 </div>

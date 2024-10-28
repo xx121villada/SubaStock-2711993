@@ -1,6 +1,6 @@
 import LazyCarousel from "./Subastas/LazyCarousel";
 import { useState } from "react";
-import Temporizador from "./Temporizador";
+import Temporizador from "./Subastas/Temporizador";
 
 /* eslint-disable react/prop-types */
 

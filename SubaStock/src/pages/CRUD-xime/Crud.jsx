@@ -1,34 +1,29 @@
-import styles from './styles/Crud.module.css';
 import { useNavigate, Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import { useEffect, useState } from 'react';
-import HistorialAliemto from '../Historiales/HistorialAliemto';
+import styles from './styles/Crud.module.css';
+import HistorialAliemto from '../Historiales/HistorialAlimento';
 import HistorialVacunacion from '../Historiales/HistorialVacunacion';
 import HistorialPesoSalud from '../Historiales/HistorialPesoSalud';
+import InsertarAlimento from '../InsertarHistoriales/InsertarAlimento'
+import InsertarEstadoPeso from '../InsertarHistoriales/InsertarEstadoPeso'
+import InsertarMedicamentos from '../InsertarHistoriales/InsertarMedicamentos'
 import BotonVolver from '../../components/UI/BotonVolver';
-import bovino from './img/2.png';
-import porcino from './img/1.png';
-import apino from './img/3.png';
-import equino from './img/4.png';
+import Modal from '../../components/UI/Modal';
 
 function Crud() {
-    
     const navigate = useNavigate();
     const [showAlimentacion, setShowAlimentacion] = useState(false);
     const [showVacunacion, setShowVacunacion] = useState(false);
     const [showPesoSalud, setShowPesoSalud] = useState(false);
+    const [insertarAlimentacion, setInsertarAlimentacion] = useState(false);
+    const [insertarVacunacion, setInsertarVacunacion] = useState(false);
+    const [insertarPesoSalud, setInsertarPesoSalud] = useState(false);
     const [marca, setMarca] = useState('');
     const [idAnimal, setIdAnimal] = useState();
     const [raza, setRaza] = useState('');
     const [especie, setEspecie] = useState('');
     const [btnActived, setBtnActived] = useState(false);
-    const [iconoEspecie, setIconoEspecie] = useState('');
-
-    const EspeciesImg = {
-        "Bovino": bovino,
-        "Porcino": porcino,
-        "Avicultura": apino,
-        "Equino": equino,
-    };
 
     useEffect(() => {
         const storedMarca = localStorage.getItem('marcaAnimal');
@@ -40,9 +35,6 @@ function Crud() {
         if (storedRaza) setRaza(storedRaza);
         if (storedEspecie) setEspecie(storedEspecie);
         if (storedIdAnimal) setIdAnimal(storedIdAnimal);
-
-        setIconoEspecie(razaAnimal(storedEspecie)); 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
@@ -52,20 +44,13 @@ function Crud() {
             try {
                 const response = await fetch(`https://apisubastock.cleverapps.io/subasta/Obtener/${idAnimal}`, {
                     method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
+                    headers: { 'Content-Type': 'application/json' },
                 });
 
                 if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
                 const data = await response.json();
-
-                if (data.status) {
-                    setBtnActived(true);
-                } else {
-                    setBtnActived(false);
-                }
+                setBtnActived(data.status);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -74,99 +59,151 @@ function Crud() {
         fetchAnimalData();
     }, [idAnimal]);
 
-    const razaAnimal = (especie) => {
-        switch (especie) {
-            case "Bovino":
-                return EspeciesImg.Bovino;
-            case "Porcino":
-                return EspeciesImg.Porcino;
-            case "Caprino":
-                return EspeciesImg.Caprino;
-                case "Equino":
-                    return EspeciesImg.Equino;
-            case "Avicultura":
-                return EspeciesImg.Avicultura;
-            default:
-                return '';
-        }
-    }
-
-    const toggleAlimentacion = () => setShowAlimentacion(!showAlimentacion);
-    const toggleVacunacion = () => setShowVacunacion(!showVacunacion);
-    const togglePesoSalud = () => setShowPesoSalud(!showPesoSalud);
-
     const insertar = (event) => {
         const selectedValue = event.target.value;
         switch (selectedValue) {
-            case "1":
-                navigate('/insertar-alimentos');
+            case '1':
+                setInsertarAlimentacion(true)
                 break;
-            case "2":
-                navigate('/insertar-medicamentos');
+            case '2':
+                setInsertarVacunacion(true)
                 break;
-            case "3":
-                navigate('/insertar-peso-salud');
+            case '3':
+                setInsertarPesoSalud(true)
                 break;
             default:
                 break;
         }
     };
+    console.log(idAnimal)
+
+    const eliminarAnimal = async (idAnimal) => {
+        try {
+            const result = await Swal.fire({
+                title: '¿Estás seguro de eliminar el animal?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            });
+
+            if (result.isConfirmed) {
+                const response = await fetch(`https://apisubastock.cleverapps.io/animal/Eliminar/${idAnimal}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const data = await response.json();
+
+                if (data.status) {
+                    Swal.fire(
+                        'Eliminado!',
+                        'El animal ha sido eliminado.',
+                        'success'
+                    );
+
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: data.message
+                    });
+                }
+            }
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Error al eliminar el animal.'
+            });
+        }
+    };
 
     return (
         <div className={styles.crudApp}>
-            <BotonVolver ruta={`/visualizar/${especie}`}/>
-
-            <div className={styles.headerCrud}>
-                {iconoEspecie && <img src={iconoEspecie} alt="Icono" className={styles.headerIcon} />}
-                <h1 className={styles.headerTitle}>Marca del Animal: {marca || "No disponible"}</h1>
-                {iconoEspecie && <img src={iconoEspecie} alt="Icono" className={styles.headerIcon} />}
-            </div>
             <div className={styles.content}>
-                <div className={styles.buttonsCrud}>
-                    <Link to={`/subastar/${idAnimal}`}>
-                        <button
-                            className={`${styles.buttonInicioCrud} ${btnActived ? styles.buttonDisabled : styles.buttonEnabled}`}
-                            disabled={btnActived}
-                        >
-                            {btnActived ? 'Animal ya subastado' : 'Iniciar Subasta'}
-                        </button>
-                    </Link>
-
+                <div className={styles.headerCrud}>
                     <div className={styles.dropdown}>
                         <label>Insertar</label>
+                        <br />
                         <select onChange={insertar}>
                             <option value="">Seleccione una opción</option>
-                            <option value="1">Insertar Alimentación</option>
-                            <option value="2">Insertar Medicamentos</option>
-                            <option value="3">Insertar Peso y Salud</option>
+                            <option value="1">Insertar alimentación</option>
+                            <option value="2">Insertar medicamentos</option>
+                            <option value="3">Insertar peso y salud</option>
                         </select>
                     </div>
                 </div>
+
                 <div className={styles.table}>
-                    <h2 className={styles.animalBreed}>Animal de raza {raza}</h2>
-                    <div className={styles.menuCrud}>
-                        <button onClick={toggleVacunacion} className={styles.menuCrudButton}>
-                            {showVacunacion ? 'Cerrar Vacunación' : 'Abrir Vacunación'}
-                        </button>
-                        {showVacunacion && <HistorialVacunacion />}
+                    <div className={styles.row}>
+                        <div className={styles.cell}>Especie</div>
+                        <div className={styles.cell}>Raza</div>
+                        <div className={styles.cell}>Marca</div>
+                        <div className={styles.cell}>Estado</div>
                     </div>
-                    <div className={styles.menuCrud}>
-                        <button onClick={toggleAlimentacion} className={styles.menuCrudButton}>
-                            {showAlimentacion ? 'Cerrar Alimentación' : 'Abrir Alimentación'}
-                        </button>
-                        {showAlimentacion && <HistorialAliemto />}
-                    </div>
-                    <div className={styles.menuCrud}>
-                        <button onClick={togglePesoSalud} className={styles.menuCrudButton}>
-                            {showPesoSalud ? 'Cerrar Peso y Salud' : 'Abrir Peso y Salud'}
-                        </button>
-                        {showPesoSalud && <HistorialPesoSalud />}
+                    <div className={styles.row}>
+                        <div className={styles.cell2}>{especie}</div>
+                        <div className={styles.cell2}>{raza}</div>
+                        <div className={styles.cell2}>{marca || 'No disponible'}</div>
+                        <div className={styles.cell2}>
+                            {btnActived ? (
+                                <span>Animal ya subastado</span>
+                            ) : (
+                                <Link to={`/subastar/${idAnimal}`}>
+                                    <button className={styles.buttonInicioCrud}>
+                                        Iniciar Subasta
+                                    </button>
+                                </Link>
+                            )}
+
+                        </div>
                     </div>
                 </div>
+                <br />
+
+                <div className={styles.menuCrud}>
+                    <button onClick={() => setShowVacunacion(true)} className={styles.menuCrudButton}>
+                        VER VACUNACIÓN
+                    </button>
+                    <Modal show={showVacunacion} onClose={() => setShowVacunacion(false)}>
+                        <HistorialVacunacion />
+                    </Modal>
+
+                    <button onClick={() => setShowAlimentacion(true)} className={styles.menuCrudButton}>
+                        VER ALIMENTACIÓN
+                    </button>
+                    <Modal show={showAlimentacion} onClose={() => setShowAlimentacion(false)}>
+                        <HistorialAliemto />
+                    </Modal>
+
+                    <button onClick={() => setShowPesoSalud(true)} className={styles.menuCrudButton}>
+                        VER PESO Y SALUD
+                    </button>
+                    <Modal show={showPesoSalud} onClose={() => setShowPesoSalud(false)}>
+                        <HistorialPesoSalud />
+                    </Modal>
+                </div>
+                <br />
+                <div className={styles.footerButtons}>
+                    <BotonVolver ruta={`/visualizar/${especie}`} />
+                    <button onClick={() => eliminarAnimal(idAnimal)} className={styles.deleteButton}>
+                        ELIMINAR ANIMAL
+                    </button>
+                </div>
+                <Modal show={insertarAlimentacion} onClose={() => setInsertarAlimentacion(false)}>
+                    <InsertarAlimento/>
+                </Modal>
+                <Modal show={insertarVacunacion} onClose={() => setInsertarVacunacion(false)}>
+                    <InsertarMedicamentos/>
+                </Modal>
+                <Modal show={insertarPesoSalud} onClose={() => setInsertarPesoSalud(false) }>
+                    <InsertarEstadoPeso/>
+                </Modal>
             </div>
         </div>
     );
 }
 
 export default Crud;
-
