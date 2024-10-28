@@ -15,9 +15,8 @@ import SubastaGanada from "./pages/TarjetaGanadora/TarjetaGanada.jsx";
 import VisualizarAnimalesSubasta from "./components/subastar/VisualizarAnimalesSubasta.jsx";
 import { AuthProvider } from "./contexts/AuthContext.jsx";
 import Subastas from "./pages/Subastas/Subastas.jsx";
-// import InsertarEstadoPeso from "./pages/insertarEstadoPeso/InsertarEstadoPeso.jsx";
-// import InsertarAlimentos from "./pages/insertarAlimentos/InsertarAlimento.jsx";
-// import Medicamentos from "./pages/Medicamentos/Medicamentos.jsx";
+import Favoritos from "./pages/favoritos/Favoritos.jsx";
+
 
 export default function AppRouter() {
   return (
@@ -45,6 +44,7 @@ export default function AppRouter() {
             <Route path="/insertar-medicamentos" element={<Medicamentos />} /> */}
             <Route path="/subasta-ganada" element={<SubastaGanada />} />
             <Route path="/subastas" element={<Subastas />} />
+            <Route path="/favoritos" element={<Favoritos />} />
           </Route>
         </Routes>
       </HashRouter>

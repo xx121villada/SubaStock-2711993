@@ -1,44 +1,96 @@
-import React, { useState, useEffect } from 'react';
-import Tarjeta from '../../components/Tarjeta';
+import { useEffect, useState } from 'react';
+import Tarjeta from '../../components/Subastas/Tarjeta'; 
+import styles from './favoritos.module.css'
 
 const Favoritos = () => {
     const [favoritos, setFavoritos] = useState([]);
-    const [error, setError] = useState(null);
+    const [idUsuario, setIdUsuario] = useState(''); 
 
-    // Función para obtener los favoritos desde la API
-    const obtenerFavoritos = () => {
-        fetch('https://apisubastock.cleverapps.io/subasta/favoritos/obtener') // Cambia la URL según tu API
-            .then(response => response.json())
-            .then(data => {
-                setFavoritos(data); // Asumiendo que la respuesta es un array de objetos
-            })
-            .catch(err => {
-                setError('Error al obtener favoritos');
-                console.error(err);
-            });
-    };
-
+    // session storage
     useEffect(() => {
-        obtenerFavoritos(); // Cargar favoritos al montar el componente
+        const storedIdUsuario = sessionStorage.getItem('idUsuario');
+        if (storedIdUsuario) {
+            setIdUsuario(storedIdUsuario);
+            console.log("ID del usuario desde sessionStorage:", storedIdUsuario);
+        } else {
+            console.warn("El usuario no ha iniciado sesión.");
+        }
     }, []);
 
+    // Hacer la petición solo si el idUsuario es válido
+    useEffect(() => {
+        if (!idUsuario) return;
+
+        const fetchFavoritos = async () => {
+            try {
+                const response = await fetch(
+                    `https://apisubastock.cleverapps.io/favorito/Obtener/${idUsuario}`,
+                    {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    }
+                );
+
+                if (!response.ok) throw new Error("No se pudieron obtener los favoritos");
+
+                const data = await response.json();
+                
+                // id subastas
+                const subastaIds = data.Favoritos.map(favorito => favorito.idSubasta);
+
+                // 
+                const respSubasta = await fetch(
+                    `https://apisubastock.cleverapps.io/subasta/Obtener`, 
+                    {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    }
+                );
+
+                if (!respSubasta.ok) throw new Error("No se pudieron obtener las subastas");
+
+                const subastasData = await respSubasta.json();
+                const subastas = subastasData.subastas || [];
+
+                // Filtrar las subastas para obtener solo las favoritas
+                const favoritasConDetalles = subastas.filter(subasta => 
+                    subastaIds.includes(subasta.idSubasta)
+                );
+
+                setFavoritos(favoritasConDetalles);
+            } catch (error) {
+                console.error("Error al obtener los favoritos o las subastas:", error);
+            }
+        };
+
+        fetchFavoritos();
+    }, [idUsuario]);
+
     return (
-        <div>
-            <h1>Mis Favoritos</h1>
-            {error && <p>{error}</p>}
-            <div className="d-flex flex-wrap gap-3">
-                {favoritos.map(favorito => (
-                    <Tarjeta
-                        key={favorito.itemId}
-                        itemId={favorito.itemId} 
-                        fechaFin={favorito.fechaFin}
-                        titulo={favorito.titulo}
-                        imgs={favorito.imgs}
-                        ubicacion={favorito.ubicacion}
-                        numeroPujas={favorito.numeroPujas}
-                        pujaMasAlta={favorito.pujaMasAlta}
-                    />
-                ))}
+        <div className="container">
+            <p className={styles.titulo}>FAVORITOS</p>
+            <div className={styles.containerLg}>
+                {favoritos.length > 0 ? (
+                    favoritos.map((subasta) => (
+                        <Tarjeta
+                            key={subasta.idSubasta}
+                            idSubasta={subasta.idSubasta}
+                            fechaFin={subasta.fechaFin}
+                            tituloSubasta={subasta.tituloSubasta}
+                            imagenUrl={subasta.imagenUrl}
+                            imagenUrl2={subasta.imagenUrl2}
+                            imagenUrl3={subasta.imagenUrl3}
+                            imagenUrl4={subasta.imagenUrl4}
+                            imagenUrl5={subasta.imagenUrl5}
+                        />
+                    ))
+                ) : (
+                    <p>No tienes subastas marcadas como favoritas.</p>
+                )}
             </div>
         </div>
     );

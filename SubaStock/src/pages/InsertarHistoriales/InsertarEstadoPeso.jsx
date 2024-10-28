@@ -74,6 +74,7 @@ export default function InsertarEstadoPeso() {
     return (
         <div>
             <form onSubmit={handleSubmit}>
+
                 <div className={styles.formContainerDiv}>
                     <h1 className={styles.title}>INSERTAR PESO Y SALUD</h1>
                     <div className={styles.cowContainerImg}>

@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import LazyCarousel from "./LazyCarousel";
 import { useState, useEffect } from "react";
 import Temporizador from "./Temporizador";
@@ -13,10 +12,14 @@ const Tarjeta = ({
   imagenUrl3,
   imagenUrl4,
   imagenUrl5,
+  pujaMinima
+  
 }) => {
   const [esTiempoCritico, setTiempoCritico] = useState(false);
   const [esFavorito, setEsFavorito] = useState(false);
   const [idUsuario, setIdUsuario] = useState('');
+  const [maxPuja, setMaxPuja] = useState(0);
+  localStorage.setItem('idSubasta', idSubasta)
 
   useEffect(() => {
     const storedIdUsuario = sessionStorage.getItem('idUsuario');
@@ -43,7 +46,6 @@ const Tarjeta = ({
 
         const data = await response.json();
         const favoritos = data.Favoritos || [];
-        // verifica si la subasta actual está en la lista de favorito
         const favorito = favoritos.some((fav) => fav.idSubasta === idSubasta);
 
         setEsFavorito(favorito);
@@ -60,9 +62,8 @@ const Tarjeta = ({
     setEsFavorito(nuevoEstadoFavorito);
 
     try {
-      //if ternario para definor la ruta a la cual se le va a hacer el fetch
       const url = `https://apisubastock.cleverapps.io/favorito/${nuevoEstadoFavorito ? 'Insertar' : 'Eliminar'}/${idSubasta}`;
-      if(nuevoEstadoFavorito){
+      if (nuevoEstadoFavorito) {
         const response = await fetch(url, {
           method: 'POST',
           headers: {
@@ -73,22 +74,22 @@ const Tarjeta = ({
         if (!response.ok) throw new Error(`No se pudo agregar el favorito`);
 
         const data = await response.json();
-        if(data.status){
-          console.log(data.message)
+        if (data.status) {
+          console.log(data.message);
         }
-      }else{
+      } else {
         const response = await fetch(url, {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({idUsuario }),
+          body: JSON.stringify({ idUsuario }),
         });
         if (!response.ok) throw new Error(`No se pudo eliminar el favorito`);
 
         const data = await response.json();
-        if(data.status){
-          console.log(data.message)
+        if (data.status) {
+          console.log(data.message);
         }
       }
     } catch (error) {
@@ -97,6 +98,32 @@ const Tarjeta = ({
     }
   };
 
+  useEffect(() => {
+    const obtenerPujas = async () => {
+      try {
+        const response = await fetch(`https://apisubastock.cleverapps.io/puja/Obtener`);
+        const data = await response.json();
+
+        if (!data.status) {
+          console.error("Error al obtener las pujas:", data.message);
+          return;
+        }
+
+        // Filtrar las pujas para la subasta específica
+        const pujas = data.pujas.filter(puja => puja.idSubasta === idSubasta);
+        if (pujas.length > 0) {
+          const maxValor = Math.max(...pujas.map(puja => parseFloat(puja.valor)));
+          setMaxPuja(maxValor);
+        } else {
+          setMaxPuja(pujaMinima);
+        }
+      } catch (error) {
+        console.error("Error al obtener las pujas:", error);
+      }
+    };
+
+    obtenerPujas();
+  }, [idSubasta]);
 
   return (
     <div
@@ -177,7 +204,9 @@ const Tarjeta = ({
           Puja más alta:{" "}
         </span>
         <span className="fs-4" style={{ fontWeight: "bold" }}>
-          COP {"3000000"}
+          {maxPuja ? `COP ${maxPuja.toLocaleString('es-CO', {
+            minimumFractionDigits: 0,
+          })}` : "0"}
         </span>
       </div>
     </div>
@@ -185,3 +214,4 @@ const Tarjeta = ({
 };
 
 export default Tarjeta;
+

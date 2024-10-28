@@ -74,6 +74,7 @@ function InsertarAlimento() {
     return (
         <div>
             <form onSubmit={handleSubmit}>
+
                 <div className={styles.formContainerDiv}>
                     <h1 className={styles.title}>Insertar Alimentos</h1>
                     <div className={styles.cowContainerImg}>

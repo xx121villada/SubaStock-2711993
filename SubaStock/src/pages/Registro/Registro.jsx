@@ -52,33 +52,33 @@ export default function Registro() {
             },
             body: JSON.stringify(valores)
         })
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then((data) => {
-            if(data.status){
-                Swal.fire({ title: data.message, icon: 'success' });
-                form.current.reset();
-                setValores({ 
-                    nombres: '',
-                    apellidos: '',
-                    correo: '',
-                    contraseña: '',
-                    saldo: '',
-                    telefono: '',
-                    repetirContraseña: ''
-                });
-                window.location.hash = "/login";
-            } else {
-                Swal.fire({ title: data.message, icon: 'error' });
-            }
-        })
-        .catch((error) => {
-            Swal.fire({ title: `Error al registrar: ${error.message}`, icon: 'error' });
-        });
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then((data) => {
+                if (data.status) {
+                    Swal.fire({ title: data.message, icon: 'success' });
+                    form.current.reset();
+                    setValores({
+                        nombres: '',
+                        apellidos: '',
+                        correo: '',
+                        contraseña: '',
+                        saldo: '',
+                        telefono: '',
+                        repetirContraseña: ''
+                    });
+                    window.location.hash = "/login";
+                } else {
+                    Swal.fire({ title: data.message, icon: 'error' });
+                }
+            })
+            .catch((error) => {
+                Swal.fire({ title: `Error al registrar: ${error.message}`, icon: 'error' });
+            });
     };
 
     return (
@@ -147,6 +147,7 @@ export default function Registro() {
                                 required
                             />
                         </div>
+
                         <div className={styles.formRow}>
                             <div className={styles.inputContainer}>
                                 <label>Confirmar contraseña</label>

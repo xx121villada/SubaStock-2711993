@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
-import './styles/HistorialAlimento.css';
+import styles from './styles/Historiales.module.css';
 
 export default function HistorialAlimento() {
     const [idAnimal, setIdAnimal] = useState('');
@@ -10,39 +10,28 @@ export default function HistorialAlimento() {
 
     useEffect(() => {
         const storedIdAnimal = localStorage.getItem('idAnimal');
-        if (storedIdAnimal) {
-            setIdAnimal(storedIdAnimal);
-        }
+        if (storedIdAnimal) setIdAnimal(storedIdAnimal);
+
         const storedMarca = localStorage.getItem('marcaAnimal');
-        if (storedMarca) {
-            setMarca(storedMarca);
-        }
+        if (storedMarca) setMarca(storedMarca);
     }, []);
 
     const fetchHistorial = async () => {
         try {
-            const response = await fetch(`https://apisubastock.cleverapps.io/alimentacion/Obtener/${idAnimal}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
+            const response = await fetch(
+                `https://apisubastock.cleverapps.io/alimentacion/Obtener/${idAnimal}`,
+                { method: 'GET', headers: { 'Content-Type': 'application/json' } }
+            );
             const data = await response.json();
 
             if (data.status) {
                 setHistorial(data.alimentos);
-            } else {
-                Swal.fire({
-                    icon: 'info',
-                    title: 'Información',
-                    text: "No hay registros de Alimentos"
-                });
             }
         } catch (error) {
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: error.message
+                text: error.message,
             });
         }
     };
@@ -51,35 +40,31 @@ export default function HistorialAlimento() {
         try {
             const result = await Swal.fire({
                 title: '¿Estás seguro de eliminar este alimento?',
-                text: "Una vez eliminado, no se podrá recuperar!",
+                text: 'Una vez eliminado, no se podrá recuperar!',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Sí, eliminarlo!'
+                confirmButtonText: 'Sí, eliminarlo!',
             });
 
             if (result.isConfirmed) {
-                const response = await fetch(`http://localhost:8000/alimentacion/Eliminar/${idAlimentacion}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
+                const response = await fetch(
+                    `https://apisubastock.cleverapps.io/alimentacion/Eliminar/${idAlimentacion}`,
+                    { method: 'DELETE', headers: { 'Content-Type': 'application/json' } }
+                );
                 const data = await response.json();
 
                 if (data.status) {
-                    Swal.fire(
-                        'Eliminado!',
-                        'El alimento ha sido eliminado.',
-                        'success'
+                    Swal.fire('Eliminado!', 'El alimento ha sido eliminado.', 'success');
+                    setHistorial((prevHistorial) =>
+                        prevHistorial.filter((alimento) => alimento.idAlimentacion !== idAlimentacion)
                     );
-                    fetchHistorial();
                 } else {
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
-                        text: data.message
+                        text: data.message,
                     });
                 }
             }
@@ -87,21 +72,19 @@ export default function HistorialAlimento() {
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: 'Error al eliminar el alimento.'
+                text: 'Error al eliminar el alimento.',
             });
         }
     };
 
     useEffect(() => {
-        if (idAnimal) {
-            fetchHistorial();
-        }
+        if (idAnimal) fetchHistorial();
     }, [idAnimal]);
 
     return (
-        <div className="historial-container-alimento">
-            <h1 className="historial-title">Historial de Alimentos - {marca}</h1>
-            <table className="historial-table-alimento">
+        <div className={styles.historialContainer}>
+            <h1 className={styles.historialTitle}>Historial de Alimentos - {marca}</h1>
+            <table className={styles.historialTable}>
                 <thead>
                     <tr>
                         <th>Tipo de Alimento</th>
@@ -118,7 +101,10 @@ export default function HistorialAlimento() {
                                 <td>{alimento.cantidad}Kl</td>
                                 <td>{alimento.fecha}</td>
                                 <td>
-                                    <button className="btn-delete-alimento" onClick={() => eliminarAlimento(alimento.idAlimentacion)}>
+                                    <button
+                                        className={styles.btnEliminar}
+                                        onClick={() => eliminarAlimento(alimento.idAlimentacion)}
+                                    >
                                         Eliminar
                                     </button>
                                 </td>
@@ -126,7 +112,9 @@ export default function HistorialAlimento() {
                         ))
                     ) : (
                         <tr>
-                            <td colSpan="4" className="no-data">No hay datos para mostrar</td>
+                            <td colSpan="4" className={styles.noData}>
+                                No hay datos para mostrar
+                            </td>
                         </tr>
                     )}
                 </tbody>
