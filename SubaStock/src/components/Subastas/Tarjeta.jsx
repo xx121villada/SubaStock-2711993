@@ -13,6 +13,7 @@ const Tarjeta = ({
   imagenUrl4,
   imagenUrl5,
   pujaMinima
+  
 }) => {
   const [esTiempoCritico, setTiempoCritico] = useState(false);
   const [esFavorito, setEsFavorito] = useState(false);
