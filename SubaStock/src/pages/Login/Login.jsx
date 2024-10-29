@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import SPLoader from '../loader/Loader'; 
-import { useAuth } from '../../contexts/AuthContext';
 
 const useForm = (initialValues) => {
     const [values, setValues] = useState(initialValues);
@@ -25,7 +24,6 @@ const Login = () => {
         contraseña: ''
     });
     const [loading, setLoading] = useState(true); 
-    const { login } = useAuth();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -56,7 +54,6 @@ const Login = () => {
 
             if (data.status) {
                 sessionStorage.setItem('idUsuario', data.idUsuario);
-                login(data);
                 Swal.fire({
                     title: 'Correcto!',
                     text: "Inicio de Sesión exitoso",

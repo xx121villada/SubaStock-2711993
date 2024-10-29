@@ -1,10 +1,8 @@
 import { Link } from "react-router-dom";
 import styles from "./sesionIniciada.module.css"; 
 import Swal from "sweetalert2";
-import { useAuth } from "../../contexts/AuthContext";
 
 function SesionIniciada() {
-  const {logout} = useAuth();
   const Cerrar = () => {
     Swal.fire({
       title: "¿Estás seguro de cerrar sesión?",
@@ -16,7 +14,6 @@ function SesionIniciada() {
       confirmButtonText: "Cerrar Sesión",
     }).then((result) => {
       if (result.isConfirmed) {
-        logout();
         Swal.fire("Sesión cerrada", "Tu sesión ha sido finalizada", "success");
         localStorage.clear();
         sessionStorage.clear();
