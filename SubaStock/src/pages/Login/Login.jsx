@@ -1,5 +1,5 @@
 import styles from './login.module.css';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import SPLoader from '../loader/Loader'; 
@@ -18,13 +18,56 @@ const useForm = (initialValues) => {
     return [values, handleChange];
 };
 
+const iniciarSesion = async (values) => {
+    try {
+        const response = await fetch('https://apisubastock.cleverapps.io/usuario/Login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(values),
+        });
+
+        if (!response.ok) {
+            throw new Error('Error en la respuesta');
+        }
+
+        const data = await response.json();
+
+        if (data.status) {
+            sessionStorage.setItem('idUsuario', data.idUsuario);
+            Swal.fire({
+                title: 'Correcto!',
+                text: "Inicio de sesión exitoso",
+                icon: 'success',
+                confirmButtonText: 'Continuar',
+            }).then(() => {
+                window.location.hash = '/sesion-iniciada';
+            });
+        } else {
+            Swal.fire({
+                title: 'Error!',
+                text: data.message,
+                icon: 'error',
+                confirmButtonText: 'Continuar',
+            });
+        }
+    } catch (error) {
+        Swal.fire({
+            title: 'Error!',
+            text: `Error al iniciar sesión: ${error.message}`,
+            icon: 'error',
+        });
+    }
+};
+
 const Login = () => {
     const [values, handleChange] = useForm({
         correo: '',
         contraseña: ''
     });
+
     const [loading, setLoading] = useState(true); 
-    const navigate = useNavigate();
 
     useEffect(() => {
         const loadData = async () => {
@@ -35,48 +78,9 @@ const Login = () => {
         loadData();
     }, []);
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        try {
-            const response = await fetch('https://apisubastock.cleverapps.io/usuario/Login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(values),
-            });
-
-            if (!response.ok) {
-                throw new Error('Error en la respuesta');
-            }
-
-            const data = await response.json();
-
-            if (data.status) {
-                sessionStorage.setItem('idUsuario', data.idUsuario);
-                Swal.fire({
-                    title: 'Correcto!',
-                    text: "Inicio de Sesión exitoso",
-                    icon: 'success',
-                    confirmButtonText: 'Continuar',
-                }).then(() => {
-                    navigate('/sesion-iniciada'); 
-                });
-            } else {
-                Swal.fire({
-                    title: 'Error!',
-                    text: data.message,
-                    icon: 'error',
-                    confirmButtonText: 'Continuar',
-                });
-            }
-        } catch (error) {
-            Swal.fire({
-                title: 'Error!',
-                text: `Error al iniciar sesión: ${error.message}`,
-                icon: 'error',
-            });
-        }
+        iniciarSesion(values);
     };
 
     if (loading) {

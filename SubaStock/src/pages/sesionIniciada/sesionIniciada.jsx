@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import styles from "./sesionIniciada.module.css"; 
+import styles from "./sesionIniciada.module.css";
 import Swal from "sweetalert2";
 
 function SesionIniciada() {
@@ -17,13 +17,14 @@ function SesionIniciada() {
         Swal.fire("Sesión cerrada", "Tu sesión ha sido finalizada", "success");
         localStorage.clear();
         sessionStorage.clear();
+
         window.location.hash = "/";
       }
     });
   };
 
   return (
- 
+
     <div className={styles.sesionContainer}>
       <div className={styles.contentContainer}>
         <main className={styles.appMain}>
@@ -33,7 +34,9 @@ function SesionIniciada() {
               <button className={styles.button}>SUBASTAR</button>
             </Link>
             <button className={styles.button}>VER SUBASTAS</button>
-            <button className={styles.button}>FAVORITOS</button>
+            <Link to="/favoritos">
+              <button className={styles.button}>FAVORITOS</button>
+            </Link>
             <Link to="/registro-animales">
               <button className={styles.button}>REGISTRAR ANIMAL</button>
             </Link>

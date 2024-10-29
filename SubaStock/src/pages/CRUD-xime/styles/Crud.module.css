@@ -91,12 +91,11 @@
 
 .deleteButton {
     padding: 10px 20px;
-    background-color: #3599dc;
+    background-color: red;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
 }
 
 .deleteButton:hover {

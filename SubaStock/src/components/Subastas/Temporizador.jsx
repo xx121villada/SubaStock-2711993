@@ -1,17 +1,66 @@
+// /* eslint-disable react/prop-types */
+// import { useEffect } from "react";
+// import { useTimer } from "react-timer-hook";
+
+// const Temporizador = ({ fechaFin, onTiempoCritico, minutosCriticos = 1 }) => {
+//   const fechaConvertida = new Date(Date.parse(fechaFin.replace(/[-]/g, "/")));
+//   const { seconds, hours, minutes, days, pause, start } = useTimer({
+//     expiryTimestamp: fechaConvertida,
+//   });
+
+//   useEffect(() => {
+//     if (days === 0 && hours === 0 && minutes < minutosCriticos) {
+//       if (onTiempoCritico && typeof onTiempoCritico === "function")
+//         onTiempoCritico();
+//     }
+//   }, [minutes, minutosCriticos, onTiempoCritico, hours, days]);
+
+//   useEffect(() => {
+//     if (days > 0) pause();
+//     else start();
+//   }, [days, pause, start]);
+
+//   if (days > 0) {
+//     return (
+//       <>
+//         {fechaConvertida.getMonth() + 1}/{fechaConvertida.getDate()}{" "}
+//         {fechaConvertida.getHours()}:{fechaConvertida.getMinutes()}
+//       </>
+//     );
+//   }
+
+//   return (
+//     <>{`${hours >= 10 ? hours : "0" + hours}:${
+//       minutes >= 10 ? minutes : "0" + minutes
+//     }:${seconds >= 10 ? seconds : "0" + seconds}`}</>
+//   );
+// };
+
+// export default Temporizador;
 /* eslint-disable react/prop-types */
 import { useEffect } from "react";
 import { useTimer } from "react-timer-hook";
 
 const Temporizador = ({ fechaFin, onTiempoCritico, minutosCriticos = 1 }) => {
-  const fechaConvertida = new Date(Date.parse(fechaFin.replace(/[-]/g, "/")));
+  // Validación de fechaFin
+  const fechaConvertida = fechaFin
+    ? new Date(Date.parse(fechaFin.replace(/[-]/g, "/")))
+    : null;
+
+  // Verificar si la fecha convertida es válida
+  if (!fechaConvertida || isNaN(fechaConvertida.getTime())) {
+    return <div>Fecha no válida</div>; // Manejo de error
+  }
+
   const { seconds, hours, minutes, days, pause, start } = useTimer({
     expiryTimestamp: fechaConvertida,
   });
 
   useEffect(() => {
     if (days === 0 && hours === 0 && minutes < minutosCriticos) {
-      if (onTiempoCritico && typeof onTiempoCritico === "function")
+      if (onTiempoCritico && typeof onTiempoCritico === "function") {
         onTiempoCritico();
+      }
     }
   }, [minutes, minutosCriticos, onTiempoCritico, hours, days]);
 
@@ -30,9 +79,11 @@ const Temporizador = ({ fechaFin, onTiempoCritico, minutosCriticos = 1 }) => {
   }
 
   return (
-    <>{`${hours >= 10 ? hours : "0" + hours}:${
-      minutes >= 10 ? minutes : "0" + minutes
-    }:${seconds >= 10 ? seconds : "0" + seconds}`}</>
+    <>
+      {`${hours >= 10 ? hours : "0" + hours}:${
+        minutes >= 10 ? minutes : "0" + minutes
+      }:${seconds >= 10 ? seconds : "0" + seconds}`}
+    </>
   );
 };
 
