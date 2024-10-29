@@ -3,14 +3,17 @@ import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import BotonVolver from "../UI/BotonVolver";
+import SPLoader from "../../pages/loader/Loader";
 
 export function Subastar() {
   const navigate = useNavigate();
+  const API_URL = import.meta.env.VITE_API_URL;
   const [idUsuario, setIdUsuario] = useState("");
   const [idAnimal, setIdAnimal] = useState("");
   const [marca, setMarca] = useState("");
   const [imagenes, setImagenes] = useState([]);
   const [imagenPreviews, setImagenPreviews] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const storedIdUsuario = sessionStorage.getItem("idUsuario");
@@ -68,6 +71,7 @@ export function Subastar() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true);
     const formData = new FormData();
     Object.keys(values).forEach((key) => formData.append(key, values[key]));
 
@@ -75,7 +79,7 @@ export function Subastar() {
       formData.append(index === 0 ? "imagen" : `imagen${index}`, img)
     );
 
-    fetch(`https://apisubastock.cleverapps.io/subasta/Insertar/${idAnimal}`, {
+    fetch(`${API_URL}/subasta/Insertar/${idAnimal}`, {
       method: "POST",
       body: formData,
     })
@@ -102,8 +106,10 @@ export function Subastar() {
           text: err.message,
           icon: "error",
         })
-      );
+      )
+      .finally(() => setLoading(false));
   };
+
   const limpiar = () => {
     if (imagenes.length === 0) {
       Swal.fire("Nada que limpiar", "No hay imágenes seleccionadas", "info");
@@ -115,82 +121,78 @@ export function Subastar() {
 
   return (
     <div className={styles.container}>
-      <BotonVolver ruta={"/sesion-iniciada"} />
-      <h2 className={styles.title}>Subastar Animal con Marca: {marca}</h2>
+      {loading ? (
+        <SPLoader />
+      ) :
+        (
+          <>
+            <BotonVolver ruta={"/sesion-iniciada"} /><h2 className={styles.title}>Subastar Animal con Marca: {marca}</h2><div className={styles.content}>
+              <div className={styles.leftContainer}>
+                <label className={styles.label}>Selecciona hasta 5 imágenes:</label>
+                <label> imagenes seleccionada : {imagenes.length} </label>
+                <input
+                  type="file"
+                  multiple
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  className={styles.fileInput} />
+                <button onClick={limpiar} className={styles.clearButton}>
+                  Limpiar Imágenes
+                </button>
 
-      <div className={styles.content}>
-        <div className={styles.leftContainer}>
-          <label className={styles.label}>Selecciona hasta 5 imágenes:</label>
-          <label > imagenes seleccionada : {imagenes.length} </label>
-          <input
-            type="file"
-            multiple
-            accept="image/*"
-            onChange={handleImageChange}
-            className={styles.fileInput}
-          />
-          <button onClick={limpiar} className={styles.clearButton}>
-            Limpiar Imágenes
-          </button>
+                <div className={styles.imageCarousel}>
+                  {imagenPreviews.map((src, idx) => (
+                    <img
+                      key={idx}
+                      src={src}
+                      alt={`Imagen ${idx + 1}`}
+                      className={styles.image} />
+                  ))}
+                </div>
+              </div>
 
-          <div className={styles.imageCarousel}>
-            {imagenPreviews.map((src, idx) => (
-              <img
-                key={idx}
-                src={src}
-                alt={`Imagen ${idx + 1}`}
-                className={styles.image}
-              />
-            ))}
-          </div>
-        </div>
-
-        <form onSubmit={handleSubmit} className={styles.form}>
-          <input
-            type="text"
-            required
-            name="tituloSubasta"
-            placeholder="Nombre de la Subasta"
-            onChange={handleChange}
-            className={styles.input}
-          />
-          <textarea
-            name="descripcion"
-            required
-            rows="3"
-            placeholder="Descripción de la Subasta"
-            onChange={handleChange}
-            className={styles.input}
-          />
-          <div className={styles.dateFields}>
-            <input
-              type="date"
-              name="fechaInicio"
-              required
-              onChange={handleChange}
-              className={styles.dateInput}
-            />
-            <input
-              type="date"
-              name="fechaFin"
-              required
-              onChange={handleChange}
-              className={styles.dateInput}
-            />
-          </div>
-          <input
-            type="number"
-            name="pujaMinima"
-            required
-            placeholder="Puja Mínima"
-            onChange={handleChange}
-            className={styles.input}
-          />
-          <button type="submit" className={styles.submitButton}>
-            Subastar
-          </button>
-        </form>
-      </div>
+              <form onSubmit={handleSubmit} className={styles.form}>
+                <input
+                  type="text"
+                  required
+                  name="tituloSubasta"
+                  placeholder="Nombre de la Subasta"
+                  onChange={handleChange}
+                  className={styles.input} />
+                <textarea
+                  name="descripcion"
+                  required
+                  rows="3"
+                  placeholder="Descripción de la Subasta"
+                  onChange={handleChange}
+                  className={styles.input} />
+                <div className={styles.dateFields}>
+                  <input
+                    type="datetime-local"
+                    name="fechaInicio"
+                    required
+                    onChange={handleChange}
+                    className={styles.dateInput} />
+                  <input
+                    type="datetime-local"
+                    name="fechaFin"
+                    required
+                    onChange={handleChange}
+                    className={styles.dateInput} />
+                </div>
+                <input
+                  type="number"
+                  name="pujaMinima"
+                  required
+                  placeholder="Puja Mínima"
+                  onChange={handleChange}
+                  className={styles.input} />
+                <button type="submit" className={styles.submitButton}>
+                  Subastar
+                </button>
+              </form>
+            </div></>
+        )}
     </div>
   );
 }
