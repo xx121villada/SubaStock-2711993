@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 import Tarjeta from "../../components/Subastas/Tarjeta";
 
-const animals = [];
 
 const Subastas = () => {
   
-  // const data = useLoaderData();
   const [data, setData] = useState([]);
 
   useEffect(() => {
