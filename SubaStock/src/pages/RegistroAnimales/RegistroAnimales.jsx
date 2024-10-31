@@ -70,7 +70,7 @@ const RegistroAnimales = () => {
                 </button>
             </div>
             <div className="registro-container">
-                <h1>Registro de Animales</h1>
+                <h1>REGISTRO DE ANIMALES</h1>
                 <div className="logos-container">
                     <img src={cerdo} alt="Cerdo" />
                     <img src={vaca} alt="Vaca" />
@@ -90,7 +90,7 @@ const RegistroAnimales = () => {
                         />
                     </div>
                     <div className="animales-div">
-                        <label htmlFor="especie">Especie</label>
+                        <label htmlFor="especie">ESPECIE</label>
                         <select
                             className="campos"
                             id="especie"
@@ -107,7 +107,7 @@ const RegistroAnimales = () => {
                         </select>
                     </div>
                     <div className="animales-div">
-                        <label htmlFor="raza">Raza</label>
+                        <label htmlFor="raza">RAZA</label>
                         <input
                             className="campos"
                             type="text"
@@ -131,7 +131,7 @@ const RegistroAnimales = () => {
                             onChange={handleChange}
                         />
                     </div> */}
-                    <button type="submit" className="registro-button">Registrar</button>
+                    <button type="submit" className="registro-button">REGISTRAR</button>
                 </form>
             </div>
         </div>
