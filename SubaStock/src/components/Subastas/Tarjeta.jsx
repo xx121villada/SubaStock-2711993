@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import LazyCarousel from "./LazyCarousel";
 import { useState, useEffect } from "react";
 import Temporizador from "./Temporizador";
@@ -19,7 +20,7 @@ const Tarjeta = ({
   const [esFavorito, setEsFavorito] = useState(false);
   const [idUsuario, setIdUsuario] = useState('');
   const [maxPuja, setMaxPuja] = useState(0);
-
+  
   useEffect(() => {
     const storedIdUsuario = sessionStorage.getItem('idUsuario');
     if (storedIdUsuario) {
@@ -122,7 +123,7 @@ const Tarjeta = ({
     };
 
     obtenerPujas();
-  }, [idSubasta]);
+  }, [idSubasta, pujaMinima]);
 
   return (
     <div

@@ -1,8 +1,8 @@
-import './registro.css';
+import styles from './registro.module.css';
 import { useState, useRef } from 'react';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
-import Loader from '../loader/Loader'
+import Loader from '../loader/Loader';
 
 export default function Registro() {
     const validarCorreo = (email) => /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/.test(email);
@@ -82,93 +82,91 @@ export default function Registro() {
     };
 
     return (
-        <div className='register-container'>
-            <div className='content-register'>
-
-                <form onSubmit={handleSubmit} ref={form} className='registro-form'>
-                    <section className='container-registro'>
-                        <h1 className="titulo">REGISTRO</h1>
-                        <div className="form-row">
-                            <div className="input-container">
-                                <label>NOMBRES</label>
-                                <input
+        <div className={styles.registerContainer}>
+            <div className={styles.contentRegister}>
+                <form onSubmit={handleSubmit} ref={form} className={styles.registroForm}>
+                    <section className={styles.containerRegistro}>
+                        <h1 className={styles.titulo}>Registro</h1>
+                        <div className={styles.formRow}>
+                            <div className={styles.inputContainer}>
+                                <label>Nombres</label>
+                                <input 
                                     placeholder='Ingrese sus nombres'
                                     type="text"
                                     name='nombres'
                                     onChange={handleChange}
-                                    className="form-input"
+                                    className={styles.formInput}
                                     required
                                 />
                             </div>
-                            <div className="input-container">
-                                <label>APELLIDOS</label>
-                                <input
+                            <div className={styles.inputContainer}>
+                                <label>Apellidos</label>
+                                <input 
                                     placeholder='Ingrese sus apellidos'
                                     type="text"
                                     name='apellidos'
                                     onChange={handleChange}
-                                    className="form-input"
+                                    className={styles.formInput}
                                     required
                                 />
                             </div>
                         </div>
-                        <div className="form-row">
-                            <div className="input-container">
-                                <label>TELÉFONO
-                                </label>
-                                <input
+                        <div className={styles.formRow}>
+                            <div className={styles.inputContainer}>
+                                <label>Teléfono</label>
+                                <input 
                                     placeholder='Ingrese su número de teléfono'
                                     type="tel"
                                     name='telefono'
                                     pattern="[0-9]{10}"
                                     onChange={handleChange}
-                                    className="form-input"
+                                    className={styles.formInput}
                                     required
                                 />
                             </div>
-                            <div className="input-container">
-                                <label>
-                                    CORREO ELECTRÓNICO</label>
-                                <input
+                            <div className={styles.inputContainer}>
+                                <label>Correo electrónico</label>
+                                <input 
                                     placeholder='Ingrese su correo electrónico'
                                     type="email"
                                     name='correo'
                                     onChange={handleChange}
-                                    className="form-input"
+                                    className={styles.formInput}
                                     required
                                 />
                             </div>
                         </div>
-                        <div className="input-container">
-                            <label>CONTRASEÑA</label>
-                            <input
+                        <div className={styles.inputContainer}>
+                            <label>Contraseña</label>
+                            <input 
                                 placeholder='Crear contraseña'
                                 type="password"
                                 name='contraseña'
                                 onChange={handleChange}
-                                className="form-input"
+                                className={styles.formInput}
                                 required
                             />
                         </div>
-                        <div className="form-row">
-                            <div className="input-container">
-                                <label>CONFIRMAR CONTRASEÑA</label>
-                                <input
+
+                        <div className={styles.formRow}>
+                            <div className={styles.inputContainer}>
+                                <label>Confirmar contraseña</label>
+                                <input 
                                     placeholder='Repita su contraseña'
                                     type="password"
                                     name='repetirContraseña'
                                     onChange={handleChange}
-                                    className="form-input"
+                                    className={styles.formInput}
                                     required
                                 />
                             </div>
                         </div>
-                        <div className="d-grid gap-2">
-                            <button className="btn btn-success" type="submit">REGISTRARSE</button>
+                        <div className={styles.dGrid}>
+                            <button className={styles.btn } type="submit">Registrarse</button>
                         </div>
                         <div className='m-3'>
-                            <Link className='text-decoration-none text-black fs-5' to="/login">
-                                <p className='text-login'>¿Ya tienes una cuenta? Inicia sesión</p>
+                            <Link className='text-decoration-none text-black fs-5' to="/login"> 
+                                <p className={styles.textLogin}>¿Ya tienes una cuenta? Inicia sesión</p>
                             </Link>
                         </div>
                     </section>

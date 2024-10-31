@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
-import './styles/HistorialPesoSalud.css';
+import styles from './styles/Historiales.module.css';
 
 export default function HistorialPesoSalud() {
     const [historial, setHistorial] = useState([]);
@@ -10,34 +10,22 @@ export default function HistorialPesoSalud() {
 
     useEffect(() => {
         const storedIdAnimal = localStorage.getItem('idAnimal');
-        if (storedIdAnimal) {
-            setIdAnimal(storedIdAnimal);
-        }
+        if (storedIdAnimal) setIdAnimal(storedIdAnimal);
+
         const storedMarca = localStorage.getItem('marcaAnimal');
-        if (storedMarca) {
-            setMarca(storedMarca);
-        }
+        if (storedMarca) setMarca(storedMarca);
     }, []);
 
     const fetchHistorial = async () => {
         try {
             const response = await fetch(`https://apisubastock.cleverapps.io/estadoSalud/Obtener/${idAnimal}`, {
                 method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                }
+                headers: { 'Content-Type': 'application/json' }
             });
             const data = await response.json();
-            console.log(data);
 
             if (data.status) {
                 setHistorial(data.estadoSalud);
-            } else {
-                Swal.fire({
-                    icon: 'info',
-                    title: 'Información',
-                    text: "No hay registros de peso ni de salud" 
-                });
             }
         } catch (e) {
             Swal.fire({ title: 'Error al cargar datos', icon: 'error' });
@@ -49,27 +37,25 @@ export default function HistorialPesoSalud() {
         try {
             const result = await Swal.fire({
                 title: '¿Estás seguro de eliminar este peso?',
-                text: "Esta acción no se puede revertir",
+                text: 'Esta acción no se puede revertir',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Sí, eliminar!',
             });
+
             if (result.isConfirmed) {
-                const response = await fetch(`http://localhost:8000/medicamento/Eliminar/${idEstado_Salud}`, {
+                const response = await fetch(`https://apisubastock.cleverapps.io/estadoSalud/Eliminar/${idEstado_Salud}`, {
                     method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }
+                    headers: { 'Content-Type': 'application/json' },
                 });
                 const data = await response.json();
-
                 if (data.status) {
                     Swal.fire({ title: 'Peso y estado de salud eliminado correctamente', icon: 'success' });
-                    fetchHistorial();
-                } else {
-                    Swal.fire({ title: data.message, icon: 'error' });
+                    setHistorial((prevHistorial) =>
+                        prevHistorial.filter((pesoSalud) => pesoSalud.idEstado_Salud !== idEstado_Salud)
+                    );
                 }
             }
         } catch (e) {
@@ -79,15 +65,13 @@ export default function HistorialPesoSalud() {
     };
 
     useEffect(() => {
-        if(idAnimal){
-            fetchHistorial();
-        }
+        if (idAnimal) fetchHistorial();
     }, [idAnimal]);
 
     return (
-        <div className="historial-container-pesoSalud">
-            <h1 className="alimento-title">Historial de Peso y Estado de Salud del Animal - {marca}</h1>
-            <table className="historial-table-pesoSalud">
+        <div className={styles.historialContainer}>
+            <h1 className={styles.historialTitle}>Historial de Peso y Estado de Salud del Animal - {marca}</h1>
+            <table className={styles.historialTable}>
                 <thead>
                     <tr>
                         <th>Peso</th>
@@ -104,9 +88,10 @@ export default function HistorialPesoSalud() {
                                 <td>{pesoSalud.fecha}</td>
                                 <td>{pesoSalud.estado}</td>
                                 <td>
-                                    <button 
-                                        className="btn-delete-pesoSalud"
-                                        onClick={() => eliminarPeso(pesoSalud.idEstado_Salud)}>
+                                    <button
+                                        className={styles.btnEliminar}
+                                        onClick={() => eliminarPeso(pesoSalud.idEstado_Salud)}
+                                    >
                                         Eliminar
                                     </button>
                                 </td>
@@ -114,7 +99,9 @@ export default function HistorialPesoSalud() {
                         ))
                     ) : (
                         <tr>
-                            <td colSpan="4" className="no-data">No hay datos para mostrar</td>
+                            <td colSpan="4" className={styles.noData}>
+                                No hay datos para mostrar
+                            </td>
                         </tr>
                     )}
                 </tbody>

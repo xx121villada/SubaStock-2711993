@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
-import './styles/HistorialVacunacion.css';
+import styles from './styles/Historiales.module.css';
 
 export default function HistorialVacunacion() {
     const [idAnimal, setIdAnimal] = useState('');
@@ -24,33 +24,23 @@ export default function HistorialVacunacion() {
             fetchHistorial();
         }
     }, [idAnimal]);
-    
+
     const fetchHistorial = async () => {
         try {
             const response = await fetch(`https://apisubastock.cleverapps.io/medicamento/Obtener/${idAnimal}`, {
                 method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+                headers: { 'Content-Type': 'application/json' },
             });
             const data = await response.json();
-            console.log(data);
-            console.log(idAnimal)
 
             if (data.status) {
                 setHistorial(data.medicamento);
-            } else {
-                Swal.fire({
-                    icon: 'info',
-                    title: 'Información',
-                    text: "No hay registros de vacunas"
-                });
             }
         } catch (error) {
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: error.message
+                text: error.message,
             });
         }
     };
@@ -64,14 +54,13 @@ export default function HistorialVacunacion() {
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Sí, eliminar'
+                confirmButtonText: 'Sí, eliminar',
             });
+
             if (result.isConfirmed) {
                 const response = await fetch(`https://apisubastock.cleverapps.io/medicamento/Eliminar/${idMedicamento}`, {
                     method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
+                    headers: { 'Content-Type': 'application/json' },
                 });
                 const data = await response.json();
 
@@ -79,14 +68,16 @@ export default function HistorialVacunacion() {
                     Swal.fire({
                         icon: 'success',
                         title: 'Éxito',
-                        text: 'Vacuna eliminada correctamente'
+                        text: 'Vacuna eliminada correctamente',
                     });
-                    fetchHistorial();
+                    setHistorial((prevHistorial) =>
+                        prevHistorial.filter((medicamento) => medicamento.idMedicamento !== idMedicamento)
+                    );
                 } else {
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
-                        text: data.message
+                        text: data.message,
                     });
                 }
             }
@@ -94,15 +85,15 @@ export default function HistorialVacunacion() {
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: e.message
+                text: e.message,
             });
         }
     };
 
     return (
-        <div className="historia-container-vacunacion">
-            <h1 className="vacuancion-title">Historial de Vacunación {marca}</h1>
-            <table className="historial-table-vacunacion">
+        <div className={styles.historiaContainer}>
+            <h1 className={styles.historialTitle}>Historial de Vacunación {marca}</h1>
+            <table className={styles.historialTable}>
                 <thead>
                     <tr>
                         <th>Vacuna</th>
@@ -118,8 +109,9 @@ export default function HistorialVacunacion() {
                                 <td>{vacuna.fecha}</td>
                                 <td>
                                     <button
-                                        className="btn-delete-vacunacion"
-                                        onClick={() => eliminarVacuna(vacuna.idMedicamento)}>
+                                        className={styles.btnElimiar}
+                                        onClick={() => eliminarVacuna(vacuna.idMedicamento)}
+                                    >
                                         Eliminar
                                     </button>
                                 </td>
@@ -127,7 +119,7 @@ export default function HistorialVacunacion() {
                         ))
                     ) : (
                         <tr>
-                            <td colSpan="3" className="no-data">No hay datos para mostrar</td>
+                            <td colSpan="3" className={styles.noData}>No hay datos para mostrar</td>
                         </tr>
                     )}
                 </tbody>
