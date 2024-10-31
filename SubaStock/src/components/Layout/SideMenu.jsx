@@ -1,7 +1,10 @@
-import options from "./constants/HeaderOptions";
+import useOptions from "./hooks/useOptions";
 import { Link } from "react-router-dom";
 
 const SideMenu = ({ onOptionClick }) => {
+  const isLogged = true;
+  const options = useOptions();
+
   return (
     <div style={{ height: "100%", width: "100%" }}>
       <ul

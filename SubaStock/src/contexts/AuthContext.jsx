@@ -1,19 +1,73 @@
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext, useEffect } from "react";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [authState, setAuthState] = useState(null);
+  const [isLogged, setIsLogged] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [userData, setUserData] = useState(null);
 
-  const login = (userData) => {
-    setAuthState(userData);
-  };
+  useEffect(() => {
+    (async () => {
+      if (!getToken()) {
+        setIsLoading(false);
+        return;
+      }
+      const validToken = await verifyToken();
 
-  const logout = () => {
-    setAuthState(null);
-  };
+      if (validToken) {
+        setIsLogged(true);
+      } else {
+        removeToken();
+      }
+
+      setIsLoading(false);
+    })();
+  }, []);
+
+  async function verifyToken() {
+    // Aqui ira logica para verificar si el token es valido mediante la API
+
+    return new Promise((resolve, reject) =>
+      setTimeout(() => resolve(Math.random() * 100 > 50 ? false : true), 1500)
+    );
+  }
+
+  function getToken() {
+    localStorage.getItem("auth_token");
+  }
+
+  function removeToken() {
+    if (localStorage.getItem("auth_token")) {
+      localStorage.removeItem("auth_token");
+    }
+  }
+
+  function addToken(token) {
+    localStorage.setItem(token);
+  }
+
+  function login(token) {
+    addToken(token);
+    setIsLogged(true);
+  }
+
+  function logout() {
+    removeToken();
+    setIsLogged(false);
+  }
 
   return (
-    <AuthContext.Provider value={{ authState, login, logout }}>
+    <AuthContext.Provider
+      value={{
+        isLogged,
+        isLoading,
+        login,
+        logout,
+        getToken,
+        addToken,
+        userData,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
