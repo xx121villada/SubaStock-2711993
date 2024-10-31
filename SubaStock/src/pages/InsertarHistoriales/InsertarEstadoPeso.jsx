@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 export default function InsertarEstadoPeso() {
     const [marca, setMarca] = useState('');
     const [idAnimal, setIdAnimal] = useState('');
+    const API_URL = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
         const storedMarca = localStorage.getItem('marcaAnimal');
@@ -36,9 +37,7 @@ export default function InsertarEstadoPeso() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Datos enviados:', valores);
-        console.log('id', idAnimal);
-        fetch('http://localhost:8000/estadoSalud/Insertar', {
+        fetch(`${API_URL}/estadoSalud/Insertar`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

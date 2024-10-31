@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 function InsertarAlimento() {
     const [marca, setMarca] = useState('');
     const [idAnimal, setIdAnimal] = useState('');
+    const API_URL = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
         const storedMarca = localStorage.getItem('marcaAnimal');
@@ -36,9 +37,7 @@ function InsertarAlimento() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Datos enviados:', valores);
-        console.log('id', idAnimal);
-        fetch('https://apisubastock.cleverapps.io/alimentacion/Insertar', {
+        fetch(`${API_URL}/alimentacion/Insertar`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

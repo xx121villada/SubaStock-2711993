@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import styles from './styles/insertarAlimentos.module.css';
 import Swal from 'sweetalert2';
 
 export default function Informacion() {
     const [marca, setMarca] = useState('');
     const [idAnimal, setIdAnimal] = useState('');
+    const API_URL = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
         const storedMarca = localStorage.getItem('marcaAnimal');
@@ -36,9 +37,7 @@ export default function Informacion() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Datos enviados:', valores);
-        console.log('id', idAnimal);
-        fetch('http://localhost:8000/medicamento/Insertar', {
+        fetch(`${API_URL}/medicamento/Insertar`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
