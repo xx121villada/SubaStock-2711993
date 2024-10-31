@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useRef } from "react";
 
-const LazyCarousel = ({ imgs }) => {
+const LazyCarousel = ({ imgs, size }) => {
   const carouselRef = useRef(null);
   const carouselId = `carousel-${Math.random() * 100}`;
 
@@ -35,7 +35,7 @@ const LazyCarousel = ({ imgs }) => {
           const item = (
             <div
               className={`carousel-item ${index === 0 ? "active" : ""}`}
-              style={{ height: 200 }}
+              style={{ height: size? 400 : 200 }}
               key={index}
             >
               <img
