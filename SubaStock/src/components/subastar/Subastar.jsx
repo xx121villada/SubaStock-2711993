@@ -126,7 +126,8 @@ export function Subastar() {
       ) :
         (
           <>
-            <BotonVolver ruta={"/sesion-iniciada"} /><h2 className={styles.title}>Subastar Animal con Marca: {marca}</h2><div className={styles.content}>
+            <BotonVolver ruta={"/sesion-iniciada"} />
+            <h2 className={styles.title}>Subastar Animal con Marca: {marca}</h2><div className={styles.content}>
               <div className={styles.leftContainer}>
                 <label className={styles.label}>Selecciona hasta 5 imágenes:</label>
                 <label> imagenes seleccionada : {imagenes.length} </label>
@@ -191,7 +192,8 @@ export function Subastar() {
                   Subastar
                 </button>
               </form>
-            </div></>
+            </div>
+            </>
         )}
     </div>
   );
