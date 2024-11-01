@@ -82,8 +82,9 @@ export default function HistorialAlimento() {
     }, [idAnimal]);
 
     return (
-        <div className={styles.historialContainer}>
-            <h1 className={styles.historialTitle}>Historial de Alimentos - {marca}</h1>
+    <div className={styles.historialContainer}>
+        <h1 className={styles.historialTitle}>Historial de Alimentos - {marca}</h1>
+        <div className={styles.tableWrapper}>
             <table className={styles.historialTable}>
                 <thead>
                     <tr>
@@ -98,7 +99,7 @@ export default function HistorialAlimento() {
                         historial.map((alimento) => (
                             <tr key={alimento.idAlimentacion}>
                                 <td>{alimento.tipo_alimento}</td>
-                                <td>{alimento.cantidad}Kl</td>
+                                <td>{alimento.cantidad} Kl</td>
                                 <td>{alimento.fecha}</td>
                                 <td>
                                     <button
@@ -120,5 +121,7 @@ export default function HistorialAlimento() {
                 </tbody>
             </table>
         </div>
-    );
+    </div>
+);
+
 }
