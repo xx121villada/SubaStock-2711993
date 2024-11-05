@@ -1,30 +1,27 @@
 import { useEffect, useState } from "react";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
+import styles from "./detalleSubasta.module.css";
 
 export function TablaHistorial({ idAnimal }) {
   const [pujas, setPujas] = useState([]);
+  const [cargando, setCargando] = useState(true);
 
   useEffect(() => {
     const obtenerHistorialPujas = async () => {
+      setCargando(true);
       try {
-        const response = await fetch(`https://apisubastock.cleverapps.io/subasta/PujasPorAnimal/${idAnimal}`);
+        const response = await fetch(
+          `https://apisubastock.cleverapps.io/subasta/PujasPorAnimal/${idAnimal}`
+        );
         const data = await response.json();
 
         if (data.status) {
-          setPujas(data.pujas);  // Guardamos las pujas en el estado
-        } else {
-          Swal.fire({
-            text: data.message,
-            icon: "info",
-            confirmButtonText: "OK",
-          });
+          setPujas(data.pujas);
         }
       } catch (error) {
-        Swal.fire({
-          text: "Error al obtener el historial de pujas.",
-          icon: "error",
-          confirmButtonText: "OK",
-        });
+        console.log(error);
+      } finally {
+        setCargando(false);
       }
     };
 
@@ -34,41 +31,44 @@ export function TablaHistorial({ idAnimal }) {
   }, [idAnimal]);
 
   return (
-    <div className="container-md my-2 mx-3 p-2 d-md-flex flex-column align-items-center historial">
-      <div
-        className="d-flex flex-column flex-md-row align-items-center m-1 p-1 justify-content-center"
-        id="titulo"
-      >
-        <h3 className="mb-2 mb-md-0 me-md-2">Historial De Pujas</h3>
+    <div className={`${styles.historialContainer} container-md my-4`}>
+      <div className={`${styles.historialHeader} mb-3`}>
+        <h3>📜 Historial de Pujas</h3>
       </div>
-      <div className="table-responsive">
-        <table className="table table-striped text-center">
-          <thead>
-            <tr>
-              <th scope="col">Nombre</th>
-              <th scope="col">Valor</th>
-            </tr>
-          </thead>
-          <tbody>
-            {pujas.length > 0 ? (
-              pujas.map((puja, index) => (
-                <tr key={index}>
-                  <th scope="row">{`${puja.nombres.charAt(0)}***${puja.apellidos.charAt(0)}`}</th>
-                  <td>{parseFloat(puja.valor).toLocaleString('es-CO', {
-                    style: 'currency',
-                    currency: 'COP',
-                    minimumFractionDigits: 0,
-                  })}</td>
-                </tr>
-              ))
-            ) : (
+      {cargando ? (
+        <p className={styles.cargando}>Cargando...</p>
+      ) : (
+        <div className="table-responsive">
+          <table className={`table text-center ${styles.historialTable}`}>
+            <thead>
               <tr>
-                <td colSpan="2">No se encontraron pujas.</td>
+                <th scope="col">Nombre</th>
+                <th scope="col">Valor</th>
               </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {pujas.length > 0 ? (
+                pujas.map((puja, index) => (
+                  <tr key={index}>
+                    <td>{`${puja.nombres.charAt(0)}***${puja.apellidos.charAt(0)}`}</td>
+                    <td>
+                      {parseFloat(puja.valor).toLocaleString("es-CO", {
+                        style: "currency",
+                        currency: "COP",
+                        minimumFractionDigits: 0,
+                      })}
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="2">No se encontraron pujas.</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 }

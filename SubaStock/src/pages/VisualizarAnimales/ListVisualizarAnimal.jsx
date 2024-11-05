@@ -12,6 +12,7 @@ export default function ListVisualizarAnimal() {
     const [animales, setAnimales] = useState([]);
     const { tipoAnimal } = useParams();
     const [idUsuario, setIdUsuario] = useState('');
+    const API_URL = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
         const storedIdUsuario = sessionStorage.getItem('idUsuario');
@@ -22,16 +23,16 @@ export default function ListVisualizarAnimal() {
 
     const especieToImageMap = {
         "Bovino": bovino,
-    "Porcino": porcino,
-    "Caprino": caprino,
-    "Equino": equino,
-    "Avicultura": apino,
-    "default": notFount
+        "Porcino": porcino,
+        "Caprino": caprino,
+        "Equino": equino,
+        "Avicultura": apino,
+        "default": notFount
     };
 
     useEffect(() => {
         if (idUsuario) {
-            fetch(`https://apisubastock.cleverapps.io/animal/Obtener/${idUsuario}`, {
+            fetch(`${API_URL}/animal/Obtener/${idUsuario}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -53,8 +54,8 @@ export default function ListVisualizarAnimal() {
                     console.error("Error fetching data:", error);
                 });
         }
-    }, [tipoAnimal, idUsuario]);
-
+    },[tipoAnimal, idUsuario, API_URL]);
+    
     const cards = animales.map((animal) =>
         <CardVisualizarAnimal
             key={animal.idAnimal}

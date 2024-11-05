@@ -5,6 +5,7 @@ import { TablaHistorial } from "./TablaHistorial";
 import LazyCarousel from "../Subastas/LazyCarousel";
 import Temporizador from "../Subastas/Temporizador";
 import Swal from 'sweetalert2';
+import { useAuth } from "../../contexts/AuthContext";
 
 export function DetalleSubasta() {
   const { idSubasta } = useParams();
@@ -13,21 +14,28 @@ export function DetalleSubasta() {
   const [idUsuario, setIdUsuario] = useState("");
   const [valorPuja, setValorPuja] = useState("");
   const [verTabla, setVerTabla] = useState(false);
+  const [cargando, setCargando] = useState(true); 
+  const {authState} = useAuth();
 
   useEffect(() => {
+    setCargando(true); 
     fetch(`https://apisubastock.cleverapps.io/subasta/Obtener/${idSubasta}`)
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("No se pudo obtener la subasta");
+        }
+        return response.json();
+      })
       .then((data) => {
-        
         const valorActual = data?.valorActual;
-  
+
         if (valorActual !== undefined && valorActual !== null) {
           const valorFormateado = valorActual.toLocaleString('es-CO', {
             style: 'currency',
             currency: 'COP',
             minimumFractionDigits: 0,
           });
-  
+
           setSubasta({
             ...data,
             valorActualFormateado: valorFormateado,  
@@ -38,16 +46,18 @@ export function DetalleSubasta() {
             valorActualFormateado: 'Sin oferta actual', 
           });
         }
+        setCargando(false);
       })
-      .catch((error) =>
-        console.error("Error al cargar la subasta:", error),
+      .catch((error) => {
+        console.error("Error al cargar la subasta:", error);
+        setCargando(false); 
         Swal.fire({
           text: "No se pudo cargar la subasta",
           icon: "error",
           confirmButtonText: "Continuar",
-        })
-      );
-  
+        });
+      });
+
     const storedIdUsuario = sessionStorage.getItem("idUsuario");
     if (storedIdUsuario) {
       setIdUsuario(storedIdUsuario);
@@ -55,6 +65,18 @@ export function DetalleSubasta() {
   }, [idSubasta]);
 
   const handlePujar = async () => {
+    console.log(authState)
+    if (!authState) {
+      Swal.fire({
+        text: "Debes iniciar sesión para realizar una puja.",
+        icon: "warning",
+        confirmButtonText: "Iniciar sesión",
+      }).then(() => {
+        navigate("/login");
+      });
+      return;
+    }
+
     if (!valorPuja) {
       Swal.fire({
         text: "Por favor, introduce un valor de puja.",
@@ -77,7 +99,7 @@ export function DetalleSubasta() {
 
     const datosPuja = {
       idSubasta: idSubasta,
-      idUsuario: idUsuario,  
+      idUsuario: authState.idUsuario,  
       valor: valorPuja,
     };
 
@@ -124,7 +146,7 @@ export function DetalleSubasta() {
 
   const [esTiempoCritico, setTiempoCritico] = useState(false);
 
-  if (!subasta) {
+  if (cargando) {
     return (
       <div className={styles.loaderContainer}>
         <div className={styles.spinner}></div>
@@ -132,66 +154,67 @@ export function DetalleSubasta() {
     );
   }
 
+  if (!subasta) {
+    return <div>No se pudo cargar la subasta.</div>;
+  }
+
   return (
-    <div className={`container-md p-2 d-flex flex-column align-items-center ${styles.body}`}>
+    <div className={`container-md ${styles.subastaContainer}`}>
       <div className="w-100 d-flex justify-content-start align-items-center mb-3">
         <button className={styles.backButton} onClick={handleBack}>
           <i className="bi bi-arrow-bar-left"></i> Regresar
         </button>
       </div>
-
-      <div className="d-flex flex-column flex-md-row align-items-center justify-content-between">
-        <div className="content-carrusel flex-grow-1">
-        <div className={styles.contentCarrusel}>
-          <LazyCarousel imgs={[subasta.subasta.imagenUrl, subasta.subasta.imagenUrl2, subasta.subasta.imagenUrl3, subasta.subasta.imagenUrl4, subasta.subasta.imagenUrl5].filter(img=>img!= null) || ["https://wintechnology.co/wp-content/uploads/2021/11/imagen-no-disponible.jpg"]} />
+  
+      <div className={styles.carruselInfoContainer}>
+        <div className={styles.carouselContainer}>
+          <LazyCarousel imgs={[subasta.subasta.imagenUrl, subasta.subasta.imagenUrl2, subasta.subasta.imagenUrl3, subasta.subasta.imagenUrl4, subasta.subasta.imagenUrl5].filter(img => img != null) || ["https://wintechnology.co/wp-content/uploads/2021/11/imagen-no-disponible.jpg"]} size/>
         </div>
-
-        <div className={`d-flex flex-column d-md-flex-row ${styles.info}`}>
-          <div className={`d-flex flex-row flex-md-row align-items-center justify-content-center mb-3 ${styles.tituloFavoritos}`}>
-            <h2 className={`${styles.titulo} mb-2 mb-md-0 me-md-2`}>{subasta.subasta.tituloSubasta}</h2>
-            <button className={styles.favoritos}>☆</button>
-          </div>
+  
+        <div className={styles.infoContainer}>
+          <h2 className={styles.titulo}>{subasta.subasta.tituloSubasta}</h2>
+          
           <span
-          className={`badge rounded-pill ${styles.tiempoRestante}`}
-          style={{
-            backgroundColor: esTiempoCritico
-              ? "#ff0000"
-              : "var(--primary-color)",
-            width: "fit-content",
-          }}
+            className={`badge rounded-pill ${styles.tiempoRestante}`}
+            style={{
+              backgroundColor: esTiempoCritico ? "#ff0000" : "var(--primary-color)",
+              width: "fit-content",
+            }}
           >
-          Cierra en&nbsp;
-          {
+            Cierra en&nbsp;
             <Temporizador
               fechaFin={subasta.subasta.fechaFin}
               onTiempoCritico={() => setTiempoCritico(true)}
               minutosCriticos={5}
             />
-          }
-        </span>
+          </span>
+  
           <div className={`mb-3 text-center ${styles.fechas}`}>
             <span className="d-block mx-1">Fecha Cierre: {subasta.subasta.fechaFin}</span>
             <span className="d-block mx-1">Fecha Apertura: {subasta.subasta.fechaInicio}</span>
           </div>
-          <p className={`mb-3 ${styles.ofertaActual}`}>Oferta Actual: {subasta.valorActualFormateado} COP</p>
-          <p className={`mb-3 ${styles.descripcion}`}>{subasta.subasta.descripcion}</p>
-          <div className={`w-100 d-flex flex-column justify-content-center flex-md-row align-items-center mb-3 ${styles.puja}`}>
-          <input
-                type="number"
-                className={`mx-2 my-2 w-50 ${styles.inputPuja}`}
-                placeholder="Realice su puja"
-                value={valorPuja}
-                onChange={(e) => setValorPuja(e.target.value)}
-              />
-              <button className={styles.pujar} onClick={handlePujar}>Pujar</button>
+  
+          <p className={`${styles.ofertaActual}`}>Oferta Actual: {subasta.valorActualFormateado} COP</p>
+          <p className={`${styles.descripcion}`}>{subasta.subasta.descripcion}</p>
+          
+          <div className={styles.pujaContainer}>
+            <input
+              type="number"
+              className={styles.inputPuja}
+              placeholder="Realice su puja"
+              value={valorPuja}
+              onChange={(e) => setValorPuja(e.target.value)}
+            />
+            <button className={styles.pujar} onClick={handlePujar}>Pujar</button>
           </div>
-          <button className={`w-50 ${styles.historialPujas}`} onClick={toggleTabla}>
+  
+          <button className={styles.historialPujas} onClick={toggleTabla}>
             HISTORIAL DE PUJAS
           </button>
         </div>
       </div>
-      {verTabla && <TablaHistorial idAnimal={subasta.subasta.idAnimal}/>}
-    </div>
+      {verTabla && <TablaHistorial idAnimal={subasta.subasta.idAnimal} />}
     </div>
   );
+  
 }
