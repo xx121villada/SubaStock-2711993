@@ -26,6 +26,7 @@
     "react-timer-hook": "^3.0.7",
     "reactstrap": "^9.2.3",
     "sweetalert2": "^11.12.4",
+    "twilio": "^5.3.5",
     "vite-plugin-svgr": "^4.2.0"
   },
   "devDependencies": {

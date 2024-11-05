@@ -106,6 +106,7 @@ function Crud() {
                         'El animal ha sido eliminado.',
                         'success'
                     );
+                    navigate('/ver-animales');
 
                 } else {
                     Swal.fire({
