@@ -5,6 +5,7 @@ import {
   UserIcon,
   HomeIcon,
   ExitIcon,
+  RegisterIcon,
 } from "../icons";
 
 const optionsLogged = [
@@ -20,7 +21,6 @@ const optionsLogged = [
   },
   {
     name: "Cerrar sesión",
-    linksTo: "/logout",
     icon: ExitIcon,
   },
 ];
@@ -39,7 +39,7 @@ const optionsUnlogged = [
   {
     name: "Registrarse",
     linksTo: "/registro",
-    icon: UserIcon,
+    icon: RegisterIcon,
   },
 ];
 

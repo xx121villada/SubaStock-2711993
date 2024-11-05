@@ -6,6 +6,7 @@ import MenuIcon from "./menu.svg?react";
 import CloseIcon from "./close.svg?react";
 import HomeIcon from "./home.svg?react";
 import ExitIcon from "./exit.svg?react";
+import RegisterIcon from "./register.svg?react";
 
 export {
   AuctionIcon,
@@ -16,4 +17,5 @@ export {
   CloseIcon,
   HomeIcon,
   ExitIcon,
+  RegisterIcon,
 };

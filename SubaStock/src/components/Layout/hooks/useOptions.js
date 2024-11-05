@@ -1,5 +1,5 @@
 import { optionsLogged, optionsUnlogged } from "../constants/HeaderOptions";
-import { useAuth } from "../../../contexts/AuthContext";
+import useAuth from "../../../contexts/AuthContext";
 
 const useOptions = () => {
   const { isLogged, isLoading } = useAuth();

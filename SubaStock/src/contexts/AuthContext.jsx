@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     (async () => {
       if (!getToken()) {
-        setIsLoading(false);
+        if (isLoading) setIsLoading(false);
         return;
       }
       const validToken = await verifyToken();
@@ -22,18 +22,37 @@ export const AuthProvider = ({ children }) => {
 
       setIsLoading(false);
     })();
-  }, []);
+  }, [isLogged]);
 
   async function verifyToken() {
-    // Aqui ira logica para verificar si el token es valido mediante la API
+    try {
+      const request = await fetch(
+        import.meta.env.VITE_API_URL + "/token/Verificar",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ token: getToken() }),
+        }
+      );
 
-    return new Promise((resolve, reject) =>
-      setTimeout(() => resolve(Math.random() * 100 > 50 ? false : true), 1500)
-    );
+      const { status: tokenIsValid, data: tokenUserData } =
+        await request.json();
+
+      if (tokenIsValid) {
+        setUserData(tokenUserData);
+        return true;
+      }
+
+      return false;
+    } catch (error) {
+      console.error("Error al verificar el token: ", error);
+    }
   }
 
   function getToken() {
-    localStorage.getItem("auth_token");
+    return localStorage.getItem("auth_token");
   }
 
   function removeToken() {
@@ -43,7 +62,7 @@ export const AuthProvider = ({ children }) => {
   }
 
   function addToken(token) {
-    localStorage.setItem(token);
+    localStorage.setItem("auth_token", token);
   }
 
   function login(token) {
@@ -54,6 +73,7 @@ export const AuthProvider = ({ children }) => {
   function logout() {
     removeToken();
     setIsLogged(false);
+    setUserData(null);
   }
 
   return (
@@ -73,6 +93,6 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-export const useAuth = () => {
+export default () => {
   return useContext(AuthContext);
 };
