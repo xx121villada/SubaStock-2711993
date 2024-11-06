@@ -11,7 +11,6 @@ import { Subastar } from "./components/subastar/Subastar.jsx";
 import RegistroAnimales from "./pages/RegistroAnimales/RegistroAnimales.jsx";
 import Animales from "./pages/Animales/Animales";
 import Crud from "./pages/CRUD-xime/Crud.jsx";
-import SubastaGanada from "./pages/TarjetaGanadora/TarjetaGanada.jsx";
 import VisualizarAnimalesSubasta from "./components/subastar/VisualizarAnimalesSubasta.jsx";
 import { AuthProvider } from "./contexts/AuthContext.jsx";
 import Subastas from "./pages/Subastas/Subastas.jsx";
@@ -42,7 +41,6 @@ export default function AppRouter() {
             {/* <Route path="/insertar-alimentos" element={<InsertarAlimentos />} /> */}
             {/* <Route path="/insertar-peso-salud" element={<InsertarEstadoPeso />} />
             <Route path="/insertar-medicamentos" element={<Medicamentos />} /> */}
-            <Route path="/subasta-ganada" element={<SubastaGanada />} />
             <Route path="/subastas" element={<Subastas />} />
             <Route path="/favoritos" element={<Favoritos />} />
           </Route>

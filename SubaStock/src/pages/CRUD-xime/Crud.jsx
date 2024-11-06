@@ -107,6 +107,15 @@ function Crud() {
                 setLoading(false);
 
                 if (data.status) {
+<<<<<<< HEAD
+                    Swal.fire(
+                        'Eliminado!',
+                        'El animal ha sido eliminado.',
+                        'success'
+                    );
+                    navigate('/ver-animales');
+
+=======
                     Swal.fire({
                         icon: 'success',
                         title: 'Eliminado',
@@ -114,6 +123,7 @@ function Crud() {
                     }).then(() => {
                         navigate('/sesion-iniciada');
                     });
+>>>>>>> 398aedc389cca9e4e93f50f6c5aec6f8ce6a15f4
                 } else {
                     Swal.fire({
                         icon: 'error',
