@@ -13,6 +13,8 @@ export const AuthProvider = ({ children }) => {
         return;
       }
       const validToken = await verifyToken();
+      if (validToken === "ERROR")
+        return console.error("Error al verificar el token");
 
       if (validToken) {
         setIsLogged(true);
@@ -32,8 +34,8 @@ export const AuthProvider = ({ children }) => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
           },
-          body: JSON.stringify({ token: getToken() }),
         }
       );
 
@@ -48,6 +50,7 @@ export const AuthProvider = ({ children }) => {
       return false;
     } catch (error) {
       console.error("Error al verificar el token: ", error);
+      return "ERROR";
     }
   }
 
@@ -62,7 +65,9 @@ export const AuthProvider = ({ children }) => {
   }
 
   function addToken(token) {
-    localStorage.setItem("auth_token", token);
+    token.startsWith("Bearer ")
+      ? localStorage.setItem("auth_token", token)
+      : localStorage.setItem("auth_token", `Bearer ${token}`);
   }
 
   function login(token) {
