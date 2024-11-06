@@ -1,6 +1,7 @@
+import React from 'react';
 
 function Modal({ show, onClose, children }) {
-    if (!show) return null; 
+    if (!show) return null;
 
     const overlayStyle = {
         position: 'fixed',
@@ -8,18 +9,20 @@ function Modal({ show, onClose, children }) {
         left: 0,
         width: '100%',
         height: '100%',
-        backgroundColor: 'rgba(0, 0, 0, 0.7)', 
+        backgroundColor: 'rgba(0, 0, 0, 0.7)',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         zIndex: 1000,
     };
 
+    // Adjust modal style based on window width
+    const isSmallScreen = window.innerWidth <= 768;
     const modalStyle = {
         backgroundColor: 'white',
-        padding: '20px',
+        padding: isSmallScreen ? '10px' : '20px',
         borderRadius: '10px',
-        width: '50%',
+        width: isSmallScreen ? '90%' : '50%',
         maxWidth: '600px',
         boxShadow: '0 5px 15px rgba(0, 0, 0, 0.3)',
         position: 'relative',
