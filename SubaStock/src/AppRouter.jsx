@@ -13,7 +13,7 @@ import VisualizarAnimalesSubasta from "./components/subastar/VisualizarAnimalesS
 import { AuthProvider } from "./contexts/AuthContext.jsx";
 import Subastas from "./pages/Subastas/Subastas.jsx";
 import Favoritos from "./pages/favoritos/Favoritos.jsx";
-import SesionIniciada from "./pages/SesionIniciada/SesionIniciada";
+import SesionIniciada from "./pages/SesionIniciada/SesionIniciada.jsx";
 
 export default function AppRouter() {
   return (
