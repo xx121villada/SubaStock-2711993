@@ -19,7 +19,7 @@ export default function HistorialAlimento() {
     const fetchHistorial = async () => {
         try {
             const response = await fetch(
-                `https://apisubastock.cleverapps.io/alimentacion/Obtener/${idAnimal}`,
+                import.meta.env.VITE_API_URL +`/alimentacion/Obtener/${idAnimal}`,
                 { method: 'GET', headers: { 'Content-Type': 'application/json' } }
             );
             const data = await response.json();
@@ -50,7 +50,7 @@ export default function HistorialAlimento() {
 
             if (result.isConfirmed) {
                 const response = await fetch(
-                    `https://apisubastock.cleverapps.io/alimentacion/Eliminar/${idAlimentacion}`,
+                    import.meta.env.VITE_API_URL`/alimentacion/Eliminar/${idAlimentacion}`,
                     { method: 'DELETE', headers: { 'Content-Type': 'application/json' } }
                 );
                 const data = await response.json();

@@ -30,7 +30,7 @@ const RegistroAnimales = () => {
       ...animales,
     };
 
-    fetch("http://localhost:8000/animal/Insertar", {
+    fetch( `${import.meta.env.VITE_API_URL}/animal/Insertar`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -27,7 +27,7 @@ export default function HistorialVacunacion() {
 
     const fetchHistorial = async () => {
         try {
-            const response = await fetch(`https://apisubastock.cleverapps.io/medicamento/Obtener/${idAnimal}`, {
+            const response = await fetch( import.meta.env.VITE_API_URL+`/medicamento/Obtener/${idAnimal}`, {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
             });
@@ -58,7 +58,7 @@ export default function HistorialVacunacion() {
             });
 
             if (result.isConfirmed) {
-                const response = await fetch(`https://apisubastock.cleverapps.io/medicamento/Eliminar/${idMedicamento}`, {
+                const response = await fetch(import.meta.env.VITE_API_URL+`/medicamento/Eliminar/${idMedicamento}`, {
                     method: 'DELETE',
                     headers: { 'Content-Type': 'application/json' },
                 });
