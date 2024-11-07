@@ -6,6 +6,7 @@ import caprino from './img/Caprino.png';
 import equino from './img/Equino.png';
 import apino from './img/Apino.png';
 import notFount from './img/Notfount.png';
+import SPLoader from '../loader/Loader'
 
 const imageMapEspecies = {
     "Bovino": bovino,
@@ -19,17 +20,16 @@ const imageMapEspecies = {
 export default function ListTipoEspecie() {
 
     const [especies, setEspecies] = useState([]);
-    const [idUsuario, setIdUsuario] = useState('');
+    const [isLoading, setIsLoading] = useState(true);
+
 
     useEffect(() => {
         const obtenerDatosEspecies = async () => {
             try {
-                const idUsuario = sessionStorage.getItem('idUsuario');
+                const idUsuario = localStorage.getItem('idUsuario');
                 if (idUsuario) {
-                    setIdUsuario(idUsuario);
-
                     const response = await fetch(
-                        `https://apisubastock.cleverapps.io/animal/Obtener/${idUsuario}`,
+                        import.meta.env.VITE_API_URL + `/animal/Obtener/${idUsuario}`,
                         {
                             method: 'GET',
                             headers: { 'Content-Type': 'application/json' }
@@ -54,11 +54,13 @@ export default function ListTipoEspecie() {
                 }
             } catch (error) {
                 console.error('Error al obtener las especies:', error);
+            } finally {
+                setIsLoading(false);
             }
         };
 
         obtenerDatosEspecies();
-    }, [idUsuario]);
+    }, []);
 
     const cards = especies.map((animal) => (
         <CardTiposEspecie
@@ -68,6 +70,9 @@ export default function ListTipoEspecie() {
         />
     ));
 
+    if (isLoading) {
+        return <SPLoader />
+    }
     return (
         <div style={styles.containerPrincipal}>
             {especies.length > 0 ? (
@@ -104,5 +109,5 @@ const styles = {
         gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
         gap: '20px',
     },
-    
+
 };

@@ -1,26 +1,46 @@
-import { AuctionIcon, MoneyIcon, CowIcon, UserIcon } from "../icons";
+import {
+  AuctionIcon,
+  MoneyIcon,
+  CowIcon,
+  UserIcon,
+  HomeIcon,
+  ExitIcon,
+  RegisterIcon,
+} from "../icons";
 
-const options = [
+const optionsLogged = [
   {
     name: "Subastas",
     linksTo: "/",
     icon: AuctionIcon,
   },
   {
-    name: "Subastar",
-    linksTo: "/subastar",
-    icon: MoneyIcon,
+    name: "Menú",
+    linksTo: "/sesion-iniciada",
+    icon: HomeIcon,
   },
   {
-    name: "Mis Animales",
-    linksTo: "/ver-animales",
-    icon: CowIcon,
-  },
-  {
-    name: "Iniciar",
-    linksTo: "/login",
-    icon: UserIcon,
+    name: "Cerrar sesión",
+    icon: ExitIcon,
   },
 ];
 
-export default options;
+const optionsUnlogged = [
+  {
+    name: "Subastas",
+    linksTo: "/",
+    icon: AuctionIcon,
+  },
+  {
+    name: "Iniciar sesión",
+    linksTo: "/login",
+    icon: UserIcon,
+  },
+  {
+    name: "Registrarse",
+    linksTo: "/registro",
+    icon: RegisterIcon,
+  },
+];
+
+export { optionsLogged, optionsUnlogged };

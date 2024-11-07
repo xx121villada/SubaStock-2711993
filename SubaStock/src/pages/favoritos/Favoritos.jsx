@@ -24,7 +24,7 @@ const Favoritos = () => {
         const fetchFavoritos = async () => {
             try {
                 const response = await fetch(
-                    `https://apisubastock.cleverapps.io/favorito/Obtener/${idUsuario}`,
+                    import.meta.env.VITE_API_URL+`/favorito/Obtener/${idUsuario}`,
                     {
                         method: 'GET',
                         headers: {

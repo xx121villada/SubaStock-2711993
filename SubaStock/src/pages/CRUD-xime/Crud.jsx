@@ -27,7 +27,6 @@ function Crud() {
     const [selectedOption, setSelectedOption] = useState(''); 
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-    const API_URL = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
         const storedMarca = localStorage.getItem('marcaAnimal');
@@ -46,7 +45,7 @@ function Crud() {
             if (!idAnimal) return;
 
             try {
-                const response = await fetch(`${API_URL}/subasta/AnimalSubastado/${idAnimal}`, {
+                const response = await fetch(import.meta.env.VITE_API_URL+ `/subasta/AnimalSubastado/${idAnimal}`, {
                     method: 'GET',
                     headers: { 'Content-Type': 'application/json' },
                 });
@@ -61,7 +60,7 @@ function Crud() {
         };
 
         fetchAnimalData();
-    }, [API_URL, idAnimal]);
+    }, [idAnimal]);
 
     const insertar = (event) => {
         const selectedValue = event.target.value;
@@ -96,7 +95,7 @@ function Crud() {
 
             if (result.isConfirmed) {
                 setLoading(true);
-                const response = await fetch(`${API_URL}/animal/Eliminar/${idAnimal}`, {
+                const response = await fetch(import.meta.env.VITE_API_URL+`/animal/Eliminar/${idAnimal}`, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',
@@ -107,15 +106,6 @@ function Crud() {
                 setLoading(false);
 
                 if (data.status) {
-<<<<<<< HEAD
-                    Swal.fire(
-                        'Eliminado!',
-                        'El animal ha sido eliminado.',
-                        'success'
-                    );
-                    navigate('/ver-animales');
-
-=======
                     Swal.fire({
                         icon: 'success',
                         title: 'Eliminado',
@@ -123,7 +113,6 @@ function Crud() {
                     }).then(() => {
                         navigate('/sesion-iniciada');
                     });
->>>>>>> 398aedc389cca9e4e93f50f6c5aec6f8ce6a15f4
                 } else {
                     Swal.fire({
                         icon: 'error',

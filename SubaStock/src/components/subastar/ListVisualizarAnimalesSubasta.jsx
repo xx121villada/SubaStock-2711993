@@ -6,6 +6,7 @@ import equino from "../../pages/Animales/img/Equino.png";
 import notFound from "../../pages/Animales/img/Notfount.png";
 import apino from "../../pages/Animales/img/Apino.png";
 import CardAnimalesSubastas from "./CardAnimalesSubastas";
+import SPLoader from "../../pages/loader/Loader";
 
 const especieToImageMap = {
     Bovino: bovino,
@@ -18,45 +19,53 @@ const especieToImageMap = {
 
 export default function ListVisualizarAnimalesSubasta() {
     const [animales, setAnimales] = useState([]);
-    const [idUsuario, setIdUsuario] = useState("");
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        const storedIdUsuario = sessionStorage.getItem("idUsuario");
-        if (storedIdUsuario) setIdUsuario(storedIdUsuario);
+        const idUsuario = localStorage.getItem('idUsuario');
+        if (idUsuario) {
+            const fetchData = async () => {
+                try {
+                    const subastaResponse = await fetch(import.meta.env.VITE_API_URL + `/subasta/Obtener`,
+                        {
+                            method: "GET",
+                            headers: { "Content-Type": "application/json" }
+                        }
+                    );
+
+                    if (!subastaResponse.ok) throw new Error(`Error en subasta: ${subastaResponse.status}`);
+                    const subastaData = await subastaResponse.json();
+                    const subastasActivas = subastaData.status
+                        ? subastaData.subastas.map((subasta) => subasta.idAnimal)
+                        : [];
+
+                    const animalResponse = await fetch(import.meta.env.VITE_API_URL + `/animal/Obtener/${idUsuario}`,
+                        {
+                            method: "GET",
+                            headers: { "Content-Type": "application/json" }
+                        }
+                    );
+
+                    if (!animalResponse.ok) throw new Error(`Error en animales: ${animalResponse.status}`);
+                    const animalData = await animalResponse.json();
+
+                    const animalesDisponibles = animalData.status
+                        ? animalData.animal.filter((animal) => !subastasActivas.includes(animal.idAnimal))
+                        : [];
+
+                    setAnimales(animalesDisponibles);
+                } catch (error) {
+                    console.error("Error al obtener datos:", error);
+                } finally {
+                    setIsLoading(false);
+                }
+            };
+
+            fetchData();
+        } else {
+            setIsLoading(false);
+        }
     }, []);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const subastaResponse = await fetch(
-                    `https://apisubastock.cleverapps.io/subasta/Obtener`,
-                    { method: "GET", headers: { "Content-Type": "application/json" } }
-                );
-                if (!subastaResponse.ok) throw new Error(`Error en subasta: ${subastaResponse.status}`);
-                const subastaData = await subastaResponse.json();
-                const subastasActivas = subastaData.status
-                    ? subastaData.subastas.map((subasta) => subasta.idAnimal)
-                    : [];
-
-                const animalResponse = await fetch(
-                    `https://apisubastock.cleverapps.io/animal/Obtener/${idUsuario}`,
-                    { method: "GET", headers: { "Content-Type": "application/json" } }
-                );
-                if (!animalResponse.ok) throw new Error(`Error en animales: ${animalResponse.status}`);
-                const animalData = await animalResponse.json();
-
-                const animalesDisponibles = animalData.status
-                    ? animalData.animal.filter((animal) => !subastasActivas.includes(animal.idAnimal))
-                    : [];
-
-                setAnimales(animalesDisponibles);
-            } catch (error) {
-                console.error("Error al obtener datos:", error);
-            }
-        };
-
-        if (idUsuario) fetchData();
-    }, [idUsuario]);
 
     const cards = animales.map((animal) => (
         <CardAnimalesSubastas
@@ -65,6 +74,10 @@ export default function ListVisualizarAnimalesSubasta() {
             imagen={especieToImageMap[animal.especie] || especieToImageMap.default}
         />
     ));
+
+    if (isLoading) {
+        return <SPLoader />;
+    }
 
     return (
         <div style={styles.contendCards}>
