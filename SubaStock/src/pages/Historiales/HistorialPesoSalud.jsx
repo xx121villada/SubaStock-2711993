@@ -18,7 +18,7 @@ export default function HistorialPesoSalud() {
 
     const fetchHistorial = async () => {
         try {
-            const response = await fetch(`https://apisubastock.cleverapps.io/estadoSalud/Obtener/${idAnimal}`, {
+            const response = await fetch(import.meta.env.VITE_API_URL+`/estadoSalud/Obtener/${idAnimal}`, {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' }
             });
@@ -46,7 +46,7 @@ export default function HistorialPesoSalud() {
             });
 
             if (result.isConfirmed) {
-                const response = await fetch(`https://apisubastock.cleverapps.io/estadoSalud/Eliminar/${idEstado_Salud}`, {
+                const response = await fetch(import.meta.env.VITE_API_URL+`/estadoSalud/Eliminar/${idEstado_Salud}`, {
                     method: 'DELETE',
                     headers: { 'Content-Type': 'application/json' },
                 });

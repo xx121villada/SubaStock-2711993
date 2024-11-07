@@ -108,7 +108,7 @@
     }
 
     .btnEliminar {
-        width: 100%; /* Ocupa todo el ancho en móviles */
+        width: 100%; 
         padding: 8px;
     }
 }

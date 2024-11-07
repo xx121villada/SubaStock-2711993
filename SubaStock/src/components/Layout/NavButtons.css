@@ -1,7 +1,10 @@
+#nav-options {
+  font-size: 0.9em;
+}
+
 #nav-options a {
   color: var(--primary-color);
   text-decoration: none;
-  font-size: 0.9em;
 }
 
 #nav-options a span {

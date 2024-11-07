@@ -2,26 +2,56 @@ import styles from './registro.module.css';
 import { useState, useRef } from 'react';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
-import Loader from '../loader/Loader';
 
 export default function Registro() {
-    const validarCorreo = (email) => /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/.test(email);
-    const validarContraseña = (password) => /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/.test(password);
     const form = useRef();
-
     const [valores, setValores] = useState({
         nombres: '',
         apellidos: '',
         correo: '',
         contraseña: '',
-        saldo: '0',
-        telefono: '',
-        repetirContraseña: ''
+        repetirContraseña: '',
+        telefono: ''
     });
+
+    const [validaciones, setValidaciones] = useState({
+        nombresValido: false,
+        apellidosValido: false,
+        correoValido: false,
+        telefonoValido: false,
+        contraseñaValida: false,
+        repetirContraseñaValida: false
+    });
+
+    const validarCorreo = (email) => /^[\w.-]+@[a-zA-Z]+\.[a-zA-Z]{2,7}$/.test(email);
+    const validarContraseña = (password) => /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/.test(password);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setValores({ ...valores, [name]: value });
+
+        switch (name) {
+            case "nombres":
+                setValidaciones((prev) => ({ ...prev, nombresValido: value.length >= 3 }));
+                break;
+            case "apellidos":
+                setValidaciones((prev) => ({ ...prev, apellidosValido: value.length >= 3 }));
+                break;
+            case "correo":
+                setValidaciones((prev) => ({ ...prev, correoValido: validarCorreo(value) }));
+                break;
+            case "telefono":
+                setValidaciones((prev) => ({ ...prev, telefonoValido: /^[0-9]{10}$/.test(value) }));
+                break;
+            case "contraseña":
+                setValidaciones((prev) => ({ ...prev, contraseñaValida: validarContraseña(value) }));
+                break;
+            case "repetirContraseña":
+                setValidaciones((prev) => ({ ...prev, repetirContraseñaValida: value === valores.contraseña }));
+                break;
+            default:
+                break;
+        }
     };
 
     const handleSubmit = (e) => {
@@ -45,10 +75,11 @@ export default function Registro() {
             }
         }
 
-        fetch('https://apisubastock.cleverapps.io/usuario/Insertar', {
+        fetch(import.meta.env.VITE_API_URL + '/usuario/Insertar', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+
             },
             body: JSON.stringify(valores)
         })
@@ -56,9 +87,11 @@ export default function Registro() {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
+
                 return response.json();
             })
             .then((data) => {
+                console.log(data);
                 if (data.status) {
                     Swal.fire({ title: data.message, icon: 'success' });
                     form.current.reset();
@@ -87,88 +120,72 @@ export default function Registro() {
                 <form onSubmit={handleSubmit} ref={form} className={styles.registroForm}>
                     <section className={styles.containerRegistro}>
                         <h1 className={styles.titulo}>Registro</h1>
+
                         <div className={styles.formRow}>
                             <div className={styles.inputContainer}>
                                 <label>Nombres</label>
-                                <input 
-                                    placeholder='Ingrese sus nombres'
-                                    type="text"
-                                    name='nombres'
-                                    onChange={handleChange}
-                                    className={styles.formInput}
-                                    required
-                                />
+                                <input type="text" name="nombres" onChange={handleChange} required />
+                                <div className={styles.checkboxContainer}>
+                                    <span className={validaciones.nombresValido ? styles.valid : styles.invalid}>
+                                        {validaciones.nombresValido ? "Válido" : "3+ caracteres"}
+                                    </span>
+                                </div>
                             </div>
                             <div className={styles.inputContainer}>
                                 <label>Apellidos</label>
-                                <input 
-                                    placeholder='Ingrese sus apellidos'
-                                    type="text"
-                                    name='apellidos'
-                                    onChange={handleChange}
-                                    className={styles.formInput}
-                                    required
-                                />
+                                <input type="text" name="apellidos" onChange={handleChange} required />
+                                <div className={styles.checkboxContainer}>
+                                    <span className={validaciones.apellidosValido ? styles.valid : styles.invalid}>
+                                        {validaciones.apellidosValido ? "Válido" : "3+ caracteres"}
+                                    </span>
+                                </div>
                             </div>
-                        </div>
-                        <div className={styles.formRow}>
-                            <div className={styles.inputContainer}>
-                                <label>Teléfono</label>
-                                <input 
-                                    placeholder='Ingrese su número de teléfono'
-                                    type="tel"
-                                    name='telefono'
-                                    pattern="[0-9]{10}"
-                                    onChange={handleChange}
-                                    className={styles.formInput}
-                                    required
-                                />
-                            </div>
-                            <div className={styles.inputContainer}>
-                                <label>Correo electrónico</label>
-                                <input 
-                                    placeholder='Ingrese su correo electrónico'
-                                    type="email"
-                                    name='correo'
-                                    onChange={handleChange}
-                                    className={styles.formInput}
-                                    required
-                                />
-                            </div>
-                        </div>
-                        <div className={styles.inputContainer}>
-                            <label>Contraseña</label>
-                            <input 
-                                placeholder='Crear contraseña'
-                                type="password"
-                                name='contraseña'
-                                onChange={handleChange}
-                                className={styles.formInput}
-                                required
-                            />
                         </div>
 
                         <div className={styles.formRow}>
                             <div className={styles.inputContainer}>
-                                <label>Confirmar contraseña</label>
-                                <input 
-                                    placeholder='Repita su contraseña'
-                                    type="password"
-                                    name='repetirContraseña'
-                                    onChange={handleChange}
-                                    className={styles.formInput}
-                                    required
-                                />
+                                <label>Teléfono</label>
+                                <input type="tel" name="telefono" pattern="[0-9]{10}" onChange={handleChange} required />
+                                <div className={styles.checkboxContainer}>
+                                    <span className={validaciones.telefonoValido ? styles.valid : styles.invalid}>
+                                        {validaciones.telefonoValido ? "Válido" : "10 dígitos"}
+                                    </span>
+                                </div>
+                            </div>
+                            <div className={styles.inputContainer}>
+                                <label>Correo Electrónico</label>
+                                <input type="email" name="correo" onChange={handleChange} required />
+                                <div className={styles.checkboxContainer}>
+                                    <span className={validaciones.correoValido ? styles.valid : styles.invalid}>
+                                        {validaciones.correoValido ? "Válido" : "Email válido"}
+                                    </span>
+                                </div>
                             </div>
                         </div>
-                        <div className={styles.dGrid}>
-                            <button className={styles.btn } type="submit">Registrarse</button>
+
+                        <div className={styles.formRow}>
+                            <div className={styles.inputContainer}>
+                                <label>Contraseña</label>
+                                <input type="password" name="contraseña" onChange={handleChange} required />
+                                <div className={styles.checkboxContainer}>
+                                    <span className={validaciones.contraseñaValida ? styles.valid : styles.invalid}>
+                                        {validaciones.contraseñaValida ? "Válido" : "6+ caracteres, 1 letra, 1 número"}
+                                    </span>
+                                </div>
+                            </div>
+                            <div className={styles.inputContainer}>
+                                <label>Confirmar Contraseña</label>
+                                <input type="password" name="repetirContraseña" onChange={handleChange} required />
+                                <div className={styles.checkboxContainer}>
+                                    <span className={validaciones.repetirContraseñaValida ? styles.valid : styles.invalid}>
+                                        {validaciones.repetirContraseñaValida ? "Coincide" : "No coincide"}
+                                    </span>
+                                </div>
+                            </div>
                         </div>
-                        <div className='m-3'>
-                            <Link className='text-decoration-none text-black fs-5' to="/login"> 
-                                <p className={styles.textLogin}>¿Ya tienes una cuenta? Inicia sesión</p>
-                            </Link>
-                        </div>
+
+                        <button type="submit" className={styles.btn}>Registrarse</button>
+                        <Link to="/login" className={styles.textLogin}>¿Ya tienes una cuenta? Inicia sesión</Link>
                     </section>
                 </form>
             </div>

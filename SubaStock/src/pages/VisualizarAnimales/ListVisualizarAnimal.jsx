@@ -1,25 +1,18 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import CardVisualizarAnimal from "./CardVisualizarAnimal";
-import bovino from '../Animales/img/Bovino.png'
-import porcino from '../Animales/img/Porcino.png'
+import bovino from '../Animales/img/Bovino.png';
+import porcino from '../Animales/img/Porcino.png';
 import notFount from '../Animales/img/Notfount.png';
 import caprino from '../Animales/img/Caprino.png';
 import equino from '../Animales/img/Equino.png';
 import apino from '../Animales/img/Apino.png';
+import SPLoader from "../loader/Loader";
 
 export default function ListVisualizarAnimal() {
     const [animales, setAnimales] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
     const { tipoAnimal } = useParams();
-    const [idUsuario, setIdUsuario] = useState('');
-    const API_URL = import.meta.env.VITE_API_URL;
-
-    useEffect(() => {
-        const storedIdUsuario = sessionStorage.getItem('idUsuario');
-        if (storedIdUsuario) {
-            setIdUsuario(storedIdUsuario);
-        }
-    }, []);
 
     const especieToImageMap = {
         "Bovino": bovino,
@@ -31,8 +24,11 @@ export default function ListVisualizarAnimal() {
     };
 
     useEffect(() => {
+        const idUsuario = localStorage.getItem('idUsuario');
+        
         if (idUsuario) {
-            fetch(`${API_URL}/animal/Obtener/${idUsuario}`, {
+            setIsLoading(true);
+            fetch(import.meta.env.VITE_API_URL + `/animal/Obtener/${idUsuario}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -52,17 +48,26 @@ export default function ListVisualizarAnimal() {
                 })
                 .catch(error => {
                     console.error("Error fetching data:", error);
+                })
+                .finally(() => {
+                    setIsLoading(false);
                 });
+        } else {
+            setIsLoading(false);
         }
-    },[tipoAnimal, idUsuario, API_URL]);
-    
-    const cards = animales.map((animal) =>
+    }, [tipoAnimal]);
+
+    const cards = animales.map((animal) => (
         <CardVisualizarAnimal
             key={animal.idAnimal}
             visualizarAnimal={animal}
             imagen={especieToImageMap[animal.especie] || especieToImageMap["default"]}
         />
-    );
+    ));
+
+    if (isLoading) {
+        return <SPLoader />;
+    }
 
     return (
         <div style={styles.contendCards}>
@@ -80,7 +85,7 @@ export default function ListVisualizarAnimal() {
     );
 }
 
-const styles = ({
+const styles = {
     contendCards: {
         padding: '20px',
         maxWidth: '1400px',
@@ -103,5 +108,4 @@ const styles = ({
         gap: '30px',
         padding: '20px',
     },
-});
-
+};
