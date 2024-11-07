@@ -9,11 +9,11 @@ import { Subastar } from "./components/subastar/Subastar.jsx";
 import RegistroAnimales from "./pages/RegistroAnimales/RegistroAnimales.jsx";
 import Animales from "./pages/Animales/Animales";
 import Crud from "./pages/CRUD-xime/Crud.jsx";
-import SesionIniciada from "./pages/sesionIniciada/SesionIniciada.jsx";
 import VisualizarAnimalesSubasta from "./components/subastar/VisualizarAnimalesSubasta.jsx";
 import { AuthProvider } from "./contexts/AuthContext.jsx";
 import Subastas from "./pages/Subastas/Subastas.jsx";
 import Favoritos from "./pages/favoritos/Favoritos.jsx";
+import SesionIniciada from "./pages/SesionIniciada/SesionIniciada";
 
 export default function AppRouter() {
   return (

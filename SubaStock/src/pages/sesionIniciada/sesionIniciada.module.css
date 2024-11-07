@@ -1,7 +1,7 @@
     .sesionContainer {
     display: flex;
     height: 100vh;
-    background-image: url("../sesionIniciada/img/fondoO.png");
+    background-image: url("./img/fondoO.png");
     background-size: cover;
     margin-top: -4%;
     background-position: center;
