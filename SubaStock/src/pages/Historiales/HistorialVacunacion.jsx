@@ -34,7 +34,7 @@ export default function HistorialVacunacion() {
             const data = await response.json();
 
             if (data.status) {
-                setHistorial(data.medicamento);
+                setHistorial(data.data.medicamento);
             }
         } catch (error) {
             Swal.fire({

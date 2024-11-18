@@ -22,7 +22,7 @@ const Tarjeta = ({
   const [maxPuja, setMaxPuja] = useState(0);
   
   useEffect(() => {
-    const storedIdUsuario = sessionStorage.getItem('idUsuario');
+    const storedIdUsuario = localStorage.getItem('idUsuario');
     if (storedIdUsuario) {
       setIdUsuario(storedIdUsuario);
     }
@@ -74,6 +74,7 @@ const Tarjeta = ({
         if (!response.ok) throw new Error(`No se pudo agregar el favorito`);
 
         const data = await response.json();
+        console.log(data);
         if (data.status) {
           console.log(data.message);
         }
@@ -103,14 +104,13 @@ const Tarjeta = ({
       try {
         const response = await fetch(`https://apisubastock.cleverapps.io/puja/Obtener`);
         const data = await response.json();
-
         if (!data.status) {
           console.error("Error al obtener las pujas:", data.message);
           return;
         }
 
         // Filtrar las pujas para la subasta específica
-        const pujas = data.pujas.filter(puja => puja.idSubasta === idSubasta);
+        const pujas = data.data.pujas.filter(puja => puja.idSubasta === idSubasta);
         if (pujas.length > 0) {
           const maxValor = Math.max(...pujas.map(puja => parseFloat(puja.valor)));
           setMaxPuja(maxValor);
