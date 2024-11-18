@@ -23,9 +23,8 @@ export default function HistorialPesoSalud() {
                 headers: { 'Content-Type': 'application/json' }
             });
             const data = await response.json();
-
             if (data.status) {
-                setHistorial(data.estadoSalud);
+                setHistorial(data.data.estadoSalud);
             }
         } catch (e) {
             Swal.fire({ title: 'Error al cargar datos', icon: 'error' });

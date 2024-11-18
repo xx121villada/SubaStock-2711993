@@ -1,10 +1,23 @@
+/* eslint-disable no-unused-vars */
 import { Link } from "react-router-dom";
 import styles from "./sesionIniciada.module.css";
 import Swal from "sweetalert2";
-import useAuth from '../../contexts/AuthContext'
+import useAuth from "../../contexts/AuthContext";
+import { useEffect, useState, useCallback } from "react";
 
 function SesionIniciada() {
-    const Cerrar = () => {
+    const { userData } = useAuth();
+    const [idUsuario, setIdUsuario] = useState(null);
+
+    useEffect(() => {
+        if (userData?.data?.id && idUsuario === null) {
+            const usuarioId = userData.data.id;
+            setIdUsuario(usuarioId);
+            localStorage.setItem("idUsuario", usuarioId);
+        }
+    }, [userData, idUsuario]);
+
+    const Cerrar = useCallback(() => {
         Swal.fire({
             title: "¿Estás seguro de cerrar sesión?",
             text: "Esta acción no se puede deshacer",
@@ -21,17 +34,9 @@ function SesionIniciada() {
                 window.location.hash = "/";
             }
         });
-    };
-    const { userData } = useAuth();
-    const idUsuario = userData ? userData.id : null;
-    if (idUsuario) {
-        localStorage.setItem("idUsuario", idUsuario);
-    }
-
-
+    }, []);
 
     return (
-
         <div className={styles.sesionContainer}>
             <div className={styles.contentContainer}>
                 <main className={styles.appMain}>
