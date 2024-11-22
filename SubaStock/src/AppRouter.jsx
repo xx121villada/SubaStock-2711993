@@ -13,7 +13,8 @@ import VisualizarAnimalesSubasta from "./components/subastar/VisualizarAnimalesS
 import { AuthProvider } from "./contexts/AuthContext.jsx";
 import Subastas from "./pages/Subastas/Subastas.jsx";
 import Favoritos from "./pages/favoritos/Favoritos.jsx";
-import SesionIniciada from "./pages/SesionIniciada/SesionIniciada.jsx";
+import SesionIniciada from "./pages/sesionIniciada/sesionIniciada.jsx";
+import SubastaGanada from "./pages/SubastaGanadora/SubastaGanada.jsx";
 
 export default function AppRouter() {
   return (
@@ -37,6 +38,7 @@ export default function AppRouter() {
             <Route path="/detalle-subasta/:idSubasta" element={<DetalleSubasta />} />
             <Route path="/favoritos" element={<Favoritos />} />
             <Route path="/subastas" element={<Subastas />} />
+            <Route path="subasta-ganada" element={<SubastaGanada/>}/>
           </Route>
         </Routes>
       </HashRouter>
