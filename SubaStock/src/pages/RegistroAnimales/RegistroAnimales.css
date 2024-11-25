@@ -1,69 +1,141 @@
+.container-Animales {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background-color: white;
+  padding: 30px;
+}
+
+.registro-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 800px;
+  flex-wrap: wrap; 
+}
+
+.imageContainer {
+  flex: 2;
+  margin-right: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: auto; 
+}
+
+.animalImage {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
 .registro-container {
-    max-width: 450px;
-    margin: 20px auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); 
-    background-color: #f9f9f9;
+  flex: 1.5;
+  padding: 30px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+  min-width: 400px; 
+  width: 100%; 
 }
 
 .registro-container h1 {
-    text-align: center;
-    font-size: 30px;
-    color: #333;
-    margin-bottom: 25px;
-}
-
-.logos-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-}
-
-.logos-container img {
-    margin: 0 10px;
-    width: 50px;
-    height: 50px;
+  text-align: center;
+  font-size: 30px;
+  color: #333;
+  margin-bottom: 25px;
 }
 
 .registro-animales {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .animales-div {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .animales-div label {
-    font-size: 16px;
-    color: #333;
-    margin-bottom: 5px;
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 5px;
 }
 
 .animales-div .campos {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #03a90e;
-    border-radius: 5px;
-    font-size: 16px;
-    color: #333;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #03a90e;
+  border-radius: 5px;
+  font-size: 16px;
+  color: #333;
 }
 
 .registro-button {
-    padding: 12px;
-    background-color: #28a745;
-    color: white;
-    font-size: 18px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  padding: 12px;
+  background-color: #28a745;
+  color: white;
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .registro-button:hover {
-    background-color: #218838;
+  background-color: #218838;
+}
+
+
+@media (max-width: 768px) {
+  .registro-main {
+    flex-direction: column; 
+    align-items: center; 
+  }
+
+  .imageContainer {
+    margin-right: 0; 
+    margin-bottom: 20px; 
+  }
+
+  .registro-container {
+    min-width: 100%; 
+  }
+
+  .registro-container h1 {
+    font-size: 24px; 
+  }
+}
+
+
+@media (max-width: 480px) {
+  .container-Animales {
+    padding: 15px; 
+  }
+
+  .registro-container {
+    padding: 20px; 
+  }
+
+  .registro-container h1 {
+    font-size: 20px; 
+  }
+
+  .registro-animales {
+    gap: 15px; 
+  }
+
+  .animales-div .campos {
+    font-size: 14px; 
+    padding: 10px;
+  }
+
+  .registro-button {
+    font-size: 16px; 
+    padding: 10px;
+  }
 }

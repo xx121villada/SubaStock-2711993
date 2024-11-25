@@ -3,12 +3,22 @@ import { Link } from "react-router-dom";
 import styles from "./sesionIniciada.module.css";
 import Swal from "sweetalert2";
 import useAuth from "../../contexts/AuthContext";
+import RegistroAnimales from "../RegistroAnimales/RegistroAnimales";
+import Modal from "../../components/UI/Modal";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState, useCallback } from "react";
 
 function UserIniciado() {
     const { userData } = useAuth();
     const [idUsuario, setIdUsuario] = useState(null);
+    const [registroAnimal, setRegistroAnimal] = useState(false);
+    const navigate = useNavigate();
 
+
+    const handleRegistroExitoso = () => {
+        setRegistroAnimal(false); 
+        navigate("/ver-animales"); 
+    };
     useEffect(() => {
         if (userData?.data?.id && idUsuario === null) {
             const usuarioId = userData.data.id;
@@ -49,9 +59,16 @@ function UserIniciado() {
                         <Link to="/favoritos">
                             <button className={styles.button}>FAVORITOS</button>
                         </Link>
-                        <Link to="/registro-animales">
-                            <button className={styles.button}>REGISTRAR ANIMAL</button>
-                        </Link>
+                        
+                            <button onClick={ () => setRegistroAnimal(true)} className={styles.button}>
+                                REGISTRAR ANIMAL
+                            </button>
+
+                            <Modal show={registroAnimal} onClose={() => setRegistroAnimal(false)}>
+                             <RegistroAnimales onRegistroExitoso={handleRegistroExitoso} />
+                            </Modal>
+
+                        
                         <Link to="/ver-animales">
                             <button className={styles.button}>VER ANIMALES</button>
                         </Link>

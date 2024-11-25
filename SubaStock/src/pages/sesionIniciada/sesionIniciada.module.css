@@ -3,7 +3,7 @@
     height: 100vh;
     background-image: url("./img/fondoO.png");
     background-size: cover;
-    margin-top: -4%;
+    margin-top: -2%;
     background-position: center;
     background-repeat: no-repeat;
     justify-content: flex-end;
@@ -63,6 +63,14 @@
     }
 
     @media (max-width: 480px) {
+
+    .sesionContainer{
+        justify-content: center;
+    }
+    .contentContainer {
+        margin-right: -3%;
+        }
+
     .buttonContainer {
         width: 95%;
     }
