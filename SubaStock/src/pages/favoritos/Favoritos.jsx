@@ -8,7 +8,7 @@ const Favoritos = () => {
 
     // session storage
     useEffect(() => {
-        const storedIdUsuario = sessionStorage.getItem('idUsuario');
+        const storedIdUsuario = localStorage.getItem('idUsuario');
         if (storedIdUsuario) {
             setIdUsuario(storedIdUsuario);
             console.log("ID del usuario desde sessionStorage:", storedIdUsuario);
@@ -38,8 +38,7 @@ const Favoritos = () => {
                 const data = await response.json();
                 
                 // id subastas
-                const subastaIds = data.Favoritos.map(favorito => favorito.idSubasta);
-
+                const subastaIds = data.data.Favoritos.map(favorito => favorito.idSubasta);
                 // 
                 const respSubasta = await fetch(
                     `https://apisubastock.cleverapps.io/subasta/Obtener`, 
@@ -54,7 +53,7 @@ const Favoritos = () => {
                 if (!respSubasta.ok) throw new Error("No se pudieron obtener las subastas");
 
                 const subastasData = await respSubasta.json();
-                const subastas = subastasData.subastas || [];
+                const subastas = subastasData.data.subastas || [];
 
                 // Filtrar las subastas para obtener solo las favoritas
                 const favoritasConDetalles = subastas.filter(subasta => 
@@ -86,6 +85,7 @@ const Favoritos = () => {
                             imagenUrl3={subasta.imagenUrl3}
                             imagenUrl4={subasta.imagenUrl4}
                             imagenUrl5={subasta.imagenUrl5}
+                            pujaMinima={subasta.pujaMinima}
                         />
                     ))
                 ) : (

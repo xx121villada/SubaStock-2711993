@@ -10,7 +10,7 @@ const Subastas = () => {
     fetch(import.meta.env.VITE_API_URL + "/subasta/Obtener")
       .then((res) => res.json())
       .then((data) => {
-        setData(data);
+        setData(data.data);
       });
   }, []);
 

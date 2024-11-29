@@ -25,7 +25,7 @@ export default function HistorialAlimento() {
             const data = await response.json();
 
             if (data.status) {
-                setHistorial(data.alimentos);
+                setHistorial(data.data.alimentos);
             }
         } catch (error) {
             Swal.fire({

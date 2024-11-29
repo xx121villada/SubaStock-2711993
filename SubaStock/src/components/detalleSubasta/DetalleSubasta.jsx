@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import styles from "./detalleSubasta.module.css";
@@ -11,41 +12,29 @@ export function DetalleSubasta() {
   const { idSubasta } = useParams();
   const navigate = useNavigate();
   const [subasta, setSubasta] = useState(null);
-  const [idUsuario, setIdUsuario] = useState("");
   const [valorPuja, setValorPuja] = useState("");
   const [verTabla, setVerTabla] = useState(false);
   const [cargando, setCargando] = useState(true);
-  const { authState } = useAuth();
+  const { isLogged, userData, getToken } = useAuth();
 
-  useEffect(() => {
+  const cargarSubasta = () => {
     setCargando(true);
-    fetch(`https://apisubastock.cleverapps.io/subasta/Obtener/${idSubasta}`)
+    fetch( import.meta.env.VITE_API_URL + `/subasta/Obtener/${idSubasta}`)
       .then((response) => {
-        if (!response.ok) {
-          throw new Error("No se pudo obtener la subasta");
-        }
+        if (!response.ok) throw new Error("No se pudo obtener la subasta");
         return response.json();
       })
       .then((data) => {
-        const valorActual = data?.valorActual;
-
-        if (valorActual !== undefined && valorActual !== null) {
-          const valorFormateado = valorActual.toLocaleString("es-CO", {
+        const valorActual = data?.data.valorActual;
+        const valorFormateado = valorActual
+          ? valorActual.toLocaleString("es-CO", {
             style: "currency",
             currency: "COP",
             minimumFractionDigits: 0,
-          });
+          })
+          : "Sin oferta actual";
 
-          setSubasta({
-            ...data,
-            valorActualFormateado: valorFormateado,
-          });
-        } else {
-          setSubasta({
-            ...data,
-            valorActualFormateado: "Sin oferta actual",
-          });
-        }
+        setSubasta({ ...data.data, valorActualFormateado: valorFormateado });
         setCargando(false);
       })
       .catch((error) => {
@@ -57,16 +46,14 @@ export function DetalleSubasta() {
           confirmButtonText: "Continuar",
         });
       });
+  };
 
-    const storedIdUsuario = sessionStorage.getItem("idUsuario");
-    if (storedIdUsuario) {
-      setIdUsuario(storedIdUsuario);
-    }
+  useEffect(() => {
+    cargarSubasta();
   }, [idSubasta]);
 
   const handlePujar = async () => {
-    console.log(authState);
-    if (!authState) {
+    if (!isLogged) {
       Swal.fire({
         text: "Debes iniciar sesión para realizar una puja.",
         icon: "warning",
@@ -87,7 +74,6 @@ export function DetalleSubasta() {
     }
 
     const valorActual = subasta.valorActual;
-
     if (parseFloat(valorPuja) <= valorActual) {
       Swal.fire({
         text: `La puja debe ser mayor a la oferta actual de ${subasta.valorActualFormateado}.`,
@@ -99,7 +85,7 @@ export function DetalleSubasta() {
 
     const datosPuja = {
       idSubasta: idSubasta,
-      idUsuario: authState.idUsuario,
+      idUsuario: userData.data.id,
       valor: valorPuja,
     };
 
@@ -110,6 +96,7 @@ export function DetalleSubasta() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
           },
           body: JSON.stringify(datosPuja),
         }
@@ -117,15 +104,16 @@ export function DetalleSubasta() {
 
       const resultado = await response.json();
 
-      if (response.ok) {
+      if (resultado.status) {
         Swal.fire({
           text: "Puja realizada exitosamente",
           icon: "success",
           confirmButtonText: "OK",
         });
+        cargarSubasta();
       } else {
         Swal.fire({
-          text: "No se pudo realizar la puja",
+          text: resultado.message || "No se pudo realizar la puja",
           icon: "error",
           confirmButtonText: "OK",
         });
@@ -139,9 +127,7 @@ export function DetalleSubasta() {
     }
   };
 
-  const toggleTabla = () => {
-    setVerTabla((prevVerTabla) => !prevVerTabla);
-  };
+  const toggleTabla = () => setVerTabla(!verTabla);
 
   const handleBack = () => {
     navigate(-2);

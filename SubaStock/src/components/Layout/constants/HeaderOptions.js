@@ -1,6 +1,5 @@
 import {
   AuctionIcon,
-  MoneyIcon,
   CowIcon,
   UserIcon,
   HomeIcon,
@@ -14,6 +13,12 @@ const optionsLogged = [
     linksTo: "/",
     icon: AuctionIcon,
   },
+  
+  {
+    name: "Mis Animales",
+    linksTo: "/ver-animales",
+    icon: CowIcon,
+  },
   {
     name: "Menú",
     linksTo: "/sesion-iniciada",
@@ -22,7 +27,7 @@ const optionsLogged = [
   {
     name: "Cerrar sesión",
     icon: ExitIcon,
-  },
+  }
 ];
 
 const optionsUnlogged = [

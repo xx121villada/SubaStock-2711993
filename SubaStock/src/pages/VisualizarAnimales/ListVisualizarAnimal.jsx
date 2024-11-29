@@ -13,6 +13,7 @@ export default function ListVisualizarAnimal() {
     const [animales, setAnimales] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const { tipoAnimal } = useParams();
+    const [animalesSubastados, setAnimalesSubastados] = useState([]);
 
     const especieToImageMap = {
         "Bovino": bovino,
@@ -24,46 +25,69 @@ export default function ListVisualizarAnimal() {
     };
 
     useEffect(() => {
-        const idUsuario = localStorage.getItem('idUsuario');
-        
-        if (idUsuario) {
-            setIsLoading(true);
-            fetch(import.meta.env.VITE_API_URL + `/animal/Obtener/${idUsuario}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-                .then(response => {
-                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                    return response.json();
-                })
-                .then(data => {
-                    if (data.animal) {
-                        const animalesFiltrados = data.animal.filter(animal =>
-                            animal.especie.toLowerCase() === tipoAnimal.toLowerCase()
-                        );
-                        setAnimales(animalesFiltrados);
-                    }
-                })
-                .catch(error => {
-                    console.error("Error fetching data:", error);
-                })
-                .finally(() => {
-                    setIsLoading(false);
-                });
-        } else {
-            setIsLoading(false);
-        }
-    }, [tipoAnimal]);
+        const fetchAnimales = async () => {
+            if (animalesSubastados.length === 0) return;
 
-    const cards = animales.map((animal) => (
-        <CardVisualizarAnimal
-            key={animal.idAnimal}
-            visualizarAnimal={animal}
-            imagen={especieToImageMap[animal.especie] || especieToImageMap["default"]}
-        />
-    ));
+            const idUsuario = localStorage.getItem('idUsuario');
+            if (!idUsuario) return;
+
+            setIsLoading(true);
+            try {
+                const response = await fetch(
+                    `${import.meta.env.VITE_API_URL}/animal/Obtener/${idUsuario}`,
+                    {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    }
+                );
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+                const data = await response.json();
+                if (data.status) {
+                    const dataAnimales = data.data.animal;
+
+                    const animalesFiltrados = dataAnimales.filter(animal =>
+                        animal.especie.toLowerCase() === tipoAnimal.toLowerCase() &&
+                        !animalesSubastados.some(subastado => subastado.idAnimal === animal.idAnimal)
+                    );
+                    setAnimales(animalesFiltrados);
+                }
+            } catch (error) {
+                console.error("Error al obtener los animales:", error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchAnimales();
+    }, [tipoAnimal, animalesSubastados]);
+
+    const animalSubastado = async () => {
+        try {
+            const response = await fetch(
+                `${import.meta.env.VITE_API_URL}/subasta/Obtener`,
+                { method: 'GET', headers: { 'Content-Type': 'application/json' } }
+            );
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            if (data.status) {
+                setAnimalesSubastados(data.data.subastas);
+            }
+
+        } catch (error) {
+            console.error('Error al obtener si el animal está subastado:', error);
+        }
+    };
+
+    useEffect(() => {
+        animalSubastado();
+    }, []);
 
     if (isLoading) {
         return <SPLoader />;
@@ -75,7 +99,13 @@ export default function ListVisualizarAnimal() {
                 <>
                     <h1 style={styles.title}>Animales de la raza {tipoAnimal}</h1>
                     <div style={styles.containerCards}>
-                        {cards}
+                        {animales.map((animal) => (
+                            <CardVisualizarAnimal
+                                key={animal.idAnimal}
+                                visualizarAnimal={animal}
+                                imagen={especieToImageMap[animal.especie] || especieToImageMap["default"]}
+                            />
+                        ))}
                     </div>
                 </>
             ) : (
