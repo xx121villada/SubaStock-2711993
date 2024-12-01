@@ -7,6 +7,7 @@ import LazyCarousel from "../Subastas/LazyCarousel";
 import Temporizador from "../Subastas/Temporizador";
 import Swal from "sweetalert2";
 import useAuth from "../../contexts/AuthContext";
+import moment from "moment";
 
 export function DetalleSubasta() {
   const { idSubasta } = useParams();
@@ -16,6 +17,19 @@ export function DetalleSubasta() {
   const [verTabla, setVerTabla] = useState(false);
   const [cargando, setCargando] = useState(true);
   const { isLogged, userData, getToken } = useAuth();
+
+  const enviarCorreo = async () => {
+    let response = await fetch( import.meta.env.VITE_API_URL + `/email/SubastaGanada.php/${idSubasta}`);
+    let subasta = await response.json();
+
+    if(!subasta.status) {
+      Swal.fire({
+        text: subasta.message,
+        icon: "error",
+        confirmButtonText: "Continuar",
+      });
+    }
+  }
 
   const cargarSubasta = () => {
     setCargando(true);
@@ -177,19 +191,19 @@ export function DetalleSubasta() {
           <h2 className={styles.titulo}>{subasta.subasta.tituloSubasta}</h2>
 
           <span
-            className={`badge rounded-pill ${styles.tiempoRestante}`}
-            style={{
-              backgroundColor: esTiempoCritico
-                ? "#ff0000"
-                : "var(--primary-color)",
-              width: "fit-content",
-            }}
+              className={`badge rounded-pill ${styles.tiempoRestante}`}
+              style={{
+                backgroundColor: esTiempoCritico
+                    ? "#ff0000"
+                    : "var(--primary-color)",
+                width: "fit-content",
+              }}
           >
             Cierra en&nbsp;
             <Temporizador
-              fechaFin={subasta.subasta.fechaFin}
-              onTiempoCritico={() => setTiempoCritico(true)}
-              minutosCriticos={5}
+                fechaFin={subasta.subasta.fechaFin}
+                onTiempoCritico={() => setTiempoCritico(true)}
+                minutosCriticos={5}
             />
           </span>
 
@@ -211,11 +225,11 @@ export function DetalleSubasta() {
 
           <div className={styles.pujaContainer}>
             <input
-              type="number"
-              className={styles.inputPuja}
-              placeholder="Realice su puja"
-              value={valorPuja}
-              onChange={(e) => setValorPuja(e.target.value)}
+                type="number"
+                className={styles.inputPuja}
+                placeholder="Realice su puja"
+                value={valorPuja}
+                onChange={(e) => setValorPuja(e.target.value)}
             />
             <button className={styles.pujar} onClick={handlePujar}>
               Pujar
@@ -225,9 +239,16 @@ export function DetalleSubasta() {
           <button className={styles.historialPujas} onClick={toggleTabla}>
             HISTORIAL DE PUJAS
           </button>
+
+          {
+              (moment().isAfter(moment(subasta.fechaFin))) && <button className={[styles.historialPujas]} onClick={enviarCorreo}>
+                ENVIAR EMAIL
+              </button>
+          }
+
         </div>
       </div>
-      {verTabla && <TablaHistorial idAnimal={subasta.subasta.idAnimal} />}
+      {verTabla && <TablaHistorial idAnimal={subasta.subasta.idAnimal}/>}
     </div>
   );
 }
