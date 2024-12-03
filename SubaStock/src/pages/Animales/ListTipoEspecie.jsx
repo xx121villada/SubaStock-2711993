@@ -6,7 +6,7 @@ import caprino from './img/Caprino.png';
 import equino from './img/Equino.png';
 import apino from './img/Apino.png';
 import notFount from './img/Notfount.png';
-import SPLoader from '../loader/Loader'
+import SPLoader from '../loader/Loader';
 
 const imageMapEspecies = {
     "Bovino": bovino,
@@ -18,61 +18,94 @@ const imageMapEspecies = {
 };
 
 export default function ListTipoEspecie() {
-
     const [especies, setEspecies] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [animalesSubastados, setAnimalesSubastados] = useState([]);
 
+    const obtenerAnimalesSubastados = async () => {
+        try {
+            const response = await fetch(
+                `${import.meta.env.VITE_API_URL}/subasta/Obtener`,
+                { method: 'GET', headers: { 'Content-Type': 'application/json' } }
+            );
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            if (data.status) {
+                setAnimalesSubastados(data.data.subastas.map(subasta => subasta.idAnimal));
+            }
+        } catch (error) {
+            console.error('Error al obtener los animales subastados:', error);
+        }
+    };
+
+    const obtenerEspeciesNoSubastadas = async () => {
+        const idUsuario = localStorage.getItem('idUsuario');
+        if (!idUsuario) return;
+
+        try {
+            const response = await fetch(
+                import.meta.env.VITE_API_URL + `/animal/Obtener/${idUsuario}`,
+                {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' }
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            if (data.status) {
+                const especiesFiltradas = {};
+
+                data.data.animal.forEach(animal => {
+                    if (!animalesSubastados.includes(animal.idAnimal)) {
+                        if (!especiesFiltradas[animal.especie]) {
+                            especiesFiltradas[animal.especie] = [];
+                        }
+                        especiesFiltradas[animal.especie].push(animal);
+                    }
+                });
+
+                setEspecies(Object.keys(especiesFiltradas).map(especie => ({
+                    especie,
+                    animales: especiesFiltradas[especie]
+                })));
+            }
+        } catch (error) {
+            console.error('Error al obtener las especies:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     useEffect(() => {
-        const obtenerDatosEspecies = async () => {
-            try {
-                const idUsuario = localStorage.getItem('idUsuario');
-                if (idUsuario) {
-                    const response = await fetch(
-                        import.meta.env.VITE_API_URL + `/animal/Obtener/${idUsuario}`,
-                        {
-                            method: 'GET',
-                            headers: { 'Content-Type': 'application/json' }
-                        }
-                    );
-
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-
-                    const data = await response.json();
-                    if (data.animal) {
-                        const especiesUnicas = {};
-                        data.animal.forEach(animal => {
-                            if (!especiesUnicas[animal.especie]) {
-                                especiesUnicas[animal.especie] = animal;
-                            }
-                        });
-
-                        setEspecies(Object.values(especiesUnicas));
-                    }
-                }
-            } catch (error) {
-                console.error('Error al obtener las especies:', error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        obtenerDatosEspecies();
+        obtenerAnimalesSubastados();
     }, []);
 
-    const cards = especies.map((animal) => (
+    useEffect(() => {
+        if (animalesSubastados.length > 0) {
+            obtenerEspeciesNoSubastadas();
+        }
+    }, [animalesSubastados]);
+
+    const cards = especies.map((especie) => (
         <CardTiposEspecie
-            key={animal.especie}
-            tipoEspecie={animal}
-            imagen={imageMapEspecies[animal.especie] || imageMapEspecies["default"]}
+            key={especie.especie}
+            tipoEspecie={especie}
+            imagen={imageMapEspecies[especie.especie] || imageMapEspecies["default"]}
         />
     ));
 
     if (isLoading) {
         return <SPLoader />
     }
+
     return (
         <div style={styles.containerPrincipal}>
             {especies.length > 0 ? (
@@ -109,5 +142,4 @@ const styles = {
         gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
         gap: '20px',
     },
-
 };

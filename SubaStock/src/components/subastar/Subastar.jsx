@@ -16,7 +16,7 @@ export function Subastar() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const storedIdUsuario = sessionStorage.getItem("idUsuario");
+    const storedIdUsuario = localStorage.getItem("idUsuario");
     const storedMarca = localStorage.getItem("marca");
     const storedIdAnimal = localStorage.getItem("idAnimal");
 

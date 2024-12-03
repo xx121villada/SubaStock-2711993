@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import SPLoader from "../loader/Loader";
 import useAuth from "../../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const useForm = (initialValues) => {
   const [values, setValues] = useState(initialValues);
@@ -20,6 +21,7 @@ const useForm = (initialValues) => {
 };
 
 const Login = () => {
+  const navigate = useNavigate();
   const [values, handleChange] = useForm({
     correo: "",
     contraseña: "",
@@ -46,14 +48,14 @@ const Login = () => {
 
       const data = await response.json();
       if (data.status) {
-        contextLogin(data.token);
+        contextLogin(data.data.token);
         Swal.fire({
           title: "Correcto!",
           text: "Inicio de sesión exitoso",
           icon: "success",
           confirmButtonText: "Continuar",
         }).then(() => {
-          window.location.hash = "/sesion-iniciada";
+          navigate('/sesion-iniciada')
         });
       } else {
         Swal.fire({

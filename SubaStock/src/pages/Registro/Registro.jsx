@@ -10,8 +10,8 @@ export default function Registro() {
         apellidos: '',
         correo: '',
         contraseña: '',
-        repetirContraseña: '',
-        telefono: ''
+        telefono: '',
+        saldo: '0'
     });
 
     const [validaciones, setValidaciones] = useState({
@@ -92,6 +92,7 @@ export default function Registro() {
             })
             .then((data) => {
                 console.log(data);
+                console.log(valores);
                 if (data.status) {
                     Swal.fire({ title: data.message, icon: 'success' });
                     form.current.reset();

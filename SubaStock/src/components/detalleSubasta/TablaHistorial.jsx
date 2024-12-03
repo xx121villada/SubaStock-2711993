@@ -11,12 +11,12 @@ export function TablaHistorial({ idAnimal }) {
       setCargando(true);
       try {
         const response = await fetch(
-          `https://apisubastock.cleverapps.io/subasta/PujasPorAnimal/${idAnimal}`
+          import.meta.env.VITE_API_URL + `/subasta/PujasPorAnimal/${idAnimal}`
         );
         const data = await response.json();
 
         if (data.status) {
-          setPujas(data.pujas);
+          setPujas(data.data.pujas);
         }
       } catch (error) {
         console.log(error);
