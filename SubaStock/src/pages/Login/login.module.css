@@ -77,7 +77,13 @@
   text-decoration: none;
   transition: color 0.3s ease-in-out;
 }
-
+.recuperar {
+    text-align: center;
+    margin-top: 20px;
+    color: #0b6d0b;
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+}
 .registrarse:hover {
   color: #25c725;
   cursor: pointer;

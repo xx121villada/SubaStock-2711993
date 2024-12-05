@@ -52,6 +52,9 @@ function UserIniciado() {
                         <Link to="/registro-animales">
                             <button className={styles.button}>REGISTRAR ANIMAL</button>
                         </Link>
+                        <Link to="/actualizar-contra">
+                            <button className={styles.button}>ACTUALIZAR CONTRASEÑA</button>
+                        </Link>
                         <Link to="/ver-animales">
                             <button className={styles.button}>VER ANIMALES</button>
                         </Link>

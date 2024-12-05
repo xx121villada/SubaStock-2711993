@@ -132,6 +132,9 @@ const Login = () => {
                 ¿No tienes una cuenta? Regístrate
               </p>
             </Link>
+            <Link to="/recuperar" className={styles.textDecorationNone}>
+              <p className={styles.recuperar}>¿Olvidaste tu contraseña?</p>
+            </Link>
           </form>
         </div>
       </div>
