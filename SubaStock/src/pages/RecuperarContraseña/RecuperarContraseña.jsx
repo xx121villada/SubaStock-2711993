@@ -1,80 +1,112 @@
-import styles from "./recuperarContraseña.module.css";
-import { useState } from "react";
-import Swal from "sweetalert2";
+import styles from './recuperarContraseña.module.css';
+import { useState } from 'react';
+import Swal from 'sweetalert2';
 
 const RecuperarContraseña = () => {
-    const [email, setEmail] = useState("");
+  const [correo, setCorreo] = useState('');
 
-    const handleChange = (e) => {
-        setEmail(e.target.value);
-    };
+  const generarContraseña = () => {
+    const caracteres =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let contraseña = '';
+    for (let i = 0; i < 8; i++) {
+      contraseña += caracteres.charAt(
+        Math.floor(Math.random() * caracteres.length),
+      );
+    }
+    return contraseña;
+  };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+  const esContraseñaValida = (contraseña) =>
+    /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/.test(contraseña);
 
-        try {
-            const response = await fetch(
-                import.meta.env.VITE_API_URL + "/recuperar/EnviarCorreo", 
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ email }), 
-                }
-            );
+  const generarContraseñaValida = () => {
+    let contraseña = generarContraseña();
+    while (!esContraseñaValida(contraseña)) {
+      contraseña = generarContraseña();
+    }
+    return contraseña;
+  };
 
-            const data = await response.json();  
+  const handleChange = (e) => {
+    setCorreo(e.target.value);
+  };
 
-            if (data.status) {
-                Swal.fire({
-                    title: "¡Éxito!",
-                    text: "Correo enviado correctamente. Revisa tu bandeja de entrada.",
-                    icon: "success",
-                });
-            } else {
-                Swal.fire({
-                    title: "Error",
-                    text: data.message,
-                    icon: "error",
-                });
-            }
-        } catch (error) {
-            Swal.fire({
-                title: "Error",
-                text: `No se pudo enviar el correo: ${error.message}`,
-                icon: "error",
-            });
-        }
-    };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    return (
-        <div className={styles.recuperarContainer}>
-            <div className={styles.contentContainer}>
-                <div className={styles.formContainer}>
-                    <h1 className={styles.centeredTitle}>RECUPERAR CONTRASEÑA</h1>
-                    <form className={styles.recuperarForm} onSubmit={handleSubmit}>
-                        <div>
-                            <label className={styles.nombreInput}>CORREO</label>
-                            <input
-                                required
-                                type="email"
-                                placeholder="Ingresa tu correo"
-                                className={styles.inputField}
-                                value={email}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <div>
-                            <button type="submit" className={styles.btnEnviar}>
-                                Enviar
-                            </button>
-                        </div>
-                    </form>
-                </div>
+    if (!correo) {
+      Swal.fire({
+        title: 'Error',
+        text: 'Por favor, ingresa un correo válido.',
+        icon: 'error',
+      });
+      return;
+    }
+
+    const nuevaContraseña = generarContraseñaValida();
+
+    try {
+      const response = await fetch(
+        import.meta.env.VITE_API_URL + '/usuario/NuevaContra',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ correo, contraseña:nuevaContraseña }),
+        },
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      if (data.status) {
+        Swal.fire({
+          title: 'Contraseña generada',
+          text: data.message,
+          icon: 'success',
+        });
+        setCorreo('');
+      }
+    } catch (err) {
+      Swal.fire({
+        title: 'Error',
+        text: err,
+        icon: 'error',
+      });
+    }
+  };
+
+  return (
+    <div className={styles.recuperarContainer}>
+      <div className={styles.contentContainer}>
+        <div className={styles.formContainer}>
+          <h1 className={styles.centeredTitle}>RECUPERAR CONTRASEÑA</h1>
+          <form className={styles.recuperarForm} onSubmit={handleSubmit}>
+            <div>
+              <label className={styles.nombreInput}>CORREO</label>
+              <input
+                required
+                type="email"
+                placeholder="Ingresa tu correo"
+                className={styles.inputField}
+                value={correo}
+                onChange={handleChange}
+              />
             </div>
+            <div>
+              <button type="submit" className={styles.btnEnviar}>
+                Enviar
+              </button>
+            </div>
+          </form>
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default RecuperarContraseña;
