@@ -57,6 +57,8 @@ const RecuperarContraseña = () => {
           body: JSON.stringify({ correo, contraseña:nuevaContraseña }),
         },
       );
+      console.log(correo);
+      console.log(response);
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -71,6 +73,7 @@ const RecuperarContraseña = () => {
         });
         setCorreo('');
       }
+      console.log(data);
     } catch (err) {
       Swal.fire({
         title: 'Error',
@@ -79,7 +82,6 @@ const RecuperarContraseña = () => {
       });
     }
   };
-
   return (
     <div className={styles.recuperarContainer}>
       <div className={styles.contentContainer}>

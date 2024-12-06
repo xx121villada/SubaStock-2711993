@@ -1,89 +1,71 @@
-import styles from "./actualizar.module.css"; // Importar estilos desde el módulo CSS
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-const CambiarContraseña = () => {
-    const [contraseñaActual, setContraseñaActual] = useState("");
-    const [nuevaContraseña, setNuevaContraseña] = useState("");
-    const [confirmarContraseña, setConfirmarContraseña] = useState("");
-    const [mensaje, setMensaje] = useState(null);
+const ActualizarContrasena = () => {
+    const [correo, setCorreo] = useState('');
+    const [nuevaContrasena, setNuevaContrasena] = useState('');
+    const [confirmarContrasena, setConfirmarContrasena] = useState('');
+    const [mensaje, setMensaje] = useState('');
 
-    const manejarEnvio = async (e) => {
-        e.preventDefault();
+    const handleActualizar = async () => {
+        // Validar que las contraseñas coincidan
+        if (nuevaContrasena !== confirmarContrasena) {
+            setMensaje('Las contraseñas no coinciden.');
+            return;
+        }
 
-        if (nuevaContraseña !== confirmarContraseña) {
-            setMensaje("Las contraseñas no coinciden.");
+        // Validar que la contraseña tenga al menos 6 caracteres
+        if (nuevaContrasena.length < 6) {
+            setMensaje('La contraseña debe tener al menos 6 caracteres.');
             return;
         }
 
         try {
-            const response = await fetch(import.meta.env.VITE_API_URL + "/recuperar/cambiarContraseña", {
-                method: "POST",
+            const response = await fetch(
+                import.meta.env.VITE_API_URL + '/usuario/Contrasena', {
+                method: 'POST',
                 headers: {
-                    "Content-Type": "application/json",
+                    'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    contraseñaActual,
-                    nuevaContraseña,
-                }),
-                credentials: "include", // Esto asegura que las cookies de sesión sean enviadas.
+                body: JSON.stringify({ correo, contraseña: nuevaContrasena }),
             });
 
             const data = await response.json();
-
             if (data.success) {
-                setMensaje("Contraseña actualizada correctamente.");
-                setContraseñaActual("");
-                setNuevaContraseña("");
-                setConfirmarContraseña("");
+                setMensaje(data.message || 'Contraseña actualizada correctamente.');
             } else {
-                setMensaje(data.message);
+                setMensaje(data.message || 'Error al actualizar la contraseña.');
             }
         } catch (error) {
-            setMensaje("Error al actualizar la contraseña. Inténtalo nuevamente.");
+            console.error('Error:', error);
+            setMensaje('Hubo un problema con la solicitud. Intenta nuevamente más tarde.');
         }
     };
 
     return (
-        <div className={styles["cambiar-contraseña-container"]}>
-            <div>
-                <h2>Cambiar Contraseña</h2>
-                {mensaje && <p className={styles["mensaje"]}>{mensaje}</p>}
-                <form onSubmit={manejarEnvio}>
-                    <div className={styles["form-group"]}>
-                        <label htmlFor="contraseñaActual">Contraseña Actual</label>
-                        <input
-                            type="password"
-                            id="contraseñaActual"
-                            value={contraseñaActual}
-                            onChange={(e) => setContraseñaActual(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div className={styles["form-group"]}>
-                        <label htmlFor="nuevaContraseña">Nueva Contraseña</label>
-                        <input
-                            type="password"
-                            id="nuevaContraseña"
-                            value={nuevaContraseña}
-                            onChange={(e) => setNuevaContraseña(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div className={styles["form-group"]}>
-                        <label htmlFor="confirmarContraseña">Confirmar Nueva Contraseña</label>
-                        <input
-                            type="password"
-                            id="confirmarContraseña"
-                            value={confirmarContraseña}
-                            onChange={(e) => setConfirmarContraseña(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <button type="submit">Actualizar Contraseña</button>
-                </form>
-            </div>
+        <div>
+            <h3>Actualizar Contraseña</h3>
+            {mensaje && <p>{mensaje}</p>}
+            <input
+                type="email"
+                placeholder="Correo electrónico"
+                value={correo}
+                onChange={(e) => setCorreo(e.target.value)}
+            />
+            <input
+                type="password"
+                placeholder="Nueva contraseña"
+                value={nuevaContrasena}
+                onChange={(e) => setNuevaContrasena(e.target.value)}
+            />
+            <input
+                type="password"
+                placeholder="Confirmar contraseña"
+                value={confirmarContrasena}
+                onChange={(e) => setConfirmarContrasena(e.target.value)}
+            />
+            <button onClick={handleActualizar}>Actualizar Contraseña</button>
         </div>
     );
 };
 
-export default CambiarContraseña;
+export default ActualizarContrasena;

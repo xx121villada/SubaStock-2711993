@@ -13,7 +13,7 @@ import VisualizarAnimalesSubasta from "./components/subastar/VisualizarAnimalesS
 import { AuthProvider } from "./contexts/AuthContext.jsx";
 import Subastas from "./pages/Subastas/Subastas.jsx";
 import Favoritos from "./pages/favoritos/Favoritos.jsx";
-import SesionIniciada from "./pages/SesionIniciada/UserIniciado.jsx";
+import SesionIniciada from "./pages/sesionIniciada/UserIniciado.jsx";
 import RecuperarContraseña from "./pages/RecuperarContraseña/RecuperarContraseña.jsx";
 import ActualizarContraseña from "./pages/actualizarContraseña/Actualizar.jsx";
 
