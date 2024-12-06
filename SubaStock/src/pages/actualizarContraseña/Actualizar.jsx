@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styles from './actualizar.module.css';
 
 const ActualizarContrasena = () => {
     const [correo, setCorreo] = useState('');
@@ -42,28 +43,33 @@ const ActualizarContrasena = () => {
     };
 
     return (
-        <div>
-            <h3>Actualizar Contraseña</h3>
-            {mensaje && <p>{mensaje}</p>}
-            <input
-                type="email"
-                placeholder="Correo electrónico"
-                value={correo}
-                onChange={(e) => setCorreo(e.target.value)}
-            />
-            <input
-                type="password"
-                placeholder="Nueva contraseña"
-                value={nuevaContrasena}
-                onChange={(e) => setNuevaContrasena(e.target.value)}
-            />
-            <input
-                type="password"
-                placeholder="Confirmar contraseña"
-                value={confirmarContrasena}
-                onChange={(e) => setConfirmarContrasena(e.target.value)}
-            />
-            <button onClick={handleActualizar}>Actualizar Contraseña</button>
+        <div className={styles.container}>
+            <div className={styles.card}>
+                <h3>ACTUALIZAR CONTRASEÑA</h3>
+                {mensaje && <p>{mensaje}</p>}
+                <p className={styles.subtitulos}> Confirme su correo</p>
+                <input
+                    type="email"
+                    placeholder="Correo electrónico"
+                    value={correo}
+                    onChange={(e) => setCorreo(e.target.value)}
+                />
+                <p  className={styles.subtitulos}> Digite su nueva contraseña</p>
+                <input
+                    type="password"
+                    placeholder="Nueva contraseña"
+                    value={nuevaContrasena}
+                    onChange={(e) => setNuevaContrasena(e.target.value)}
+                />
+                <p  className={styles.subtitulos}> Confirme su contraseña</p>
+                <input
+                    type="password"
+                    placeholder="Confirmar contraseña"
+                    value={confirmarContrasena}
+                    onChange={(e) => setConfirmarContrasena(e.target.value)}
+                />
+                <button onClick={handleActualizar}>Actualizar Contraseña</button>
+            </div>
         </div>
     );
 };
