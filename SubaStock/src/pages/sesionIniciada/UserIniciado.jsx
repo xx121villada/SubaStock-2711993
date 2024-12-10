@@ -3,12 +3,19 @@ import { Link } from "react-router-dom";
 import styles from "./sesionIniciada.module.css";
 import Swal from "sweetalert2";
 import useAuth from "../../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState, useCallback } from "react";
 
 function UserIniciado() {
     const { userData } = useAuth();
     const [idUsuario, setIdUsuario] = useState(null);
+    const navigate = useNavigate();
 
+
+    const handleRegistroExitoso = () => {
+        setRegistroAnimal(false); 
+        navigate("/ver-animales"); 
+    };
     useEffect(() => {
         if (userData?.data?.id && idUsuario === null) {
             const usuarioId = userData.data.id;
@@ -63,9 +70,6 @@ function UserIniciado() {
                         <Link to="/mis-subastas">
                             <button className={styles.button}>MIS SUBASTAS</button>
                         </Link>
-                        <button className={styles.button} onClick={Cerrar}>
-                            CERRAR SESION
-                        </button>
                     </div>
                 </main>
             </div>

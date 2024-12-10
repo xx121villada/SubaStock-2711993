@@ -1,14 +1,11 @@
 import "./RegistroAnimales.css";
-import cerdo from "../CRUD-xime/img/1.png";
-import vaca from "../CRUD-xime/img/2.png";
-import pollo from "../CRUD-xime/img/3.png";
 import { useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAuth from "../../contexts/AuthContext";
-import { Navigate } from "react-router-dom";
+import { animalBreeds } from "./Especies";
 
-const RegistroAnimales = () => {
+const RegistroAnimales = ({ onRegistroExitoso }) => {
   const form = useRef();
   const [animales, setAnimales] = useState({
     marca: "",
@@ -30,7 +27,7 @@ const RegistroAnimales = () => {
       ...animales,
     };
 
-    fetch( `${import.meta.env.VITE_API_URL}/animal/Insertar`, {
+    fetch(`${import.meta.env.VITE_API_URL}/animal/Insertar`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -51,6 +48,10 @@ const RegistroAnimales = () => {
             title: data.message,
             icon: "success",
             confirmButtonText: "Continuar",
+          }).then((result) => {
+            if (result.isConfirmed && onRegistroExitoso) {
+              onRegistroExitoso();
+            }
           });
         } else {
           Swal.fire({
@@ -66,84 +67,68 @@ const RegistroAnimales = () => {
     return <Navigate to="/login" />;
   }
 
+  const filteredBreeds = animalBreeds.find((animal) => animal.species === animales.especie)?.breeds || [];
+
   return (
     <div className="container-Animales">
-      <div className="w-100 d-flex justify-content-start align-items-center mb-3">
-        <button className="back-button ms-2">
-          <Link
-            to={"/sesion-iniciada"}
-            className="text-decoration-none text-dark"
-          >
-            Regresar
-          </Link>
-        </button>
-      </div>
-      <div className="registro-container">
-        <h1>REGISTRO DE ANIMALES</h1>
-        <div className="logos-container">
-          <img src={cerdo} alt="Cerdo" />
-          <img src={vaca} alt="Vaca" />
-          <img src={pollo} alt="Pollo" />
+      <div className="registro-main">
+        <div className="registro-container">
+          <h1>REGISTRO DE ANIMALES</h1>
+          <div className="form-container">
+            <form onSubmit={handleSubmit} ref={form} className="registro-animales">
+              <div className="animales-div">
+                <label htmlFor="marca">ID</label>
+                <input
+                  className="campos"
+                  type="text"
+                  id="marca"
+                  name="marca"
+                  placeholder="Ingrese la identificación del animal"
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="animales-div">
+                <label htmlFor="especie">ESPECIE</label>
+                <select
+                  className="campos"
+                  id="especie"
+                  name="especie"
+                  required
+                  onChange={handleChange}
+                >
+                  <option value="">Seleccione una especie</option>
+                  {animalBreeds.map((animal) => (
+                    <option key={animal.species} value={animal.species}>
+                      {animal.species}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="animales-div">
+                <label htmlFor="raza">RAZA</label>
+                <select
+                  className="campos"
+                  id="raza"
+                  name="raza"
+                  required
+                  onChange={handleChange}
+                  disabled={!animales.especie}
+                >
+                  <option value="">Seleccione una raza</option>
+                  {filteredBreeds.map((breed, index) => (
+                    <option key={index} value={breed}>
+                      {breed}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <button type="submit" className="registro-button">
+                REGISTRAR
+              </button>
+            </form>
+          </div>
         </div>
-        <form onSubmit={handleSubmit} ref={form} className="registro-animales">
-          <div className="animales-div">
-            <label htmlFor="marca">ID</label>
-            <input
-              className="campos"
-              type="text"
-              id="marca"
-              name="marca"
-              placeholder="Ingrese la identificación del animal"
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="animales-div">
-            <label htmlFor="especie">ESPECIE</label>
-            <select
-              className="campos"
-              id="especie"
-              name="especie"
-              required
-              onChange={handleChange}
-            >
-              <option value="">Seleccione una especie</option>
-              <option value="Bovino">Bovino</option>
-              <option value="Porcino">Porcino</option>
-              <option value="Caprino">Caprino</option>
-              <option value="Equino">Equino</option>
-              <option value="Avicultura">Avicultura</option>
-            </select>
-          </div>
-          <div className="animales-div">
-            <label htmlFor="raza">RAZA</label>
-            <input
-              className="campos"
-              type="text"
-              id="raza"
-              name="raza"
-              placeholder="Ingrese la raza del animal"
-              required
-              onChange={handleChange}
-            />
-          </div>
-          {/* <div className="animales-div">
-                        <label htmlFor="peso">Peso (Kg)</label>
-                        <input
-                            className="campos"
-                            type="number"
-                            id="peso"
-                            name="peso"
-                            placeholder="Ingrese el peso del animal en Kg"
-                            required
-                            step="0.01"
-                            onChange={handleChange}
-                        />
-                    </div> */}
-          <button type="submit" className="registro-button">
-            REGISTRAR
-          </button>
-        </form>
       </div>
     </div>
   );

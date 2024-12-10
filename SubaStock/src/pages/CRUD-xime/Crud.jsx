@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { useEffect, useState } from 'react';
+import { QRCodeCanvas } from 'qrcode.react'; 
 import styles from './styles/Crud.module.css';
 import HistorialAliemto from '../Historiales/HistorialAlimento';
 import HistorialVacunacion from '../Historiales/HistorialVacunacion';
@@ -11,11 +12,13 @@ import InsertarMedicamentos from '../InsertarHistoriales/InsertarMedicamentos';
 import BotonVolver from '../../components/UI/BotonVolver';
 import Modal from '../../components/UI/Modal';
 import SPLoader from '../loader/Loader';
+import useAuth from "../../contexts/AuthContext";
 
 function Crud() {
     const [showAlimentacion, setShowAlimentacion] = useState(false);
     const [showVacunacion, setShowVacunacion] = useState(false);
     const [showPesoSalud, setShowPesoSalud] = useState(false);
+    const [showQr, setShowQr] = useState(false);
     const [insertarAlimentacion, setInsertarAlimentacion] = useState(false);
     const [insertarVacunacion, setInsertarVacunacion] = useState(false);
     const [insertarPesoSalud, setInsertarPesoSalud] = useState(false);
@@ -26,6 +29,8 @@ function Crud() {
     const [btnActived, setBtnActived] = useState(false);
     const [selectedOption, setSelectedOption] = useState(''); 
     const [loading, setLoading] = useState(false);
+    
+    const {  isLogged, isLoading } = useAuth();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -45,7 +50,7 @@ function Crud() {
             if (!idAnimal) return;
 
             try {
-                const response = await fetch(import.meta.env.VITE_API_URL+ `/subasta/AnimalSubastado/${idAnimal}`, {
+                const response = await fetch(import.meta.env.VITE_API_URL + `/subasta/AnimalSubastado/${idAnimal}`, {
                     method: 'GET',
                     headers: { 'Content-Type': 'application/json' },
                 });
@@ -95,7 +100,7 @@ function Crud() {
 
             if (result.isConfirmed) {
                 setLoading(true);
-                const response = await fetch(import.meta.env.VITE_API_URL+`/animal/Eliminar/${idAnimal}`, {
+                const response = await fetch(import.meta.env.VITE_API_URL + `/animal/Eliminar/${idAnimal}`, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',
@@ -111,7 +116,7 @@ function Crud() {
                         title: 'Eliminado',
                         text: 'El animal ha sido eliminado correctamente.',
                     }).then(() => {
-                        navigate('/sesion-iniciada');
+                        navigate('/ver-animales');
                     });
                 } else {
                     Swal.fire({
@@ -130,6 +135,26 @@ function Crud() {
             });
         }
     };
+    useEffect(() => {
+        const checkSession = async () => {
+            if (!isLogged && !isLoading) {
+                
+                const result = await Swal.fire({
+                    title: 'Debes iniciar sesión',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Iniciar sesión',
+                    cancelButtonText: 'Cancelar',
+                });
+
+                if (result.isConfirmed) {
+                    navigate('/login');     
+                }
+            }
+        };
+
+        checkSession();
+    }, [isLogged, isLoading, navigate]);
 
     return (
         <div className={styles.crudApp}>
@@ -174,6 +199,9 @@ function Crud() {
                             </div>
                         </div>
                     </div>
+
+                    
+
                     <div className={styles.menuCrud}>
                         <button onClick={() => setShowVacunacion(true)} className={styles.menuCrudButton}>
                             VER VACUNACIÓN
@@ -199,6 +227,9 @@ function Crud() {
                     <br />
                     <div className={styles.footerButtons}>
                         <BotonVolver ruta={`/visualizar/${especie}`} />
+                        <button onClick={() => setShowQr(true)} className={styles.menuCrudButton}>
+                            VER QR
+                        </button>
                         <button onClick={() => eliminarAnimal(idAnimal)} className={styles.deleteButton}>
                             ELIMINAR ANIMAL
                         </button>
@@ -212,6 +243,21 @@ function Crud() {
                     <Modal show={insertarPesoSalud} onClose={() => setInsertarPesoSalud(false)}>
                         <InsertarEstadoPeso />
                     </Modal>
+                    <Modal show={showQr} onClose={() => setShowQr(false)}>
+                        <div className={styles.qrCodeContainer}>
+                            <h3>Código QR del Animal</h3>
+                            {idAnimal ? (
+                                <QRCodeCanvas
+                                    value={`${window.location.origin}/#/crud-animal/${idAnimal}`}
+                                    size={256}
+                                    level={'H'}
+                                />
+                            ) : (
+                                <p>No se puede generar QR sin un ID de animal.</p>
+                            )}
+                        </div>
+                    </Modal>
+
                 </div>
             )}
         </div>
