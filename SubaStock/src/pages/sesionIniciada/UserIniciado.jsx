@@ -45,7 +45,9 @@ function UserIniciado() {
                         <Link to="/Subastar">
                             <button className={styles.button}>SUBASTAR</button>
                         </Link>
-                        <button className={styles.button}>VER SUBASTAS</button>
+                        <Link to="/">
+                            <button className={styles.button}>VER SUBASTAS</button>
+                        </Link>
                         <Link to="/favoritos">
                             <button className={styles.button}>FAVORITOS</button>
                         </Link>
@@ -56,7 +58,10 @@ function UserIniciado() {
                             <button className={styles.button}>ACTUALIZAR CONTRASEÑA</button>
                         </Link>
                         <Link to="/ver-animales">
-                            <button className={styles.button}>VER ANIMALES</button>
+                            <button className={styles.button}>MIS ANIMALES</button>
+                        </Link>
+                        <Link to="/mis-subastas">
+                            <button className={styles.button}>MIS SUBASTAS</button>
                         </Link>
                         <button className={styles.button} onClick={Cerrar}>
                             CERRAR SESION

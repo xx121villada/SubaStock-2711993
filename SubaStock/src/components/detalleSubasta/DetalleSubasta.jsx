@@ -7,6 +7,7 @@ import LazyCarousel from "../Subastas/LazyCarousel";
 import Temporizador from "../Subastas/Temporizador";
 import Swal from "sweetalert2";
 import useAuth from "../../contexts/AuthContext";
+import BestLoader from "../BestLoader/BestLoader";
 
 export function DetalleSubasta() {
   const { idSubasta } = useParams();
@@ -16,6 +17,8 @@ export function DetalleSubasta() {
   const [verTabla, setVerTabla] = useState(false);
   const [cargando, setCargando] = useState(true);
   const { isLogged, userData, getToken } = useAuth();
+  const [miSubasta, setMiSubasta] = useState();
+  const [idUsuario, setIdUsuario] = useState();
 
   const cargarSubasta = () => {
     setCargando(true);
@@ -111,6 +114,7 @@ export function DetalleSubasta() {
           confirmButtonText: "OK",
         });
         cargarSubasta();
+        setValorPuja("");
       } else {
         Swal.fire({
           text: resultado.message || "No se pudo realizar la puja",
@@ -129,17 +133,25 @@ export function DetalleSubasta() {
 
   const toggleTabla = () => setVerTabla(!verTabla);
 
-  const handleBack = () => {
-    navigate(-2);
-  };
+  useEffect(() => {
+    if (userData?.data) {
+      setIdUsuario(userData.data.id);
+    } else {
+      console.log("No disponible");
+    }
+  }, [userData]);
+
+  useEffect(() => {
+    if (idUsuario && subasta?.subasta) {
+      setMiSubasta(idUsuario === subasta.subasta.idUsuario);
+    }
+  }, [idUsuario, subasta]);
 
   const [esTiempoCritico, setTiempoCritico] = useState(false);
 
   if (cargando) {
     return (
-      <div className={styles.loaderContainer}>
-        <div className={styles.spinner}></div>
-      </div>
+      <BestLoader/>
     );
   }
 
@@ -149,12 +161,6 @@ export function DetalleSubasta() {
 
   return (
     <div className={`container-md ${styles.subastaContainer}`}>
-      <div className="w-100 d-flex justify-content-start align-items-center mb-3">
-        <button className={styles.backButton} onClick={handleBack}>
-          <i className="bi bi-arrow-bar-left"></i> Regresar
-        </button>
-      </div>
-
       <div className={styles.carruselInfoContainer}>
         <div className={styles.carouselContainer}>
           <LazyCarousel
@@ -208,20 +214,33 @@ export function DetalleSubasta() {
           <p className={`${styles.descripcion}`}>
             {subasta.subasta.descripcion}
           </p>
-
-          <div className={styles.pujaContainer}>
-            <input
-              type="number"
-              className={styles.inputPuja}
-              placeholder="Realice su puja"
-              value={valorPuja}
-              onChange={(e) => setValorPuja(e.target.value)}
-            />
-            <button className={styles.pujar} onClick={handlePujar}>
-              Pujar
-            </button>
-          </div>
-
+          {miSubasta ? (
+            <p
+              style={{
+                backgroundColor: '#e6ffe6',
+                padding: '10px',
+                borderRadius: '5px',
+                fontWeight: 'bold',
+                color: '#2b8f2b',
+                textAlign: 'center',
+                justifySelf: 'center',
+                width: '300px',
+              }}
+            >Esta es tu subasta</p>
+          )  : (
+            <div className={styles.pujaContainer}>
+              <input
+                type="number"
+                className={styles.inputPuja}
+                placeholder="Realice su puja"
+                value={valorPuja}
+                onChange={(e) => setValorPuja(e.target.value)}
+              />
+              <button className={styles.pujar} onClick={handlePujar}>
+                Pujar
+              </button>
+            </div>
+          )}
           <button className={styles.historialPujas} onClick={toggleTabla}>
             HISTORIAL DE PUJAS
           </button>

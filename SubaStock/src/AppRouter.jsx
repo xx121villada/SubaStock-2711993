@@ -14,9 +14,13 @@ import { AuthProvider } from "./contexts/AuthContext.jsx";
 import Subastas from "./pages/Subastas/Subastas.jsx";
 import Favoritos from "./pages/favoritos/Favoritos.jsx";
 import SesionIniciada from "./pages/sesionIniciada/UserIniciado.jsx";
+<<<<<<< HEAD
 import RecuperarContraseña from "./pages/RecuperarContraseña/RecuperarContraseña.jsx";
 import ActualizarContraseña from "./pages/actualizarContraseña/Actualizar.jsx";
 
+=======
+import MisSubastas from "./components/MisSubastas/MisSubastas.jsx";
+>>>>>>> origin/dev05
 export default function AppRouter() {
   return (
     <AuthProvider>
@@ -39,8 +43,12 @@ export default function AppRouter() {
             <Route path="/detalle-subasta/:idSubasta" element={<DetalleSubasta />} />
             <Route path="/favoritos" element={<Favoritos />} />
             <Route path="/subastas" element={<Subastas />} />
+<<<<<<< HEAD
             <Route path="/recuperar" element={<RecuperarContraseña/>} />
             <Route path="/actualizar-contra" element={<ActualizarContraseña/>} />
+=======
+            <Route path="/mis-subastas" element={<MisSubastas />} />
+>>>>>>> origin/dev05
           </Route>
         </Routes>
       </HashRouter>

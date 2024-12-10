@@ -11,6 +11,10 @@ button {
   font-weight: 500;
 }
 
+.subastaContainer {
+  margin-top: 100px;
+}
+
 .carruselInfoContainer {
   display: flex;
   flex-direction: row;
@@ -155,28 +159,6 @@ button {
   background-color: white;
 }
 
-.loaderContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background: rgba(255, 255, 255, 0.8);
-  position: fixed;
-  width: 100%;
-  top: 0;
-  z-index: 1000;
-}
-
-.spinner {
-  border: 8px solid rgba(0, 0, 0, 0.1);
-  border-left-color: var(--primary-color);
-  border-radius: 50%;
-  width: 80px;
-  height: 80px;
-  animation: spin 1s linear infinite;
-}
-
-
 .historialContainer {
   background-color: #ffffff; 
   padding: 20px;
@@ -217,14 +199,7 @@ button {
 }
 
 
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
+
 
 @media screen and (min-width: 990px) {
   .infoContainer {
@@ -327,6 +302,9 @@ button {
 }
 
 @media screen and (max-width: 576px) {
+  .subastaContainer {
+    margin-top: 60px;
+  }  
   .carruselInfoContainer {
     display: flex;
     flex-direction: column;

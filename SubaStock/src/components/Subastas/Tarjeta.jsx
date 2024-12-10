@@ -13,8 +13,8 @@ const Tarjeta = ({
   imagenUrl3,
   imagenUrl4,
   imagenUrl5,
-  pujaMinima
-  
+  pujaMinima,
+  isEnded,
 }) => {
   const [esTiempoCritico, setTiempoCritico] = useState(false);
   const [esFavorito, setEsFavorito] = useState(false);
@@ -131,6 +131,8 @@ const Tarjeta = ({
         width: "100%",
         height: 500,
         boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+        opacity: isEnded ? 0.2 : 1,
+        pointerEvents: isEnded ? 'none' : 'auto' 
       }}
       className="d-flex flex-column"
     >
@@ -144,21 +146,28 @@ const Tarjeta = ({
         <Link to={`/detalle-subasta/${idSubasta}`} style={{ textDecoration: "none", color: "inherit" }}>
           <span className="fs-4 text-bold">{tituloSubasta}</span>
         </Link>
-
         <span
           className="badge rounded-pill"
           style={{
             backgroundColor: esTiempoCritico ? "#ff0000" : "var(--primary-color)",
+            fontSize: isEnded ? "20px" : "15px",
             width: "fit-content",
           }}
         >
-          Cierra en&nbsp;
-          <Temporizador
-            fechaFin={fechaFin}
-            onTiempoCritico={() => setTiempoCritico(true)}
-            minutosCriticos={5}
-          />
+          {isEnded ? (
+            "Subastado"
+          ) : (
+            <>
+              Cierra en&nbsp;
+              <Temporizador
+                fechaFin={fechaFin}
+                onTiempoCritico={() => setTiempoCritico(true)}
+                minutosCriticos={5}
+              />
+            </>
+          )}
         </span>
+
 
         <div className="my-1 d-flex flex-wrap flex-column gap-1">
           <div className="ubicacionDetalles d-flex gap-2 align-items-center">
