@@ -20,9 +20,22 @@ export function DetalleSubasta() {
   const [miSubasta, setMiSubasta] = useState();
   const [idUsuario, setIdUsuario] = useState();
 
+  const enviarCorreo = async () => {
+    let response = await fetch(import.meta.env.VITE_API_URL + `/email/SubastaGanada.php/${idSubasta}`);
+    let subasta = await response.json();
+
+    if (!subasta.status) {
+      Swal.fire({
+        text: subasta.message,
+        icon: "error",
+        confirmButtonText: "Continuar",
+      });
+    }
+  }
+
   const cargarSubasta = () => {
     setCargando(true);
-    fetch( import.meta.env.VITE_API_URL + `/subasta/Obtener/${idSubasta}`)
+    fetch(import.meta.env.VITE_API_URL + `/subasta/Obtener/${idSubasta}`)
       .then((response) => {
         if (!response.ok) throw new Error("No se pudo obtener la subasta");
         return response.json();
@@ -244,6 +257,13 @@ export function DetalleSubasta() {
           <button className={styles.historialPujas} onClick={toggleTabla}>
             HISTORIAL DE PUJAS
           </button>
+
+
+          <button className={[styles.historialPujas]} onClick={enviarCorreo}>
+            ENVIAR EMAIL
+          </button>
+
+
         </div>
       </div>
       {verTabla && <TablaHistorial idAnimal={subasta.subasta.idAnimal} />}

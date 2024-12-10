@@ -32,7 +32,7 @@ button {
   overflow: hidden;
   margin: 0;
   background-color: #fff;
-  
+
 }
 
 .carouselContainer img {
@@ -149,6 +149,8 @@ button {
   border-radius: 5px;
   padding: 10px 15px;
   transition: 0.3s ease;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 .historialPujas:hover {
@@ -160,7 +162,7 @@ button {
 }
 
 .historialContainer {
-  background-color: #ffffff; 
+  background-color: #ffffff;
   padding: 20px;
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -181,7 +183,7 @@ button {
 
 
 .historialTable {
-  background-color: #ffffff; 
+  background-color: #ffffff;
   border-radius: 8px;
   overflow: hidden;
 }
@@ -232,28 +234,28 @@ button {
   .titulo {
     font-size: 20px;
   }
-  
+
   .tiempoRestante {
     font-size: 14px;
   }
-  
+
   .fechas {
     margin: 16px;
     padding-bottom: 10px;
   }
-  
+
   .fechas span{
     font-size: 14px;
   }
-  
+
   .ofertaActual {
     font-size: 20px;
   }
-  
+
   .descripcion {
     font-size: 14px;
   }
-  
+
   .pujaContainer {
     gap: 2px;
     margin-bottom: 14px;
@@ -262,7 +264,7 @@ button {
     padding: 4px;
     font-size: 14px;
   }
-  
+
   .pujar {
     padding: 10px 10px;
     margin-left: 8px;
@@ -274,7 +276,7 @@ button {
     margin: 5 auto;
     padding: 8px 10px;
   }
-  
+
 }
 
 @media screen and (max-width: 767.9999999px) {
