@@ -1,52 +1,15 @@
-import { useState, useEffect, useCallback } from "react";
-import { Link } from "react-router-dom";
-
-import styles from './Buscador.module.css'; 
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Buscador = () => {
   const [textoBusqueda, setTextoBusqueda] = useState("");
-  const [animales, setAnimales] = useState([]);
-  const [idUsuario, setIdUsuario] = useState("");
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const storedIdUsuario = sessionStorage.getItem("idUsuario");
-    if (storedIdUsuario) {
-      setIdUsuario(storedIdUsuario);
-    }
-  }, []);
-
-  const buscar = useCallback((query) => {
-    if (!query.trim()) {
-      setAnimales([]);
-      return;
-    }
-
-    fetch(`https://apisubastock.cleverapps.io/buscador/Buscar/${idUsuario}/${query}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setAnimales(data.animal || []);
-      })
-      .catch((error) => {
-        console.error("Error al buscar animales:", error);
-        setAnimales([]);
-      });
-  }, [idUsuario]);
-
-  useEffect(() => {
-    const delayDebounceFn = setTimeout(() => {
-      buscar(textoBusqueda);
-    }, 300);
-
-    return () => clearTimeout(delayDebounceFn);
-  }, [buscar, textoBusqueda]);
-
-  const handleAnimalClick = (idAnimal, marca, raza) => {
-    setTextoBusqueda("");
-    setAnimales([]);
-    localStorage.setItem('idAnimal', idAnimal);
-    localStorage.setItem('marcaAnimal', marca);
-    localStorage.setItem('razaAnimal', raza);
-  };
+  function actualizarBusqueda() {
+    navigate(
+      `/${textoBusqueda.trim() === "" ? "" : `?search=${textoBusqueda}`}`
+    );
+  }
 
   return (
     <div style={{ position: "relative", width: "290px" }}>
@@ -62,7 +25,7 @@ const Buscador = () => {
         <input
           value={textoBusqueda}
           onChange={(e) => setTextoBusqueda(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && buscar(textoBusqueda)}
+          onKeyDown={(e) => e.key === "Enter" && actualizarBusqueda()}
           className="form-control border-0 rounded-pill shadow-none bg-transparent"
           style={{ padding: "0 0 0 20px", margin: 0, height: "100%" }}
           type="text"
@@ -71,7 +34,7 @@ const Buscador = () => {
         <div
           className="input-group-text bg-transparent border-0 pointer-click"
           role="button"
-          onClick={() => buscar(textoBusqueda)}
+          onClick={actualizarBusqueda}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -85,25 +48,6 @@ const Buscador = () => {
           </svg>
         </div>
       </div>
-
-      {animales.length > 0 && (
-        <div className={styles.resultadosBusqueda}>
-          {animales.map((animal) => (
-            <Link
-              key={animal.idAnimal}
-              to={`/crud-animal/${animal.idAnimal}`}
-
-              
-              className={styles.resultadoItemLink}
-              onClick={() => handleAnimalClick(animal.idAnimal, animal.marca, animal.raza)}
-              >
-              <div className={styles.resultadoItem}>
-                <h5>{animal.raza} - {animal.marca}</h5>
-              </div>
-            </Link>
-          ))}
-        </div>
-      )}
     </div>
   );
 };

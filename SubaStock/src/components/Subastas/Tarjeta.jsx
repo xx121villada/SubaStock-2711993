@@ -18,11 +18,11 @@ const Tarjeta = ({
 }) => {
   const [esTiempoCritico, setTiempoCritico] = useState(false);
   const [esFavorito, setEsFavorito] = useState(false);
-  const [idUsuario, setIdUsuario] = useState('');
+  const [idUsuario, setIdUsuario] = useState("");
   const [maxPuja, setMaxPuja] = useState(0);
-  
+
   useEffect(() => {
-    const storedIdUsuario = localStorage.getItem('idUsuario');
+    const storedIdUsuario = localStorage.getItem("idUsuario");
     if (storedIdUsuario) {
       setIdUsuario(storedIdUsuario);
     }
@@ -36,9 +36,9 @@ const Tarjeta = ({
         const response = await fetch(
           `https://apisubastock.cleverapps.io/favorito/Obtener/${idUsuario}`,
           {
-            method: 'GET',
+            method: "GET",
             headers: {
-              'Content-Type': 'application/json',
+              "Content-Type": "application/json",
             },
           }
         );
@@ -62,12 +62,14 @@ const Tarjeta = ({
     setEsFavorito(nuevoEstadoFavorito);
 
     try {
-      const url = `https://apisubastock.cleverapps.io/favorito/${nuevoEstadoFavorito ? 'Insertar' : 'Eliminar'}/${idSubasta}`;
+      const url = `https://apisubastock.cleverapps.io/favorito/${
+        nuevoEstadoFavorito ? "Insertar" : "Eliminar"
+      }/${idSubasta}`;
       if (nuevoEstadoFavorito) {
         const response = await fetch(url, {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({ idSubasta, idUsuario }),
         });
@@ -80,9 +82,9 @@ const Tarjeta = ({
         }
       } else {
         const response = await fetch(url, {
-          method: 'DELETE',
+          method: "DELETE",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({ idUsuario }),
         });
@@ -102,7 +104,9 @@ const Tarjeta = ({
   useEffect(() => {
     const obtenerPujas = async () => {
       try {
-        const response = await fetch(`https://apisubastock.cleverapps.io/puja/Obtener`);
+        const response = await fetch(
+          `https://apisubastock.cleverapps.io/puja/Obtener`
+        );
         const data = await response.json();
         if (!data.status) {
           console.error("Error al obtener las pujas:", data.message);
@@ -110,9 +114,13 @@ const Tarjeta = ({
         }
 
         // Filtrar las pujas para la subasta específica
-        const pujas = data.data.pujas.filter(puja => puja.idSubasta === idSubasta);
+        const pujas = data.data.pujas.filter(
+          (puja) => puja.idSubasta === idSubasta
+        );
         if (pujas.length > 0) {
-          const maxValor = Math.max(...pujas.map(puja => parseFloat(puja.valor)));
+          const maxValor = Math.max(
+            ...pujas.map((puja) => parseFloat(puja.valor))
+          );
           setMaxPuja(maxValor);
         } else {
           setMaxPuja(pujaMinima);
@@ -136,14 +144,33 @@ const Tarjeta = ({
       }}
       className="d-flex flex-column"
     >
-      <Link to={`/detalle-subasta/${idSubasta}`} style={{ textDecoration: "none", color: "inherit" }}>
+      <Link
+        to={`/detalle-subasta/${idSubasta}`}
+        style={{ textDecoration: "none", color: "inherit" }}
+      >
         <LazyCarousel
-          imgs={[imagenUrl, imagenUrl2, imagenUrl3, imagenUrl4, imagenUrl5].filter((img) => img !== null)}
+          imgs={[
+            imagenUrl,
+            imagenUrl2,
+            imagenUrl3,
+            imagenUrl4,
+            imagenUrl5,
+          ].filter((img) => img !== null)}
         />
       </Link>
 
       <div className="p-3 d-flex flex-column gap-2">
-        <Link to={`/detalle-subasta/${idSubasta}`} style={{ textDecoration: "none", color: "inherit" }}>
+        <Link
+          to={`/detalle-subasta/${idSubasta}`}
+          style={{
+            textDecoration: "none",
+            color: "inherit",
+            maxWidth: "100%",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+          }}
+        >
           <span className="fs-4 text-bold">{tituloSubasta}</span>
         </Link>
         <span
@@ -185,7 +212,11 @@ const Tarjeta = ({
               Colombia
               <span
                 onClick={toggleFavorito}
-                style={{ cursor: "pointer", fontSize: "1.5rem", marginLeft: '10px' }}
+                style={{
+                  cursor: "pointer",
+                  fontSize: "1.5rem",
+                  marginLeft: "10px",
+                }}
               >
                 {esFavorito ? "★" : "☆"}
               </span>
@@ -213,9 +244,11 @@ const Tarjeta = ({
           Puja más alta:{" "}
         </span>
         <span className="fs-4" style={{ fontWeight: "bold" }}>
-          {maxPuja ? `COP ${maxPuja.toLocaleString('es-CO', {
-            minimumFractionDigits: 0,
-          })}` : "0"}
+          {maxPuja
+            ? `COP ${maxPuja.toLocaleString("es-CO", {
+                minimumFractionDigits: 0,
+              })}`
+            : "0"}
         </span>
       </div>
     </div>
@@ -223,4 +256,3 @@ const Tarjeta = ({
 };
 
 export default Tarjeta;
-

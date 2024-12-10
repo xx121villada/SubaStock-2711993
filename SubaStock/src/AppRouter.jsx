@@ -1,7 +1,7 @@
 import { Routes, Route, HashRouter } from "react-router-dom";
 import Login from "./pages/Login/Login.jsx";
 import Layout from "./components/Layout/Layout";
-import Inicio from './App.jsx';
+import Inicio from "./App.jsx";
 import Registro from "./pages/Registro/Registro.jsx";
 import { DetalleSubasta } from "./components/detalleSubasta/DetalleSubasta";
 import VisualizarAnimal from "./pages/VisualizarAnimales/VisualizarAnimal";
@@ -17,6 +17,7 @@ import SesionIniciada from "./pages/sesionIniciada/UserIniciado.jsx";
 import RecuperarContraseña from "./pages/RecuperarContraseña/RecuperarContraseña.jsx";
 import ActualizarContraseña from "./pages/actualizarContraseña/Actualizar.jsx";
 import MisSubastas from "./components/MisSubastas/MisSubastas.jsx";
+
 export default function AppRouter() {
   return (
     <AuthProvider>
@@ -32,11 +33,17 @@ export default function AppRouter() {
             <Route path="/sesion-iniciada" element={<SesionIniciada />} />
             <Route path="/registro-animales" element={<RegistroAnimales />} />
             <Route path="/ver-animales" element={<Animales />} />
-            <Route path="/visualizar/:tipoAnimal" element={<VisualizarAnimal />} />
+            <Route
+              path="/visualizar/:tipoAnimal"
+              element={<VisualizarAnimal />}
+            />
             <Route path="/crud-animal/:idAnimal" element={<Crud />} />
             <Route path="/subastar" element={<VisualizarAnimalesSubasta />} />
             <Route path="/subastar/:idAnimal" element={<Subastar />} />
-            <Route path="/detalle-subasta/:idSubasta" element={<DetalleSubasta />} />
+            <Route
+              path="/detalle-subasta/:idSubasta"
+              element={<DetalleSubasta />}
+            />
             <Route path="/favoritos" element={<Favoritos />} />
             <Route path="/subastas" element={<Subastas />} />
             <Route path="/recuperar" element={<RecuperarContraseña/>} />
